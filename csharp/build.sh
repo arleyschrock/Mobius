@@ -42,7 +42,7 @@ export CONFIGURATION=$STEP
 
 export STEP=$CONFIGURATION
 
-xbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
+msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
 export RC=$? && [ $RC -ne 0 ] && error_exit
 echo "BUILD ok for $CONFIGURATION $PROJ"
 
@@ -51,7 +51,7 @@ export STEP=Release
 
 export CONFIGURATION=$STEP
 
-xbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
+msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
 export RC=$? && [ $RC -ne 0 ] && error_exit
 echo "BUILD ok for $CONFIGURATION $PROJ"
 
@@ -59,14 +59,14 @@ echo "BUILD ok for $CONFIGURATION $PROJ"
 # The plan is to build SparkCLR nuget package in AppVeyor (Windows). 
 # Comment out this step for TravisCI (Linux) for now.
 #
-# if [ -f "$PROJ_NAME.nuspec" ];
-# then
-#   echo "===== Build NuGet package for $PROJ ====="
-#   export STEP=NuGet-Pack
-# 
-#   nuget pack "$PROJ_NAME.nuspec"
-#   export RC=$? && [ $RC -ne 0 ] && error_exit
-#   echo "NuGet package ok for $PROJ"
-# fi
+if [ -f "$PROJ_NAME.nuspec" ];
+then
+  echo "===== Build NuGet package for $PROJ ====="
+  export STEP=NuGet-Pack
+
+  nuget pack "$PROJ_NAME.nuspec"
+  export RC=$? && [ $RC -ne 0 ] && error_exit
+  echo "NuGet package ok for $PROJ"
+fi
 
 echo "===== Build succeeded for $PROJ ====="
