@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Adapter\Adapter.csproj" />
+    <ProjectReference Include="..\..\Adapter\Microsoft.Spark.CSharp\Adapter.csproj" />
   </ItemGroup>
 
 </Project>

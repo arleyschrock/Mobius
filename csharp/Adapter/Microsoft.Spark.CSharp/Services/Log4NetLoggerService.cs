@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using log4net;
 using log4net.Config;
+using System.IO;
 
 namespace Microsoft.Spark.CSharp.Services
 {
@@ -18,10 +19,13 @@ namespace Microsoft.Spark.CSharp.Services
         /// Gets a instance of Log4Net logger
         /// </summary>
         public static Log4NetLoggerService Instance = new Log4NetLoggerService(typeof(Type));
-
+        public static string ConfigFile => Path.Combine(Path.GetDirectoryName(typeof(Log4NetLoggerService).Assembly.Location), "log4net.config");
         static Log4NetLoggerService()
         {
-            XmlConfigurator.Configure();
+            if (File.Exists(ConfigFile))
+            {
+                XmlConfigurator.Configure(log4net.LogManager.GetRepository(typeof(Log4NetLoggerService).Name), new FileInfo(ConfigFile));
+            }
         }
 
         /// <summary>
@@ -143,7 +147,7 @@ namespace Microsoft.Spark.CSharp.Services
         /// <param name="e">The exception to be logged</param>
         public void LogException(Exception e)
         {
-            
+
             if (e.GetType() != typeof(AggregateException))
             {
                 logger.Error(e.Message);
@@ -178,7 +182,7 @@ namespace Microsoft.Spark.CSharp.Services
                 }
 
             }
-            
+
         }
 
         /// <summary>

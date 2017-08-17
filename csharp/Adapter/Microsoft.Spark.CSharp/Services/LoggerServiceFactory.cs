@@ -40,8 +40,7 @@ namespace Microsoft.Spark.CSharp.Services
         /// <returns></returns>
         private static ILoggerService GetDefaultLogger()
         {
-            if (File.Exists(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile)
-                && ConfigurationManager.GetSection("log4net") != null)
+            if(File.Exists(Path.Combine(Path.GetDirectoryName(typeof(LoggerServiceFactory).Assembly.Location), "log4net.config")))
             {
                 return Log4NetLoggerService.Instance;
             }
