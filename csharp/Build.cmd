@@ -37,13 +37,6 @@ set PROJ=%CMDHOME%\%PROJ_NAME%.sln
 
 @echo ===== Building %PROJ% =====
 
-@echo Restore NuGet packages ===================
-SET STEP=NuGet-Restore
-
-nuget restore "%PROJ%"
-
-@if ERRORLEVEL 1 GOTO :ErrorStop
-
 @echo Build Debug ==============================
 SET STEP=Debug
 
@@ -51,7 +44,8 @@ SET CONFIGURATION=%STEP%
 
 SET STEP=%CONFIGURATION%
 
-"%MSBUILDEXE%" /p:Configuration=%CONFIGURATION%;AllowUnsafeBlocks=true %MSBUILDOPT% "%PROJ%"
+dotnet build -c %CONFIGURATION%
+
 @if ERRORLEVEL 1 GOTO :ErrorStop
 @echo BUILD ok for %CONFIGURATION% %PROJ%
 
@@ -60,7 +54,8 @@ SET STEP=Release
 
 SET CONFIGURATION=%STEP%
 
-"%MSBUILDEXE%" /p:Configuration=%CONFIGURATION%;AllowUnsafeBlocks=true %MSBUILDOPT% "%PROJ%"
+dotnet build -c %CONFIGURATION%
+
 @if ERRORLEVEL 1 GOTO :ErrorStop
 @echo BUILD ok for %CONFIGURATION% %PROJ%
 
