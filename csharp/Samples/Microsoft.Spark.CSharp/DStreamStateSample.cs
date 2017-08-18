@@ -45,7 +45,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample("experimental")]
-        internal static void DStreamMapWithStateSample()
+        public static void DStreamMapWithStateSample()
         {
             string directory = SparkCLRSamples.Configuration.SampleDataLocation;
             string checkpointPath = Path.Combine(directory, "checkpoint");

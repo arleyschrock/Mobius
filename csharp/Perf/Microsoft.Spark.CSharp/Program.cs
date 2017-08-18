@@ -18,10 +18,10 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
     /// </summary>
     class PerfBenchmark
     {
-        internal static SparkContext SparkContext;
-        internal static SqlContext SqlContext;
-        internal static List<TimeSpan> ExecutionTimeList = new List<TimeSpan>();
-        internal static Dictionary<string, List<TimeSpan>> PerfResults = new Dictionary<string, List<TimeSpan>>();
+        public static SparkContext SparkContext;
+        public static SqlContext SqlContext;
+        public static List<TimeSpan> ExecutionTimeList = new List<TimeSpan>();
+        public static Dictionary<string, List<TimeSpan>> PerfResults = new Dictionary<string, List<TimeSpan>>();
 
         public static void Main(string[] args)
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
             SparkContext.Stop();
         }
 
-        internal static void RunBenchmarks(string[] args)
+        public static void RunBenchmarks(string[] args)
         {
             var perfSuites = Assembly.GetEntryAssembly().GetTypes()
                 .SelectMany(type => type.GetMethods(BindingFlags.NonPublic | BindingFlags.Static))
@@ -84,7 +84,7 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
 
         }
 
-        internal static void ReportResult()
+        public static void ReportResult()
         {
             Console.WriteLine("** Printing results of the perf run (C#) **");
             var allMedianCosts = new SortedDictionary<string, long>();

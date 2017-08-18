@@ -7,7 +7,7 @@ using Microsoft.Spark.CSharp.Sql;
 
 namespace Tests.Common
 {
-    internal class RowHelper
+    public class RowHelper
     {
         public const string BasicJsonSchema = @"
                 {

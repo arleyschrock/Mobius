@@ -13,7 +13,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// <summary>
     /// A simple wrapper of System.Net.Sockets.Socket class.
     /// </summary>
-    internal class DefaultSocketWrapper : ISocketWrapper
+    public class DefaultSocketWrapper : ISocketWrapper
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(DefaultSocketWrapper));
         private readonly Socket innerSocket;

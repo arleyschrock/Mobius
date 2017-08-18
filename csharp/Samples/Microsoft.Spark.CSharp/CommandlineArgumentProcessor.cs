@@ -10,12 +10,12 @@ namespace Microsoft.Spark.CSharp.Samples
     /// <summary>
     /// Simple commandline argument parser
     /// </summary>
-    internal class CommandlineArgumentProcessor
+    public class CommandlineArgumentProcessor
     {
         private const string UsageFileName = "samplesusage.md";
 
         private static readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(CommandlineArgumentProcessor));
-        internal static Configuration ProcessArugments(string[] args)
+        public static Configuration ProcessArugments(string[] args)
         {
             if (args.Length == 0)
             {

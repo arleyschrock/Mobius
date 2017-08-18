@@ -5,7 +5,7 @@ using Microsoft.Spark.CSharp.Core;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    interface ISparkCLRProxy
+    public interface  ISparkCLRProxy
     {
         ISparkContextProxy SparkContextProxy { get; }
         IStreamingContextProxy StreamingContextProxy { get; }

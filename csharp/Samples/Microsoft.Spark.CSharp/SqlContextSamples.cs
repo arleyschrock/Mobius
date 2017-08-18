@@ -27,7 +27,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to GetOrCreate a sql context
         /// </summary>
         [Sample]
-        internal static void SqlContextGetOrCreateSample()
+        public static void SqlContextGetOrCreateSample()
         {
             // create a new SqlContext
             var sqlContext = SqlContext.GetOrCreate(SparkCLRSamples.SparkContext);
@@ -44,7 +44,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to create DataFrame. The RDD is generated from SparkContext Parallelize; the schema is created via object creating.
         /// </summary>
         [Sample]
-        internal static void SqlContextCreateDataFrameSample()
+        public static void SqlContextCreateDataFrameSample()
         {
             var schemaPeople = new StructType(new List<StructField>
                                         {
@@ -94,7 +94,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to create DataFrame. The RDD is generated from SparkContext TextFile; the schema is created from Json.
         /// </summary>
         [Sample]
-        internal static void SqlContextCreateDataFrameSample2()
+        public static void SqlContextCreateDataFrameSample2()
         {
             var rddRequestsLog = SparkCLRSamples.SparkContext.TextFile(SparkCLRSamples.Configuration.GetInputDataPath(RequestsLog), 1).Map(r => r.Split(',').Select(s => (object)s).ToArray());
 
@@ -154,7 +154,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to create new session from a SqlContext
         /// </summary>
         [Sample]
-        internal static void SqlContextNewSessionSample()
+        public static void SqlContextNewSessionSample()
         {
             var originalSqlContext = GetSqlContext();
             var newSession = originalSqlContext.NewSession();
@@ -172,7 +172,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to register DataFrame as temp table/show tableNames/drop table
         /// </summary>
         [Sample]
-        internal static void SqlContextTempTableSample()
+        public static void SqlContextTempTableSample()
         {
             var sqlContext = GetSqlContext();
             var peopleDataFrame = sqlContext.Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -200,7 +200,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to show tables
         /// </summary>
         [Sample]
-        internal static void SqlContextTablesSample()
+        public static void SqlContextTablesSample()
         {
             var sqlContext = GetSqlContext();
             var peopleDataFrame = sqlContext.Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -224,7 +224,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to uncache table
         /// </summary>
         [Sample]
-        internal static void SqlContextCacheAndUncacheTableSample()
+        public static void SqlContextCacheAndUncacheTableSample()
         {
             var sqlContext = GetSqlContext();
             var peopleDataFrame = sqlContext.Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -253,7 +253,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to clear cache
         /// </summary>
         [Sample]
-        internal static void SqlContextClearCacheTableSample()
+        public static void SqlContextClearCacheTableSample()
         {
             var sqlContext = GetSqlContext();
             var peopleDataFrame = sqlContext.Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -281,7 +281,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// DataFrameReader read json sample
         /// </summary>
         [Sample]
-        internal static void SqlContextReadJsonSample()
+        public static void SqlContextReadJsonSample()
         {
             // load json
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -310,7 +310,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// DataFrameReader read json with option sample
         /// </summary>
         [Sample]
-        internal static void SqlContextReadJsonWithOptionSample()
+        public static void SqlContextReadJsonWithOptionSample()
         {
             // load json with sampling ration option sample
             // set sampling ration to a very little value so that schema probably won't be infered.
@@ -326,7 +326,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// DataFrameReader read parquet sample
         /// </summary>
         [Sample]
-        internal static void SqlContextReadParquetSample()
+        public static void SqlContextReadParquetSample()
         {
             // save json file to parquet file first
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));

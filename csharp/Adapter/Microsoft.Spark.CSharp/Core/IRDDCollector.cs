@@ -9,7 +9,7 @@ namespace Microsoft.Spark.CSharp.Core
     /// <summary>
     /// Interface for collect operation on RDD
     /// </summary>
-    interface IRDDCollector
+    public interface  IRDDCollector
     {
         IEnumerable<dynamic> Collect(int port, SerializedMode serializedMode, Type type);
     }

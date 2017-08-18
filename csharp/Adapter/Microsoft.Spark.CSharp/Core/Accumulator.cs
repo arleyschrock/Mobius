@@ -34,10 +34,10 @@ namespace Microsoft.Spark.CSharp.Core
     [Serializable]
     public class Accumulator
     {
-        internal static Dictionary<int, Accumulator> accumulatorRegistry = new Dictionary<int, Accumulator>();
+        public static Dictionary<int, Accumulator> accumulatorRegistry = new Dictionary<int, Accumulator>();
 
         [ThreadStatic] // Thread safe is needed when running in C# worker
-        internal static Dictionary<int, Accumulator> threadLocalAccumulatorRegistry = new Dictionary<int, Accumulator>();
+        public static Dictionary<int, Accumulator> threadLocalAccumulatorRegistry = new Dictionary<int, Accumulator>();
 
         /// <summary>
         /// The identity of the accumulator 
@@ -60,7 +60,7 @@ namespace Microsoft.Spark.CSharp.Core
     public class Accumulator<T> : Accumulator
     {
         [NonSerialized]
-        internal T value;
+        public T value;
         private readonly AccumulatorParam<T> accumulatorParam = new AccumulatorParam<T>();
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         [OnDeserialized()]
-        internal void OnDeserializedMethod(System.Runtime.Serialization.StreamingContext context)
+        public void OnDeserializedMethod(System.Runtime.Serialization.StreamingContext context)
         {
             if (threadLocalAccumulatorRegistry == null)
             {
@@ -153,14 +153,14 @@ namespace Microsoft.Spark.CSharp.Core
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
-    internal class AccumulatorParam<T>
+    public class AccumulatorParam<T>
     {
         /// <summary>
         /// Provide a "zero value" for the type
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        internal T Zero(T value)
+        public T Zero(T value)
         {
             return default(T);
         }
@@ -170,7 +170,7 @@ namespace Microsoft.Spark.CSharp.Core
         /// <param name="value1"></param>
         /// <param name="value2"></param>
         /// <returns></returns>
-        internal T AddInPlace(T value1, T value2)
+        public T AddInPlace(T value1, T value2)
         {
             dynamic d1 = value1, d2 = value2;
             d1 += d2;
@@ -182,24 +182,24 @@ namespace Microsoft.Spark.CSharp.Core
     /// A simple TCP server that intercepts shutdown() in order to interrupt
     /// our continuous polling on the handler.
     /// </summary>
-    internal class AccumulatorServer
+    public class AccumulatorServer
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(AccumulatorServer));
         private volatile bool serverShutdown;
         private ISocketWrapper innerSocket;
 
-        internal AccumulatorServer()
+        public AccumulatorServer()
         {
             innerSocket = SocketFactory.CreateSocket();
         }
 
-        internal void Shutdown()
+        public void Shutdown()
         {
             serverShutdown = true;
             innerSocket.Close();
         }
 
-        internal int StartUpdateServer()
+        public int StartUpdateServer()
         {
             innerSocket.Listen();
             Task.Run(() =>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockDataFrameReaderProxy : IDataFrameReaderProxy
+    public class MockDataFrameReaderProxy : IDataFrameReaderProxy
     {
         private ISqlContextProxy mockSqlContextProxy;
         private string path;

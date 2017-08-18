@@ -924,7 +924,7 @@ namespace Microsoft.Spark.CSharp.Sql
             {typeof(short), "smallint"}
         };
 
-        internal static string GetReturnType(Type type)
+        public static string GetReturnType(Type type)
         {
             Type[] types = new Type[] { type };
             string returnTypeFormat = "{0}";
@@ -955,166 +955,166 @@ namespace Microsoft.Spark.CSharp.Sql
     /// </summary>
     /// <typeparam name="RT"></typeparam>
     [Serializable]
-    internal class UdfHelper<RT>
+    public class UdfHelper<RT>
     {
         private readonly Func<RT> func;
 
-        internal UdfHelper(Func<RT> f)
+        public UdfHelper(Func<RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func()).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1>
+    public class UdfHelper<RT, A1>
     {
         private readonly Func<A1, RT> func;
 
-        internal UdfHelper(Func<A1, RT> f)
+        public UdfHelper(Func<A1, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2>
+    public class UdfHelper<RT, A1, A2>
     {
         private readonly Func<A1, A2, RT> func;
 
-        internal UdfHelper(Func<A1, A2, RT> f)
+        public UdfHelper(Func<A1, A2, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3>
+    public class UdfHelper<RT, A1, A2, A3>
     {
         private readonly Func<A1, A2, A3, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, RT> f)
+        public UdfHelper(Func<A1, A2, A3, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4>
+    public class UdfHelper<RT, A1, A2, A3, A4>
     {
         private readonly Func<A1, A2, A3, A4, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4, A5>
+    public class UdfHelper<RT, A1, A2, A3, A4, A5>
     {
         private readonly Func<A1, A2, A3, A4, A5, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, A5, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, A5, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]), (A5)(a[4]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4, A5, A6>
+    public class UdfHelper<RT, A1, A2, A3, A4, A5, A6>
     {
         private readonly Func<A1, A2, A3, A4, A5, A6, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, A5, A6, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, A5, A6, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]), (A5)(a[4]), (A6)(a[5]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7>
+    public class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7>
     {
         private readonly Func<A1, A2, A3, A4, A5, A6, A7, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]), (A5)(a[4]), (A6)(a[5]), (A7)(a[6]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7, A8>
+    public class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7, A8>
     {
         private readonly Func<A1, A2, A3, A4, A5, A6, A7, A8, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, A8, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, A8, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]), (A5)(a[4]), (A6)(a[5]), (A7)(a[6]), (A8)(a[7]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7, A8, A9>
+    public class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7, A8, A9>
     {
         private readonly Func<A1, A2, A3, A4, A5, A6, A7, A8, A9, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, A8, A9, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, A8, A9, RT> f)
         {
             func = f;
         }
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]), (A5)(a[4]), (A6)(a[5]), (A7)(a[6]), (A8)(a[7]), (A9)(a[8]))).Cast<dynamic>();
         }
     }
 
     [Serializable]
-    internal class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>
+    public class UdfHelper<RT, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10>
     {
         private readonly Func<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, RT> func;
 
-        internal UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, RT> f)
+        public UdfHelper(Func<A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, RT> f)
         {
             func = f;
         }
 
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> input)
         {
             return input.Select(a => func((A1)(a[0]), (A2)(a[1]), (A3)(a[2]), (A4)(a[3]), (A5)(a[4]), (A6)(a[5]), (A7)(a[6]), (A8)(a[7]), (A9)(a[8]), (A10)(a[9]))).Cast<dynamic>();
         }

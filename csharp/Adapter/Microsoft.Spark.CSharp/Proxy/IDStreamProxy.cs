@@ -11,7 +11,7 @@ using Microsoft.Spark.CSharp.Core;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IDStreamProxy
+    public interface IDStreamProxy
     {
         int SlideDuration { get; }
         IDStreamProxy Window(int windowSeconds, int slideSeconds = 0);

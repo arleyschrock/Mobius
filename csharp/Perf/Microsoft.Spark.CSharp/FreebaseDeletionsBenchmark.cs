@@ -32,7 +32,7 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
         private static readonly Stopwatch stopwatch = new Stopwatch();
 
         [PerfSuite]
-        internal static void RunRDDLineCount(string[] args)
+        public static void RunRDDLineCount(string[] args)
         {
             string filePath = args[2].StartsWith(@"hdfs://") ? args[2] : new Uri(args[2]).ToString();
             stopwatch.Restart();
@@ -47,7 +47,7 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
         }
 
         [PerfSuite]
-        internal static void RunRDDMaxDeletionsByUser(string[] args)
+        public static void RunRDDMaxDeletionsByUser(string[] args)
         {
             string filePath = args[2].StartsWith(@"hdfs://") ? args[2] : new Uri(args[2]).ToString();
             stopwatch.Restart();
@@ -83,7 +83,7 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
         }
 
         [PerfSuite]
-        internal static void RunDFLineCount(string[] args)
+        public static void RunDFLineCount(string[] args)
         {
             stopwatch.Restart();
 
@@ -96,7 +96,7 @@ namespace Microsoft.Spark.CSharp.PerfBenchmark
         }
 
         [PerfSuite]
-        internal static void RunDFMaxDeletionsByUser(string[] args)
+        public static void RunDFMaxDeletionsByUser(string[] args)
         {
             stopwatch.Restart();
 

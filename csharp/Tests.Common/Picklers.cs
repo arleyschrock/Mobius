@@ -11,7 +11,7 @@ namespace Tests.Common
     /// Used to pickle StructType objects
     /// Reference: StructTypePickler from https://github.com/apache/spark/blob/master/sql/core/src/main/scala/org/apache/spark/sql/execution/python.scala#L240
     /// </summary>
-    internal class StructTypePickler : IObjectPickler
+    public class StructTypePickler : IObjectPickler
     {
         private const string Module = "pyspark.sql.types";
 
@@ -41,7 +41,7 @@ namespace Tests.Common
     /// Used to pickle Row objects
     /// Reference: RowPickler from https://github.com/apache/spark/blob/master/sql/core/src/main/scala/org/apache/spark/sql/execution/python.scala#L261
     /// </summary>
-    internal class RowPickler : IObjectPickler
+    public class RowPickler : IObjectPickler
     {
         private const string Module = "pyspark.sql.types";
 

@@ -9,11 +9,11 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class DataFrameWriterIpcProxy : IDataFrameWriterProxy
+    public class DataFrameWriterIpcProxy : IDataFrameWriterProxy
     {
         private readonly JvmObjectReference jvmDataFrameWriterReference;
 
-        internal DataFrameWriterIpcProxy(JvmObjectReference jvmDataFrameWriterReference)
+        public DataFrameWriterIpcProxy(JvmObjectReference jvmDataFrameWriterReference)
         {
             this.jvmDataFrameWriterReference = jvmDataFrameWriterReference;
         }

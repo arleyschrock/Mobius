@@ -18,7 +18,7 @@ namespace Microsoft.Spark.CSharp.Sql
         private readonly DataFrame df;
         private readonly SparkContext sparkContext;
 
-        internal DataFrameNaFunctions(IDataFrameNaFunctionsProxy dataFrameNaFunctionsProxy, DataFrame df, SparkContext sparkContext)
+        public DataFrameNaFunctions(IDataFrameNaFunctionsProxy dataFrameNaFunctionsProxy, DataFrame df, SparkContext sparkContext)
         {
             this.dataFrameNaFunctionsProxy = dataFrameNaFunctionsProxy;
             this.df = df;

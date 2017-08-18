@@ -15,7 +15,7 @@ using Microsoft.Spark.CSharp.Interop;
 
 namespace Microsoft.Spark.CSharp.Samples
 {
-    internal class Configuration
+    public class Configuration
     {
         private string samplesCategory = SampleAttribute.CATEGORY_DEFAULT;
 

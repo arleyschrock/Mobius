@@ -11,7 +11,7 @@ using Microsoft.Spark.CSharp.Core;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IStatusTrackerProxy
+    public interface IStatusTrackerProxy
     {
         int[] GetJobIdsForGroup(string jobGroup);
         int[] GetActiveStageIds();

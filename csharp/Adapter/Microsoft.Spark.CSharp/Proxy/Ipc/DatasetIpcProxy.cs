@@ -12,12 +12,12 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class DatasetIpcProxy : IDatasetProxy
+    public class DatasetIpcProxy : IDatasetProxy
     {
         private readonly JvmObjectReference jvmDatasetReference;
         private readonly ISqlContextProxy sqlContextProxy;
 
-        internal DatasetIpcProxy(JvmObjectReference jvmDatasetReference, ISqlContextProxy sqlContextProxy)
+        public DatasetIpcProxy(JvmObjectReference jvmDatasetReference, ISqlContextProxy sqlContextProxy)
         {
             this.jvmDatasetReference = jvmDatasetReference;
             this.sqlContextProxy = sqlContextProxy;

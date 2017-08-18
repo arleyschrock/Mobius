@@ -11,7 +11,7 @@ namespace Microsoft.Spark.CSharp.Core
     /// Function that will be executed in CSharpWorker
     /// </summary>
     [Serializable]
-    internal class CSharpWorkerFunc
+    public class CSharpWorkerFunc
     {
         // using dynamic types to keep deserialization simple in worker side
         private readonly Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> func;
@@ -62,14 +62,14 @@ namespace Microsoft.Spark.CSharp.Core
             private readonly Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> outerFunc;
             private readonly Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> innerFunc;
 
-            internal CSharpWrokerFuncChainHelper(Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> iFunc,
+            public CSharpWrokerFuncChainHelper(Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> iFunc,
                 Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> oFunc)
             {
                 innerFunc = iFunc;
                 outerFunc = oFunc;
             }
 
-            internal IEnumerable<dynamic> Execute(int split, IEnumerable<dynamic> input)
+            public IEnumerable<dynamic> Execute(int split, IEnumerable<dynamic> input)
             {
                 return outerFunc(split, innerFunc(split, input));
             }

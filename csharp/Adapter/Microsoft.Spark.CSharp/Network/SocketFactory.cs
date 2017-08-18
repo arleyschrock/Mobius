@@ -7,10 +7,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.Spark.CSharp.Configuration;
 
-[assembly: InternalsVisibleTo("CSharpWorker")]
-[assembly: InternalsVisibleTo("Tests.Common")]
-[assembly: InternalsVisibleTo("AdapterTest")]
-[assembly: InternalsVisibleTo("WorkerTest")]
 namespace Microsoft.Spark.CSharp.Network
 {
     /// <summary>
@@ -19,15 +15,15 @@ namespace Microsoft.Spark.CSharp.Network
     /// The ISocket instance can be RioSocket object, if the configuration is set to RioSocket and
     /// only the application is running on a Windows OS that supports Registered IO socket.
     /// </summary>
-    internal static class SocketFactory
+    public static class SocketFactory
     {
         private const string RiosockDll = "Riosock.dll";
         private static SocketWrapperType sockWrapperType = SocketWrapperType.None;
 
         /// <summary>
-        /// Set socket wrapper type only for internal use (unit test)
+        /// Set socket wrapper type only for public use (unit test)
         /// </summary>
-        internal static SocketWrapperType SocketWrapperType
+        public static SocketWrapperType SocketWrapperType
         {
             get
             {
@@ -109,7 +105,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// <summary>
     /// SocketWrapperType defines the socket wrapper type be used in transport.
     /// </summary>
-    internal enum SocketWrapperType
+    public enum SocketWrapperType
     {
         /// <summary>
         /// None

@@ -25,6 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Adapter\Microsoft.Spark.CSharp\Adapter.csproj"/>
-    <ProjectReference Include="..\..\Tests.Common\Tests.Common.csproj" />
+    <ProjectReference Include="..\Tests.Common\Tests.Common.csproj" />
   </ItemGroup>
 </Project>

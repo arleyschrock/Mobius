@@ -12,9 +12,9 @@ using Moq;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockSqlContextProxy : ISqlContextProxy
+    public class MockSqlContextProxy : ISqlContextProxy
     {
-        internal object mockSqlContextReference;
+        public object mockSqlContextReference;
         private ISparkContextProxy mockSparkContextProxy;
 
         public ISparkContextProxy SparkContextProxy

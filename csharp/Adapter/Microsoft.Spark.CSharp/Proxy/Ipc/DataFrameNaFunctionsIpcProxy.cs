@@ -9,12 +9,12 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class DataFrameNaFunctionsIpcProxy : IDataFrameNaFunctionsProxy
+    public class DataFrameNaFunctionsIpcProxy : IDataFrameNaFunctionsProxy
     {
         private readonly JvmObjectReference jvmDataFrameNaFunctionsReference;
         private readonly ISqlContextProxy sqlContextProxy;
 
-        internal DataFrameNaFunctionsIpcProxy(JvmObjectReference jvmDataFrameNaFunctionsReference, ISqlContextProxy sqlContextProxy)
+        public DataFrameNaFunctionsIpcProxy(JvmObjectReference jvmDataFrameNaFunctionsReference, ISqlContextProxy sqlContextProxy)
         {
             this.jvmDataFrameNaFunctionsReference = jvmDataFrameNaFunctionsReference;
             this.sqlContextProxy = sqlContextProxy;

@@ -17,12 +17,12 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
     /// calling Spark jvm side API in JavaDStream.scala, DStream.scala or CSharpDStream.scala
     /// </summary>
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class DStreamIpcProxy : IDStreamProxy
+    public class DStreamIpcProxy : IDStreamProxy
     {
-        internal readonly JvmObjectReference jvmDStreamReference;
-        internal readonly JvmObjectReference javaDStreamReference;
+        public readonly JvmObjectReference jvmDStreamReference;
+        public readonly JvmObjectReference javaDStreamReference;
 
-        internal DStreamIpcProxy(JvmObjectReference javaDStreamReference, JvmObjectReference jvmDStreamReference = null)
+        public DStreamIpcProxy(JvmObjectReference javaDStreamReference, JvmObjectReference jvmDStreamReference = null)
         {
             this.jvmDStreamReference = jvmDStreamReference ?? new JvmObjectReference((string)SparkCLRIpcProxy.JvmBridge.CallNonStaticJavaMethod(javaDStreamReference, "dstream"));
             this.javaDStreamReference = javaDStreamReference;

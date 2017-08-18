@@ -8,10 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker", "Worker\Microsoft.Spark.CSharp\Worker.csproj", "{82C9D3B2-E4FB-4713-B980-948C1E96A10A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "Samples\Microsoft.Spark.CSharp\Samples.csproj", "{913E6A56-9839-4379-8B3C-855BA9341663}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CE999A96-F42B-4E80-B208-709D7F49A77C} = {CE999A96-F42B-4E80-B208-709D7F49A77C}
-		{82C9D3B2-E4FB-4713-B980-948C1E96A10A} = {82C9D3B2-E4FB-4713-B980-948C1E96A10A}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdapterTest", "AdapterTest\AdapterTest.csproj", "{D5C2C46E-3FEC-473B-8ABA-3B0FC5A7319C}"
 EndProject

@@ -11,7 +11,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// ISocketWrapper interface defines the common methods to operate a socket (traditional socket or 
     /// Windows Registered IO socket)
     /// </summary>
-    internal interface ISocketWrapper : IDisposable
+    public interface ISocketWrapper : IDisposable
     {
         /// <summary>
         /// Accepts a incoming connection request.

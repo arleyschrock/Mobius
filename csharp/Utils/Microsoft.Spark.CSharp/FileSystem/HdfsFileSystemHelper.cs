@@ -86,7 +86,7 @@ namespace Microsoft.Spark.CSharp.Utils
             return Delete(path, false);
         }
 
-        internal bool Delete(string path, bool recursive)
+        public bool Delete(string path, bool recursive)
         {
             var pathJvmReference = SparkCLRIpcProxy.JvmBridge.CallConstructor("org.apache.hadoop.fs.Path", path);
             return (bool)SparkCLRIpcProxy.JvmBridge.CallNonStaticJavaMethod(jvmHdfsReference, "delete", pathJvmReference, recursive);

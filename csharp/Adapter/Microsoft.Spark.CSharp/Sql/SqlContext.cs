@@ -19,7 +19,7 @@ namespace Microsoft.Spark.CSharp.Sql
 
         private readonly ISqlContextProxy sqlContextProxy;
         protected readonly SparkContext sparkContext;
-        internal ISqlContextProxy SqlContextProxy { get { return sqlContextProxy; } }
+        public ISqlContextProxy SqlContextProxy { get { return sqlContextProxy; } }
 
         private static SqlContext instance;
 
@@ -34,7 +34,7 @@ namespace Microsoft.Spark.CSharp.Sql
             get { return sparkSession; }
         }
 
-        internal SqlContext(SparkSession sparkSession, bool isRootContext)
+        public SqlContext(SparkSession sparkSession, bool isRootContext)
         {
             this.sparkSession = sparkSession;
             this.sparkContext = sparkSession.SparkContext;
@@ -43,7 +43,7 @@ namespace Microsoft.Spark.CSharp.Sql
             if (instance == null) instance = this;
         }
 
-        internal SqlContext(SparkSession sparkSession) : this(sparkSession, true)
+        public SqlContext(SparkSession sparkSession) : this(sparkSession, true)
         { }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Spark.CSharp.Sql
         }
 
         //TODO - remove this constructor after fixing unit tests that reference this
-        internal SqlContext(SparkContext sparkContext, ISqlContextProxy sqlContextProxy)
+        public SqlContext(SparkContext sparkContext, ISqlContextProxy sqlContextProxy)
         {
             this.sparkContext = sparkContext;
             this.sqlContextProxy = sqlContextProxy;

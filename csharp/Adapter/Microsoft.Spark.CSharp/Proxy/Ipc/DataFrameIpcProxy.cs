@@ -11,11 +11,11 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class DataFrameIpcProxy : IDataFrameProxy
+    public class DataFrameIpcProxy : IDataFrameProxy
     {
         private readonly JvmObjectReference jvmDataFrameReference;
 
-        internal JvmObjectReference JvmDataFrameReference
+        public JvmObjectReference JvmDataFrameReference
         {
             get { return jvmDataFrameReference; }
         }
@@ -25,7 +25,7 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         private readonly DataFrameNaFunctions na;
         private readonly DataFrameStatFunctions stat;
 
-        internal DataFrameIpcProxy(JvmObjectReference jvmDataFrameReference, ISqlContextProxy sqlProxy)
+        public DataFrameIpcProxy(JvmObjectReference jvmDataFrameReference, ISqlContextProxy sqlProxy)
         {
             this.jvmDataFrameReference = jvmDataFrameReference;
             sqlContextProxy = sqlProxy;
@@ -582,11 +582,11 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class UDFIpcProxy : IUDFProxy
+    public class UDFIpcProxy : IUDFProxy
     {
         private readonly JvmObjectReference jvmUDFReference;
 
-        internal UDFIpcProxy(JvmObjectReference jvmUDFReference)
+        public UDFIpcProxy(JvmObjectReference jvmUDFReference)
         {
             this.jvmUDFReference = jvmUDFReference;
         }
@@ -599,13 +599,13 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class ColumnIpcProxy : IColumnProxy
+    public class ColumnIpcProxy : IColumnProxy
     {
         private readonly JvmObjectReference scalaColumnReference;
 
-        internal JvmObjectReference ScalaColumnReference { get { return scalaColumnReference; } }
+        public JvmObjectReference ScalaColumnReference { get { return scalaColumnReference; } }
 
-        internal ColumnIpcProxy(JvmObjectReference colReference)
+        public ColumnIpcProxy(JvmObjectReference colReference)
         {
             scalaColumnReference = colReference;
         }
@@ -642,12 +642,12 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class GroupedDataIpcProxy : IGroupedDataProxy
+    public class GroupedDataIpcProxy : IGroupedDataProxy
     {
         private readonly JvmObjectReference scalaGroupedDataReference;
-        internal JvmObjectReference ScalaGroupedDataReference { get { return scalaGroupedDataReference; } }
+        public JvmObjectReference ScalaGroupedDataReference { get { return scalaGroupedDataReference; } }
         private readonly ISqlContextProxy scalaSqlContextReference;
-        internal GroupedDataIpcProxy(JvmObjectReference gdRef, ISqlContextProxy sccProxy)
+        public GroupedDataIpcProxy(JvmObjectReference gdRef, ISqlContextProxy sccProxy)
         {
             scalaGroupedDataReference = gdRef;
             scalaSqlContextReference = sccProxy;
@@ -689,7 +689,7 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class DataFrameNaFunctions
+    public class DataFrameNaFunctions
     {
         private readonly JvmObjectReference dataFrameProxy;
         public DataFrameNaFunctions(JvmObjectReference dataFrameProxy)
@@ -706,7 +706,7 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class DataFrameStatFunctions
+    public class DataFrameStatFunctions
     {
         private readonly JvmObjectReference dataFrameProxy;
         public DataFrameStatFunctions(JvmObjectReference dataFrameProxy)

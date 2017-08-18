@@ -10,7 +10,7 @@ using Microsoft.Spark.CSharp.Core;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IRDDProxy
+    public interface IRDDProxy
     {
         IRDDCollector RDDCollector { get; set; }
         StorageLevel GetStorageLevel();

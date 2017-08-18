@@ -17,7 +17,7 @@ namespace Microsoft.Spark.CSharp.Sql
     {
         IDatasetProxy datasetProxy;
 
-        internal Dataset(IDatasetProxy datasetProxy)
+        public Dataset(IDatasetProxy datasetProxy)
         {
             this.datasetProxy = datasetProxy;
         }
@@ -112,7 +112,7 @@ namespace Microsoft.Spark.CSharp.Sql
     /// <typeparam name="T">Type parameter</typeparam>
     public class Dataset<T> : Dataset
     {
-        internal Dataset(IDatasetProxy datasetProxy): base(datasetProxy) {}
+        public Dataset(IDatasetProxy datasetProxy): base(datasetProxy) {}
 
         /************************************************************
          * Would it be useful to expose methods like the following?

@@ -14,7 +14,7 @@ using Microsoft.Spark.CSharp.Sql;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class SqlContextIpcProxy : ISqlContextProxy
+    public class SqlContextIpcProxy : ISqlContextProxy
     {
         private readonly JvmObjectReference jvmSqlContextReference;
 

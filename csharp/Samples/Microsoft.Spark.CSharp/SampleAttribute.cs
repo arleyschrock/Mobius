@@ -10,7 +10,7 @@ namespace Microsoft.Spark.CSharp.Samples
     /// Attribute that marks a method as a sample
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    internal class SampleAttribute : Attribute
+    public class SampleAttribute : Attribute
     {
         public const string CATEGORY_ALL = "all";   // run all sample tests
         public const string CATEGORY_DEFAULT = "default"; // run default tests

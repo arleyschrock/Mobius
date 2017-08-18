@@ -14,7 +14,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// SaeaSocketWrapper class is a wrapper of a socket that use SocketAsyncEventArgs class
     /// to implement socket operations.
     /// </summary>
-    internal class SaeaSocketWrapper : ISocketWrapper
+    public class SaeaSocketWrapper : ISocketWrapper
     {
         private const int MaxDataCacheSize = 4096; // The max size of data caching in the queue.
 

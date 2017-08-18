@@ -17,7 +17,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// ByteBufChunk represents a memory blocks that can be allocated from 
     /// .Net heap (managed code) or process heap(unsafe code)
     /// </summary>
-    internal sealed class ByteBufChunk
+    public sealed class ByteBufChunk
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(RioSocketWrapper));
         private readonly Queue<Segment> segmentQueue;
@@ -272,7 +272,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// </summary>
         [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage")]
         [SuppressUnmanagedCodeSecurity]
-        internal static void FreeToProcessHeap(IntPtr heapBlock)
+        public static void FreeToProcessHeap(IntPtr heapBlock)
         {
             Debug.Assert(heapBlock != IntPtr.Zero);
             HeapFree(GetProcessHeap(), 0, heapBlock);

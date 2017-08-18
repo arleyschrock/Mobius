@@ -22,15 +22,15 @@ namespace Microsoft.Spark.CSharp.Core
     public class SparkContext
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkContext));
-        internal ISparkContextProxy SparkContextProxy { get; private set; }
-        internal SparkConf SparkConf { get; private set; }
+        public ISparkContextProxy SparkContextProxy { get; private set; }
+        public SparkConf SparkConf { get; private set; }
 
         private static SparkContext _activeSparkContext = null;
 
         /// <summary>
         /// Get existing SparkContext
         /// </summary>
-        internal static SparkContext GetActiveSparkContext()
+        public static SparkContext GetActiveSparkContext()
         {
             return _activeSparkContext;
         }
@@ -125,7 +125,7 @@ namespace Microsoft.Spark.CSharp.Core
         /// </summary>
         /// <param name="sparkContextProxy"></param>
         /// <param name="conf"></param>
-        internal SparkContext(ISparkContextProxy sparkContextProxy, SparkConf conf)
+        public SparkContext(ISparkContextProxy sparkContextProxy, SparkConf conf)
         {
             SparkContextProxy = sparkContextProxy;
             SparkConf = conf;
@@ -165,7 +165,7 @@ namespace Microsoft.Spark.CSharp.Core
             return _activeSparkContext;
         }
 
-        internal void StartAccumulatorServer()
+        public void StartAccumulatorServer()
         {
             if (accumulatorServer == null)
             {
@@ -599,7 +599,7 @@ namespace Microsoft.Spark.CSharp.Core
             SparkContextProxy.CancelAllJobs();
         }
 
-        internal static byte[] BuildCommand(CSharpWorkerFunc workerFunc, SerializedMode deserializerMode = SerializedMode.Byte, SerializedMode serializerMode = SerializedMode.Byte)
+        public static byte[] BuildCommand(CSharpWorkerFunc workerFunc, SerializedMode deserializerMode = SerializedMode.Byte, SerializedMode serializerMode = SerializedMode.Byte)
         {
             var formatter = new BinaryFormatter();
             var stream = new MemoryStream();

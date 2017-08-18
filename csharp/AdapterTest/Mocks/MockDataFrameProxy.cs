@@ -15,9 +15,9 @@ using Microsoft.Spark.CSharp.Proxy;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockDataFrameProxy : IDataFrameProxy
+    public class MockDataFrameProxy : IDataFrameProxy
     {
-        internal object[] mockDataFrameReference;
+        public object[] mockDataFrameReference;
         private ISqlContextProxy mockSqlContextProxy;
         private List<object> mockRows;
         private int mockPort;
@@ -29,7 +29,7 @@ namespace AdapterTest.Mocks
         }
 
         //just saving the parameter collection to mock the proxy reference that will be used in Assert statements
-        internal MockDataFrameProxy(object[] parameterCollection, ISqlContextProxy scProxy)
+        public MockDataFrameProxy(object[] parameterCollection, ISqlContextProxy scProxy)
         {
             mockDataFrameReference = parameterCollection;
             mockSqlContextProxy = scProxy;
@@ -37,7 +37,7 @@ namespace AdapterTest.Mocks
 
         // prepare data for mock CollectAndServe()
         // input data is List of Rows and each row is modeled as array of columns 
-        internal MockDataFrameProxy(int port, List<object> rows, IStructTypeProxy schema)
+        public MockDataFrameProxy(int port, List<object> rows, IStructTypeProxy schema)
         {
             mockPort = port;
             mockRows = rows;

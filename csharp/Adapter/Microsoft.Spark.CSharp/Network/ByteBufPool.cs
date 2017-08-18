@@ -13,7 +13,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// ByteBufPool class is used to manage the ByteBuf pool that allocate and free pooled memory buffer.
     /// We borrows some ideas from Netty buffer memory management.
     /// </summary>
-    internal sealed class ByteBufPool
+    public sealed class ByteBufPool
     {
         /// <summary>
         /// The chunk size is calculated with given segment size and chunk order.

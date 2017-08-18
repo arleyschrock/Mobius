@@ -11,7 +11,7 @@ namespace Microsoft.Spark.CSharp.Samples
     class DoubleRDDSamples
     {
         [Sample]
-        internal static void DoubleRDDSumSample()
+        public static void DoubleRDDSumSample()
         {
             var sum = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1.0, 2.0, 3.0 }, 2).Sum();
             Console.WriteLine(sum);
@@ -23,7 +23,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DoubleRDDStatsSample()
+        public static void DoubleRDDStatsSample()
         {
             var stats = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1, 2, 3 }, 2).Stats();
             Console.WriteLine(stats);
@@ -42,7 +42,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DoubleRDDMeanSample()
+        public static void DoubleRDDMeanSample()
         {
             var mean = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1, 2, 3 }, 2).Mean();
             Console.WriteLine(mean);
@@ -54,7 +54,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DoubleRDVarianceSample()
+        public static void DoubleRDVarianceSample()
         {
             var variance = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1, 2, 3 }, 2).Variance();
             Console.WriteLine(variance);
@@ -66,7 +66,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DoubleRDDStdevSample()
+        public static void DoubleRDDStdevSample()
         {
             var stdev = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1, 2, 3 }, 2).Stdev();
             Console.WriteLine(stdev);
@@ -78,7 +78,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DoubleRDDSampleStdevSample()
+        public static void DoubleRDDSampleStdevSample()
         {
             var sampleStdev = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1, 2, 3 }, 2).SampleStdev();
             Console.WriteLine(sampleStdev);
@@ -90,7 +90,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DoubleRDDSampleVarianceSample()
+        public static void DoubleRDDSampleVarianceSample()
         {
             var sampleVariance = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1, 2, 3 }, 2).SampleVariance();
             Console.WriteLine(sampleVariance);

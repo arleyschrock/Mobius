@@ -10,7 +10,7 @@ using Microsoft.Spark.CSharp.Sql;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IDataFrameReaderProxy
+    public interface IDataFrameReaderProxy
     {
         void Format(string source);
         void Schema(StructType schema);

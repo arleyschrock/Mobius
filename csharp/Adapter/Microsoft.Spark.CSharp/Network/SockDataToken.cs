@@ -7,7 +7,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// SockDataToken class is used to associate with the SocketAsyncEventArgs object.
     /// Primarily, it is a way to pass state to the event handler.
     /// </summary>
-    internal class SockDataToken
+    public class SockDataToken
     {
         /// <summary>
         /// Initializes a SockDataToken instance with a client socket and a dataBuf 

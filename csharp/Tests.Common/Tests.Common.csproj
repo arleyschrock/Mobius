@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\Adapter\Microsoft.Spark.CSharp\Adapter.csproj"/>
   </ItemGroup>
-  
 </Project>

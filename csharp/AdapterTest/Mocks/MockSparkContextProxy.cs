@@ -16,11 +16,11 @@ using Microsoft.Spark.CSharp.Network;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockSparkContextProxy : ISparkContextProxy
+    public class MockSparkContextProxy : ISparkContextProxy
     {
         private static IFormatter formatter = new BinaryFormatter();
 
-        internal object mockSparkContextReference;
+        public object mockSparkContextReference;
 
         public MockSparkContextProxy(ISparkConfProxy conf)
         {
@@ -195,7 +195,7 @@ namespace AdapterTest.Mocks
             throw new NotImplementedException();
         }
 
-        internal static int RunJob(IRDDProxy rdd)
+        public static int RunJob(IRDDProxy rdd)
         {
             var mockRdd = (rdd as MockRddProxy);
             IEnumerable<byte[]> result = mockRdd.pickle ? mockRdd.result.Cast<byte[]>() :

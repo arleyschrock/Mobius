@@ -13,16 +13,16 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class StructTypeIpcProxy : IStructTypeProxy
+    public class StructTypeIpcProxy : IStructTypeProxy
     {
         private readonly JvmObjectReference jvmStructTypeReference;
 
-        internal JvmObjectReference JvmStructTypeReference
+        public JvmObjectReference JvmStructTypeReference
         {
             get { return jvmStructTypeReference; }
         }
 
-        internal StructTypeIpcProxy(JvmObjectReference jvmStructTypeReference)
+        public StructTypeIpcProxy(JvmObjectReference jvmStructTypeReference)
         {
             this.jvmStructTypeReference = jvmStructTypeReference;
         }
@@ -39,11 +39,11 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class StructDataTypeIpcProxy : IStructDataTypeProxy
+    public class StructDataTypeIpcProxy : IStructDataTypeProxy
     {
-        internal readonly JvmObjectReference jvmStructDataTypeReference;
+        public readonly JvmObjectReference jvmStructDataTypeReference;
 
-        internal StructDataTypeIpcProxy(JvmObjectReference jvmStructDataTypeReference)
+        public StructDataTypeIpcProxy(JvmObjectReference jvmStructDataTypeReference)
         {
             this.jvmStructDataTypeReference = jvmStructDataTypeReference;
         }
@@ -59,12 +59,12 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
 
-    internal class StructFieldIpcProxy : IStructFieldProxy
+    public class StructFieldIpcProxy : IStructFieldProxy
     {
         private readonly JvmObjectReference jvmStructFieldReference;
-        internal JvmObjectReference JvmStructFieldReference { get { return jvmStructFieldReference; } }
+        public JvmObjectReference JvmStructFieldReference { get { return jvmStructFieldReference; } }
 
-        internal StructFieldIpcProxy(JvmObjectReference jvmStructFieldReference)
+        public StructFieldIpcProxy(JvmObjectReference jvmStructFieldReference)
         {
             this.jvmStructFieldReference = jvmStructFieldReference;
         }

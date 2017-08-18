@@ -63,7 +63,7 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class CSharpInputDStreamTransformRDDHelper<T>
+    public class CSharpInputDStreamTransformRDDHelper<T>
     {
         private Func<double, RDD<T>> func;
 
@@ -72,7 +72,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             this.func = func;
         }
 
-        internal RDD<dynamic> Execute(double t, RDD<dynamic> rdd)
+        public RDD<dynamic> Execute(double t, RDD<dynamic> rdd)
         {
             return func(t).ConvertTo<dynamic>();
         }
@@ -85,7 +85,7 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class CSharpInputDStreamMapPartitionWithIndexHelper<T>
+    public class CSharpInputDStreamMapPartitionWithIndexHelper<T>
     {
         Func<double, int, IEnumerable <T>> func;
         double time;
@@ -96,7 +96,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             this.func = func;
         }
 
-        internal IEnumerable<T> Execute(int partitionIndex, IEnumerable<int> input)
+        public IEnumerable<T> Execute(int partitionIndex, IEnumerable<int> input)
         {
             return func(time, partitionIndex);
         }
@@ -109,7 +109,7 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class CSharpInputDStreamGenerateRDDHelper<T>
+    public class CSharpInputDStreamGenerateRDDHelper<T>
     {
         private Func<double, int, IEnumerable<T>> func;
         private int numPartitions;
@@ -120,7 +120,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             this.func = func;
         }
 
-        internal RDD<T> Execute(double t)
+        public RDD<T> Execute(double t)
         {
             var sc = SparkContext.GetActiveSparkContext();
             int[] array = new int[numPartitions];

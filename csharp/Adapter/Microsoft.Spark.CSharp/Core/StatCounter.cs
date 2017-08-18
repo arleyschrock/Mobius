@@ -39,11 +39,11 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         /// <summary>
-        /// Add a value into this StatCounter, updating the internal statistics.
+        /// Add a value into this StatCounter, updating the public statistics.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        internal StatCounter Merge(double value)
+        public StatCounter Merge(double value)
         {
             var delta = value - mu;
             n += 1;
@@ -56,11 +56,11 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         /// <summary>
-        /// Add multiple values into this StatCounter, updating the internal statistics.
+        /// Add multiple values into this StatCounter, updating the public statistics.
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        internal StatCounter Merge(IEnumerable<double> values)
+        public StatCounter Merge(IEnumerable<double> values)
         {
             foreach (var value in values)
                 Merge(value);
@@ -68,11 +68,11 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         /// <summary>
-        /// Merge another StatCounter into this one, adding up the internal statistics.
+        /// Merge another StatCounter into this one, adding up the public statistics.
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        internal StatCounter Merge(StatCounter other)
+        public StatCounter Merge(StatCounter other)
         {
             if (other == this) 
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Spark.CSharp.Core
         /// Clone this StatCounter
         /// </summary>
         /// <returns></returns>
-        internal StatCounter copy()
+        public StatCounter copy()
         {
             var other = new StatCounter();
             other.n = n;

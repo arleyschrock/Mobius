@@ -23,7 +23,7 @@ namespace Microsoft.Spark.CSharp.Sql
 
         private ISparkSessionProxy sparkSessionProxy;
 
-        internal ISparkSessionProxy SparkSessionProxy
+        public ISparkSessionProxy SparkSessionProxy
         {
             get { return sparkSessionProxy; } 
             //setter is used only for testing...//TODO - refactor
@@ -59,13 +59,13 @@ namespace Microsoft.Spark.CSharp.Sql
             return new Builder();
         }
 
-        internal SparkSession(SparkContext sparkContext)
+        public SparkSession(SparkContext sparkContext)
         {
             sparkSessionProxy = sparkContext.SparkContextProxy.CreateSparkSession();
             SparkContext = sparkContext;
         }
 
-        internal SparkSession(ISparkSessionProxy sparkSessionProxy)
+        public SparkSession(ISparkSessionProxy sparkSessionProxy)
         {
             this.sparkSessionProxy = sparkSessionProxy;
         }

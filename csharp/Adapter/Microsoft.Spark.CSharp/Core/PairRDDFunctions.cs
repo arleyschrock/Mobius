@@ -923,7 +923,7 @@ namespace Microsoft.Spark.CSharp.Core
         }
         
         [Serializable]
-        internal class AddShuffleKeyHelper<K, V>
+        public class AddShuffleKeyHelper<K, V>
         {
             [NonSerialized]
             private MD5 md5 = MD5.Create();
@@ -998,28 +998,28 @@ namespace Microsoft.Spark.CSharp.Core
             }
         }
         [Serializable]
-        internal class LookupHelper<K, V>
+        public class LookupHelper<K, V>
         {
             private readonly K key;
-            internal LookupHelper(K key)
+            public LookupHelper(K key)
             {
                 this.key = key;
             }
-            internal bool Execute(Tuple<K, V> input)
+            public bool Execute(Tuple<K, V> input)
             {
                 return input.Item1.ToString() == key.ToString();
             }
         }
 
         [Serializable]
-        internal class PartitionFuncDynamicTypeHelper<K>
+        public class PartitionFuncDynamicTypeHelper<K>
         {
             private readonly Func<K, int> func;
-            internal PartitionFuncDynamicTypeHelper(Func<K, int> f)
+            public PartitionFuncDynamicTypeHelper(Func<K, int> f)
             {
                 this.func = f;
             }
-            internal int Execute(dynamic input)
+            public int Execute(dynamic input)
             {
                 return func((K)input);
             }

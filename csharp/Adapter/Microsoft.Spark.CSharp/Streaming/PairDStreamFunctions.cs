@@ -432,7 +432,7 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class GroupByMergeHelper<K, C>
+    public class GroupByMergeHelper<K, C>
     {
         private readonly Func<C, C, C> mergeCombiners;
         public GroupByMergeHelper(Func<C, C, C> mc)
@@ -451,13 +451,13 @@ namespace Microsoft.Spark.CSharp.Streaming
     }
 
     [Serializable]
-    internal class CombineByKeyHelper<K, V, C>
+    public class CombineByKeyHelper<K, V, C>
     {
         private readonly Func<C> createCombiner;
         private readonly Func<C, V, C> mergeValue;
         private readonly Func<C, C, C> mergeCombiners;
         private readonly int numPartitions = 0;
-        internal CombineByKeyHelper(Func<C> createCombiner, Func<C, V, C> mergeValue, Func<C, C, C> mergeCombiners, int numPartitions = 0)
+        public CombineByKeyHelper(Func<C> createCombiner, Func<C, V, C> mergeValue, Func<C, C, C> mergeCombiners, int numPartitions = 0)
         {
             this.createCombiner = createCombiner;
             this.mergeValue = mergeValue;
@@ -465,37 +465,37 @@ namespace Microsoft.Spark.CSharp.Streaming
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, C>> Execute(RDD<Tuple<K, V>> rdd)
+        public RDD<Tuple<K, C>> Execute(RDD<Tuple<K, V>> rdd)
         {
             return rdd.CombineByKey(createCombiner, mergeValue, mergeCombiners, numPartitions);
         }
     }
 
     [Serializable]
-    internal class PartitionByHelper<K, V>
+    public class PartitionByHelper<K, V>
     {
         private readonly int numPartitions = 0;
-        internal PartitionByHelper(int numPartitions = 0)
+        public PartitionByHelper(int numPartitions = 0)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, V>> Execute(RDD<Tuple<K, V>> rdd)
+        public RDD<Tuple<K, V>> Execute(RDD<Tuple<K, V>> rdd)
         {
             return rdd.PartitionBy(numPartitions);
         }
     }
 
     [Serializable]
-    internal class AddShuffleKeyHelper<K, V>
+    public class AddShuffleKeyHelper<K, V>
     {
         private readonly int numPartitions;
-        internal AddShuffleKeyHelper(int numPartitions)
+        public AddShuffleKeyHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<byte[]> Execute(RDD<Tuple<K, V>> rdd)
+        public RDD<byte[]> Execute(RDD<Tuple<K, V>> rdd)
         {
             var keyed = rdd.MapPartitionsWithIndex(new PairRDDFunctions.AddShuffleKeyHelper<K, V>(numPartitions).Execute, true);
             keyed.bypassSerializer = true;
@@ -506,134 +506,134 @@ namespace Microsoft.Spark.CSharp.Streaming
     }
 
     [Serializable]
-    internal class MapValuesHelper<K, V, U>
+    public class MapValuesHelper<K, V, U>
     {
         private readonly Func<V, U> func;
-        internal MapValuesHelper(Func<V, U> f)
+        public MapValuesHelper(Func<V, U> f)
         {
             func = f;
         }
 
-        internal Tuple<K, U> Execute(Tuple<K, V> kvp)
+        public Tuple<K, U> Execute(Tuple<K, V> kvp)
         {
             return new Tuple<K, U>(kvp.Item1, func(kvp.Item2));
         }
     }
 
     [Serializable]
-    internal class FlatMapValuesHelper<K, V, U>
+    public class FlatMapValuesHelper<K, V, U>
     {
         private readonly Func<V, IEnumerable<U>> func;
-        internal FlatMapValuesHelper(Func<V, IEnumerable<U>> f)
+        public FlatMapValuesHelper(Func<V, IEnumerable<U>> f)
         {
             func = f;
         }
 
-        internal IEnumerable<Tuple<K, U>> Execute(Tuple<K, V> kvp)
+        public IEnumerable<Tuple<K, U>> Execute(Tuple<K, V> kvp)
         {
             return func(kvp.Item2).Select(v => new Tuple<K, U>(kvp.Item1, v));
         }
     }
     
     [Serializable]
-    internal class GroupByKeyHelper<K, V>
+    public class GroupByKeyHelper<K, V>
     {
         private readonly int numPartitions = 0;
-        internal GroupByKeyHelper(int numPartitions = 0)
+        public GroupByKeyHelper(int numPartitions = 0)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, List<V>>> Execute(RDD<Tuple<K, V>> rdd)
+        public RDD<Tuple<K, List<V>>> Execute(RDD<Tuple<K, V>> rdd)
         {
             return rdd.GroupByKey(numPartitions);
         }
     }
 
     [Serializable]
-    internal class GroupWithHelper<K, V, W>
+    public class GroupWithHelper<K, V, W>
     {
         private readonly int numPartitions;
-        internal GroupWithHelper(int numPartitions)
+        public GroupWithHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, Tuple<List<V>, List<W>>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
+        public RDD<Tuple<K, Tuple<List<V>, List<W>>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
         {
             return l.GroupWith<K, V, W>(r, numPartitions);
         }
     }
 
     [Serializable]
-    internal class JoinHelper<K, V, W>
+    public class JoinHelper<K, V, W>
     {
         private readonly int numPartitions;
-        internal JoinHelper(int numPartitions)
+        public JoinHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, Tuple<V, W>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
+        public RDD<Tuple<K, Tuple<V, W>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
         {
             return l.Join<K, V, W>(r, numPartitions);
         }
     }
 
     [Serializable]
-    internal class LeftOuterJoinHelper<K, V, W>
+    public class LeftOuterJoinHelper<K, V, W>
     {
         private readonly int numPartitions;
-        internal LeftOuterJoinHelper(int numPartitions)
+        public LeftOuterJoinHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, Tuple<V, Option<W>>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
+        public RDD<Tuple<K, Tuple<V, Option<W>>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
         {
             return l.LeftOuterJoin<K, V, W>(r, numPartitions);
         }
     }
 
     [Serializable]
-    internal class RightOuterJoinHelper<K, V, W>
+    public class RightOuterJoinHelper<K, V, W>
     {
         private readonly int numPartitions;
-        internal RightOuterJoinHelper(int numPartitions)
+        public RightOuterJoinHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, Tuple<Option<V>, W>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
+        public RDD<Tuple<K, Tuple<Option<V>, W>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
         {
             return l.RightOuterJoin<K, V, W>(r, numPartitions);
         }
     }
 
     [Serializable]
-    internal class FullOuterJoinHelper<K, V, W>
+    public class FullOuterJoinHelper<K, V, W>
     {
         private readonly int numPartitions;
-        internal FullOuterJoinHelper(int numPartitions)
+        public FullOuterJoinHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<Tuple<K, Tuple<Option<V>, Option<W>>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
+        public RDD<Tuple<K, Tuple<Option<V>, Option<W>>>> Execute(RDD<Tuple<K, V>> l, RDD<Tuple<K, W>> r)
         {
             return l.FullOuterJoin<K, V, W>(r, numPartitions);
         }
     }
 
     [Serializable]
-    internal class ReduceByKeyAndWindowHelper<K, V>
+    public class ReduceByKeyAndWindowHelper<K, V>
     {
         private readonly Func<V, V, V> reduceFunc;
         private readonly Func<V, V, V> invReduceFunc;
         private readonly int numPartitions;
         private readonly Func<Tuple<K, V>, bool> filterFunc;
 
-        internal ReduceByKeyAndWindowHelper(Func<V, V, V> reduceF, 
+        public ReduceByKeyAndWindowHelper(Func<V, V, V> reduceF, 
             Func<V, V, V> invReduceF, 
             int numPartitions, 
             Func<Tuple<K, V>, bool> filterF)
@@ -644,7 +644,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             filterFunc = filterF;
         }
 
-        internal RDD<dynamic> Reduce(double t, RDD<dynamic> a, RDD<dynamic> b)
+        public RDD<dynamic> Reduce(double t, RDD<dynamic> a, RDD<dynamic> b)
         {
             b.partitioner = new Partitioner(numPartitions, null);
             var r = b.ConvertTo<Tuple<K, V>>();
@@ -659,7 +659,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             return r.ConvertTo<dynamic>();
         }
 
-        internal RDD<dynamic> InvReduce(double t, RDD<dynamic> a, RDD<dynamic> b)
+        public RDD<dynamic> InvReduce(double t, RDD<dynamic> a, RDD<dynamic> b)
         {     
             a.partitioner = b.partitioner = new Partitioner(numPartitions, null);
             var rddb = b.ConvertTo<Tuple<K, V>>().ReduceByKey<K, V>(reduceFunc, numPartitions);
@@ -671,28 +671,28 @@ namespace Microsoft.Spark.CSharp.Streaming
     }
     
     [Serializable]
-    internal class UpdateStateByKeyHelper<K, V, S>
+    public class UpdateStateByKeyHelper<K, V, S>
     {
         private readonly Func<IEnumerable<V>, S, S> func;
 
-        internal UpdateStateByKeyHelper(Func<IEnumerable<V>, S, S> f)
+        public UpdateStateByKeyHelper(Func<IEnumerable<V>, S, S> f)
         {
             func = f;
         }
 
-        internal IEnumerable<Tuple<K, S>> Execute(IEnumerable<Tuple<K, Tuple<IEnumerable<V>, S>>> input)
+        public IEnumerable<Tuple<K, S>> Execute(IEnumerable<Tuple<K, Tuple<IEnumerable<V>, S>>> input)
         {
             return input.Select(x => new Tuple<K, S>(x.Item1, func(x.Item2.Item1, x.Item2.Item2)));
         }
     }
 
     [Serializable]
-    internal class UpdateStateByKeysHelper<K, V, S>
+    public class UpdateStateByKeysHelper<K, V, S>
     {           
         private readonly Func<int, IEnumerable<Tuple<K, Tuple<IEnumerable<V>, S>>>, IEnumerable<Tuple<K, S>>> func;
         private readonly RDD<Tuple<K, S>> initialState;
         private readonly int numPartitions;
-        internal UpdateStateByKeysHelper(
+        public UpdateStateByKeysHelper(
             Func<int, IEnumerable<Tuple<K, Tuple<IEnumerable<V>, S>>>, IEnumerable<Tuple<K, S>>> f, 
             RDD<Tuple<K, S>> initialState, int numPartitions)
         {
@@ -701,7 +701,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<dynamic> Execute(double t, RDD<dynamic> stateRDD, RDD<dynamic> valuesRDD)
+        public RDD<dynamic> Execute(double t, RDD<dynamic> stateRDD, RDD<dynamic> valuesRDD)
         {
             RDD<Tuple<K, S>> state = null;
             RDD<Tuple<K, Tuple<IEnumerable<V>, S>>> g = null;

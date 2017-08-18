@@ -15,7 +15,7 @@ namespace Microsoft.Spark.CSharp.Configuration
     /// Implementation of configuration service that helps getting config settings
     /// to be used in SparkCLR runtime
     /// </summary>
-    internal class ConfigurationService : IConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
         public const string ProcFileName = "CSharpWorker.exe";
         public const string CSharpWorkerPathSettingKey = "CSharpWorkerPath";
@@ -41,7 +41,7 @@ namespace Microsoft.Spark.CSharp.Configuration
             }
         }
 
-        internal ConfigurationService()
+        public ConfigurationService()
         {
             Assembly entryAssembly = Assembly.GetEntryAssembly();
             if (entryAssembly == null) // happens when instantiate ConfigurationService in unit tests
@@ -96,7 +96,7 @@ namespace Microsoft.Spark.CSharp.Configuration
             protected readonly string sparkCLRHome = Environment.GetEnvironmentVariable(SPARKCLR_HOME); //set by sparkclr-submit.cmd
             private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkCLRConfiguration));
 
-            internal SparkCLRConfiguration(System.Configuration.Configuration configuration)
+            public SparkCLRConfiguration(System.Configuration.Configuration configuration)
             {
                 appSettings = configuration.AppSettings;
             }
@@ -104,7 +104,7 @@ namespace Microsoft.Spark.CSharp.Configuration
             /// <summary>
             /// The port number used for communicating with the CSharp external backend worker process.
             /// </summary>
-            internal virtual int GetPortNumber()
+            public virtual int GetPortNumber()
             {
                 int portNo;
                 if (!int.TryParse(Environment.GetEnvironmentVariable(CSHARPBACKEND_PORT), out portNo))
@@ -121,7 +121,7 @@ namespace Microsoft.Spark.CSharp.Configuration
             /// <summary>
             /// The path of the CSharp external backend worker process.
             /// </summary>
-            internal virtual string GetCSharpWorkerExePath()
+            public virtual string GetCSharpWorkerExePath()
             {
                 // SparkCLR jar and driver, worker & dependencies are shipped using Spark file server. 
                 // These files are available in the Spark executing directory at executor node.
@@ -141,7 +141,7 @@ namespace Microsoft.Spark.CSharp.Configuration
                 return workerPath;
             }
 
-            internal virtual string GetCSharpProcFileName()
+            public virtual string GetCSharpProcFileName()
             {
                 return ProcFileName;
             }
@@ -153,11 +153,11 @@ namespace Microsoft.Spark.CSharp.Configuration
         private class SparkCLRLocalConfiguration : SparkCLRConfiguration
         {
             private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkCLRLocalConfiguration));
-            internal SparkCLRLocalConfiguration(System.Configuration.Configuration configuration)
+            public SparkCLRLocalConfiguration(System.Configuration.Configuration configuration)
                 : base(configuration)
             { }
 
-            internal override string GetCSharpProcFileName()
+            public override string GetCSharpProcFileName()
             {
                 // Path for the CSharpWorker.exe was not specified in App.config
                 // Try to work out where location relative to this class.
@@ -177,12 +177,12 @@ namespace Microsoft.Spark.CSharp.Configuration
         {
             private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkCLRDebugConfiguration));
 
-            internal SparkCLRDebugConfiguration(System.Configuration.Configuration configuration)
+            public SparkCLRDebugConfiguration(System.Configuration.Configuration configuration)
                 : base(configuration)
             {
             }
 
-            internal override int GetPortNumber()
+            public override int GetPortNumber()
             {
                 int cSharpBackendPortNumber = CSHARPBACKEND_DEBUG_PORT;
                 KeyValueConfigurationElement portConfig = appSettings.Settings[CSharpBackendPortNumberSettingKey];
@@ -205,7 +205,7 @@ namespace Microsoft.Spark.CSharp.Configuration
             /// <summary>
             /// The full path of the CSharp external backend worker process.
             /// </summary>
-            internal override string GetCSharpWorkerExePath()
+            public override string GetCSharpWorkerExePath()
             {
                 KeyValueConfigurationElement workerPathConfig = appSettings.Settings[CSharpWorkerPathSettingKey];
                 if (workerPathConfig != null)

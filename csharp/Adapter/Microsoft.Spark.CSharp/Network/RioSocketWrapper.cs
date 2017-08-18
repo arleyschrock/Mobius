@@ -17,12 +17,12 @@ namespace Microsoft.Spark.CSharp.Network
     /// RioSocketWrapper class is a wrapper of a socket that use Windows RIO socket with IO
     /// completion ports to implement socket operations.
     /// </summary>
-    internal class RioSocketWrapper : ISocketWrapper
+    public class RioSocketWrapper : ISocketWrapper
     {
         private const int Ipv4AddressSize = 16; // Default buffer size for IP v4 address
         private const int MaxDataCacheSize = 4096; // The max size of data caching in the queue.
         private static readonly int InitialCqRoom = 2 * rioRqGrowthFactor; // initial room allocated from completion queue.
-        internal static int rioRqGrowthFactor = 2; // Growth factor used to grow the RIO request queue.
+        public static int rioRqGrowthFactor = 2; // Growth factor used to grow the RIO request queue.
 
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(RioSocketWrapper));
         private readonly BlockingCollection<ByteBuf> receivedDataQueue = 
@@ -105,7 +105,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// Returns the handle of native socket.
         /// </summary>
-        internal IntPtr SockHandle { get; private set; }
+        public IntPtr SockHandle { get; private set; }
 
         /// <summary>
         /// Accepts a incoming connection request.
@@ -287,7 +287,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// IO completion callback
         /// </summary>
-        internal void IoCompleted(long requestId, int status, uint byteTransferred)
+        public void IoCompleted(long requestId, int status, uint byteTransferred)
         {
             if (isCleanedUp) return;
             ReleaseRequest();
@@ -657,7 +657,7 @@ namespace Microsoft.Spark.CSharp.Network
         }
     }
     
-    internal class RequestContext
+    public class RequestContext
     {
         public RequestContext(SocketOperation operation, ByteBuf data)
         {
@@ -669,7 +669,7 @@ namespace Microsoft.Spark.CSharp.Network
         public ByteBuf Data { get; set; }
     }
 
-    internal enum SocketOperation
+    public enum SocketOperation
     {
         None = 0,
         Receive,

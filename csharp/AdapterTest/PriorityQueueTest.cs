@@ -15,7 +15,7 @@ namespace AdapterTest
     [TestFixture]
     class PriorityQueueTest
     {
-        internal List<int> GetRandomList(int size)
+        public List<int> GetRandomList(int size)
         {
             var rand = new Random(DateTime.Now.Millisecond);
             return Enumerable.Range(0, size).Select(i => rand.Next()).ToList();

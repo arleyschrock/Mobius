@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IDataFrameWriterProxy
+    public interface IDataFrameWriterProxy
     {
         void Mode(string saveMode);
         void Format(string source);

@@ -8,7 +8,7 @@ using Microsoft.Spark.CSharp.Core;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IStreamingContextProxy
+    public interface IStreamingContextProxy
     {
         SparkContext SparkContext { get; }
         void Start();

@@ -12,7 +12,7 @@ using Microsoft.Spark.CSharp.Interop;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface ISparkContextProxy
+    public interface ISparkContextProxy
     {
         ISparkConfProxy GetConf();
         ISqlContextProxy CreateHiveContext();
@@ -56,7 +56,7 @@ namespace Microsoft.Spark.CSharp.Proxy
         IRDDProxy CreatePairwiseRDD(IRDDProxy javaReferenceInByteArrayRdd, int numPartitions, long partitionFuncId);
         IUDFProxy CreateUserDefinedCSharpFunction(string name, byte[] command, string returnType);
     }
-    internal interface IBroadcastProxy
+    public interface IBroadcastProxy
     {
         void Unpersist(bool blocking);
     }

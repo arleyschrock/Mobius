@@ -72,7 +72,7 @@ namespace Microsoft.Spark.CSharp.Core
     /// </summary>
     public class StorageLevel
     {
-        internal static Dictionary<StorageLevelType, StorageLevel> storageLevel = new Dictionary<StorageLevelType, StorageLevel>
+        public static Dictionary<StorageLevelType, StorageLevel> storageLevel = new Dictionary<StorageLevelType, StorageLevel>
         {
             {StorageLevelType.NONE, new StorageLevel(false, false, false, false, 1)},
             {StorageLevelType.DISK_ONLY, new StorageLevel(true, false, false, false, 1)},
@@ -88,12 +88,12 @@ namespace Microsoft.Spark.CSharp.Core
             {StorageLevelType.OFF_HEAP, new StorageLevel(false, false, true, false, 1)},
         };
 
-        internal bool useDisk;
-        internal bool useMemory;
-        internal bool useOffHeap;
-        internal bool deserialized;
-        internal int replication;
-        internal StorageLevel(bool useDisk, bool useMemory, bool useOffHeap, bool deserialized, int replication)
+        public bool useDisk;
+        public bool useMemory;
+        public bool useOffHeap;
+        public bool deserialized;
+        public int replication;
+        public StorageLevel(bool useDisk, bool useMemory, bool useOffHeap, bool deserialized, int replication)
         {
             this.useDisk = useDisk;
             this.useMemory = useMemory;

@@ -12,7 +12,7 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class SparkSessionIpcProxy : ISparkSessionProxy
+    public class SparkSessionIpcProxy : ISparkSessionProxy
     {
         private readonly JvmObjectReference jvmSparkSessionReference;
         private readonly ISqlContextProxy sqlContextProxy;
@@ -37,7 +37,7 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
             return new CatalogIpcProxy(new JvmObjectReference((string) SparkCLRIpcProxy.JvmBridge.CallNonStaticJavaMethod(jvmSparkSessionReference, "catalog")), sqlContextProxy);
         }
 
-        internal SparkSessionIpcProxy(JvmObjectReference jvmSparkSessionReference)
+        public SparkSessionIpcProxy(JvmObjectReference jvmSparkSessionReference)
         {
             this.jvmSparkSessionReference = jvmSparkSessionReference;
             sqlContextProxy = new SqlContextIpcProxy(GetSqlContextReference());
@@ -96,10 +96,10 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
     }
 
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class UdfRegistrationIpcProxy : IUdfRegistrationProxy
+    public class UdfRegistrationIpcProxy : IUdfRegistrationProxy
     {
         private readonly ISqlContextProxy sqlContextProxy;
-        internal UdfRegistrationIpcProxy(ISqlContextProxy sqlContextProxy)
+        public UdfRegistrationIpcProxy(ISqlContextProxy sqlContextProxy)
         {
             this.sqlContextProxy = sqlContextProxy;
         }

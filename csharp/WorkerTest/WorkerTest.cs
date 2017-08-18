@@ -833,15 +833,15 @@ namespace WorkerTest
     }
 
     [Serializable]
-    internal class AccumulatorHelper
+    public class AccumulatorHelper
     {
         private Accumulator<int> accumulator;
-        internal AccumulatorHelper(Accumulator<int> accumulator)
+        public AccumulatorHelper(Accumulator<int> accumulator)
         {
             this.accumulator = accumulator;
         }
 
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> iter)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> iter)
         {
             return iter.Select(e =>
             {

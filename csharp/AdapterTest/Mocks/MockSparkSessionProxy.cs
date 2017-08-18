@@ -24,7 +24,7 @@ namespace AdapterTest.Mocks
             return new MockDataFrameReaderProxy(SqlContextProxy);
         }
 
-        internal ISparkSessionProxy InjectedSparkSessionProxy { get; set; }
+        public ISparkSessionProxy InjectedSparkSessionProxy { get; set; }
         public ISparkSessionProxy NewSession()
         {
             return InjectedSparkSessionProxy;

@@ -15,7 +15,7 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
     /// Utility methods for C#-JVM interaction
     /// </summary>
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal static class JvmBridgeUtils
+    public static class JvmBridgeUtils
     {
         public static JvmObjectReference GetJavaMap<K, V>(IEnumerable<Tuple<K, V>> enumerable)
         {

@@ -17,11 +17,11 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
     [Serializable]
-    internal class RDDIpcProxy : IRDDProxy
+    public class RDDIpcProxy : IRDDProxy
     {
         private readonly JvmObjectReference jvmRddReference;
 
-        internal JvmObjectReference JvmRddReference
+        public JvmObjectReference JvmRddReference
         {
             get { return jvmRddReference; }
         }

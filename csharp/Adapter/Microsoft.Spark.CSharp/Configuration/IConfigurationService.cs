@@ -6,7 +6,7 @@ namespace Microsoft.Spark.CSharp.Configuration
     /// <summary>
     /// Helps getting config settings to be used in SparkCLR runtime
     /// </summary>
-    internal interface IConfigurationService
+    public interface IConfigurationService
     {
         /// <summary>
         /// The port number used for communicating with the CSharp external backend worker process.

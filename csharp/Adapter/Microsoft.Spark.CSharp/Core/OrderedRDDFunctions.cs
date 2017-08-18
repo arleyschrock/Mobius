@@ -113,7 +113,7 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         [Serializable]
-        internal class SortByKeyHelper<K, V, U>
+        public class SortByKeyHelper<K, V, U>
         {
             private readonly Func<K, U> func;
             private readonly bool ascending;
@@ -145,13 +145,13 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         [Serializable]
-        internal class DefaultSortKeyFuncHelper<K>
+        public class DefaultSortKeyFuncHelper<K>
         {
             public K Execute(K key) { return key; }
         }
 
         [Serializable]
-        internal class RangePartitionerHelper<K, U>
+        public class RangePartitionerHelper<K, U>
         {
             private readonly int numPartitions;
             private readonly Func<K, U> keyFunc;

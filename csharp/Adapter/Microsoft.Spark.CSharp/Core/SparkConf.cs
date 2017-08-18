@@ -23,13 +23,13 @@ namespace Microsoft.Spark.CSharp.Core
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkConf));
         private readonly ISparkConfProxy sparkConfProxy;
-        internal ISparkConfProxy SparkConfProxy { get { return sparkConfProxy; } }
+        public ISparkConfProxy SparkConfProxy { get { return sparkConfProxy; } }
 
         /// <summary>
         /// when created from checkpoint
         /// </summary>
         /// <param name="sparkConfProxy"></param>
-        internal SparkConf(ISparkConfProxy sparkConfProxy)
+        public SparkConf(ISparkConfProxy sparkConfProxy)
         {
             this.sparkConfProxy = sparkConfProxy;
         }

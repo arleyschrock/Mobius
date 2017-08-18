@@ -6,7 +6,7 @@ using Microsoft.Spark.CSharp.Core;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IDataFrameProxy
+    public interface IDataFrameProxy
     {
         void RegisterTempTable(string tableName);
         long Count();
@@ -62,12 +62,12 @@ namespace Microsoft.Spark.CSharp.Proxy
         IDataFrameWriterProxy Write();
     }
 
-    internal interface IUDFProxy
+    public interface IUDFProxy
     {
         IColumnProxy Apply(IColumnProxy[] columns);
     }
 
-    internal interface IColumnProxy
+    public interface IColumnProxy
     {
         IColumnProxy EqualsOperator(IColumnProxy secondColumn);
         IColumnProxy UnaryOp(string name);
@@ -76,7 +76,7 @@ namespace Microsoft.Spark.CSharp.Proxy
         IColumnProxy InvokeMethod(string methodName, params object[] parameters);
     }
 
-    internal interface IGroupedDataProxy
+    public interface IGroupedDataProxy
     {
         IDataFrameProxy Count();
         IDataFrameProxy Mean(params string[] columns);

@@ -24,8 +24,8 @@ namespace Microsoft.Spark.CSharp.Core
     [Serializable]
     public class PipelinedRDD<U> : RDD<U>
     {
-        internal CSharpWorkerFunc workerFunc;
-        internal bool preservesPartitioning;
+        public CSharpWorkerFunc workerFunc;
+        public bool preservesPartitioning;
 
         //TODO - give generic types a better id
         /// <summary>
@@ -71,13 +71,13 @@ namespace Microsoft.Spark.CSharp.Core
         {
             private readonly Func<int, IEnumerable<I>, IEnumerable<O>> newFunc;
             private readonly Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> prevFunc;
-            internal MapPartitionsWithIndexHelper(Func<int, IEnumerable<I>, IEnumerable<O>> nFunc, Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> pFunc)
+            public MapPartitionsWithIndexHelper(Func<int, IEnumerable<I>, IEnumerable<O>> nFunc, Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> pFunc)
             {
                 prevFunc = pFunc;
                 newFunc = nFunc;
             }
 
-            internal IEnumerable<dynamic> Execute(int split, IEnumerable<dynamic> input)
+            public IEnumerable<dynamic> Execute(int split, IEnumerable<dynamic> input)
             {
                 return newFunc(split, prevFunc(split, input).Cast<I>()).Cast<dynamic>();
             }
@@ -88,7 +88,7 @@ namespace Microsoft.Spark.CSharp.Core
             return !(isCached || isCheckpointed);
         }
 
-        internal override IRDDProxy RddProxy
+        public override IRDDProxy RddProxy
         {
             get
             {

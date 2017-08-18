@@ -13,12 +13,12 @@ using Microsoft.Spark.CSharp.Sql;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class DataFrameReaderIpcProxy : IDataFrameReaderProxy
+    public class DataFrameReaderIpcProxy : IDataFrameReaderProxy
     {
         private readonly JvmObjectReference jvmDataFrameReaderReference;
         private readonly ISqlContextProxy sqlContextProxy;
 
-        internal DataFrameReaderIpcProxy(JvmObjectReference jvmDataFrameReaderReference, ISqlContextProxy sqlContextProxy)
+        public DataFrameReaderIpcProxy(JvmObjectReference jvmDataFrameReaderReference, ISqlContextProxy sqlContextProxy)
         {
             this.jvmDataFrameReaderReference = jvmDataFrameReaderReference;
             this.sqlContextProxy = sqlContextProxy;

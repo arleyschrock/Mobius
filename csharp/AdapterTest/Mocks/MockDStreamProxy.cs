@@ -15,9 +15,9 @@ using Microsoft.Spark.CSharp.Proxy;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockDStreamProxy : IDStreamProxy
+    public class MockDStreamProxy : IDStreamProxy
     {
-        internal IRDDProxy rddProxy;
+        public IRDDProxy rddProxy;
         private IFormatter formatter = new BinaryFormatter();
 
         public int SlideDuration

@@ -19,14 +19,14 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
     /// calling SparkCLR jvm side API
     /// </summary>
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class SparkCLRIpcProxy : ISparkCLRProxy
+    public class SparkCLRIpcProxy : ISparkCLRProxy
     {
         private SparkContextIpcProxy sparkContextProxy;
         private StreamingContextIpcProxy streamingContextIpcProxy;
 
         private static readonly IJvmBridge jvmBridge = new JvmBridge();
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkCLRIpcProxy));
-        internal static IJvmBridge JvmBridge
+        public static IJvmBridge JvmBridge
         {
             get
             {

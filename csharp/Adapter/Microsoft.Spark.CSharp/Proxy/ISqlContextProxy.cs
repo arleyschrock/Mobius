@@ -11,7 +11,7 @@ using Microsoft.Spark.CSharp.Sql;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface ISqlContextProxy
+    public interface ISqlContextProxy
     {
         IDataFrameReaderProxy Read();
         string GetConf(string key, string defaultValue);

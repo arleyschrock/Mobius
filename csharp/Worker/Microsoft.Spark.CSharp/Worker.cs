@@ -35,6 +35,9 @@ namespace Microsoft.Spark.CSharp
         private static ILoggerService logger;
         private static SparkCLRAssemblyHandler assemblyHandler;
 
+        public static string Log4netConfigFile { get; } =
+            Path.Combine(Path.GetDirectoryName(typeof(Worker).Assembly.Location), "log4net.config");
+
         public static void Main(string[] args)
         {
             assemblyHandler = new SparkCLRAssemblyHandler();
@@ -103,7 +106,10 @@ namespace Microsoft.Spark.CSharp
             try
             {
                 // if there exists exe.config file, then use log4net
-                if (File.Exists(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile))
+                // ahem.... 
+                // If there exists log4net.config file, then use log4net
+                // if (File.Exists(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile))
+                if (File.Exists(Log4netConfigFile))
                 {
                     LoggerServiceFactory.SetLoggerService(Log4NetLoggerService.Instance);
                 }
@@ -680,7 +686,7 @@ namespace Microsoft.Spark.CSharp
             logger.LogInfo("total receive time: {0}", watch.ElapsedMilliseconds);
         }
 
-        internal class SparkCLRAssemblyHandler
+        public class SparkCLRAssemblyHandler
         {
             private readonly ConcurrentDictionary<string, Assembly> assemblyDict = new ConcurrentDictionary<string, Assembly>();
             private readonly ConcurrentDictionary<string, bool> loadedFiles = new ConcurrentDictionary<string, bool>();

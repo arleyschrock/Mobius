@@ -226,7 +226,7 @@ namespace Microsoft.Spark.CSharp.Streaming
         /// </summary>
         public long UntilOffset { get { return untilOffset; } }
 
-        internal OffsetRange(string topic, string clusterId, int partition, long fromOffset, long untilOffset)
+        public OffsetRange(string topic, string clusterId, int partition, long fromOffset, long untilOffset)
         {
             this.topic = topic;
             this.clusterId = clusterId;

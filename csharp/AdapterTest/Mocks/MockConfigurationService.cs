@@ -14,9 +14,9 @@ namespace AdapterTest.Mocks
 {
     //Fakes is not supported in AppVeyor (CI that will probably be used with CSharpSpark in GitHub)
     //Using custom implementation of mock for now. Replace with Moq or similiar framework //TODO
-    internal class MockConfigurationService : IConfigurationService
+    public class MockConfigurationService : IConfigurationService
     {
-        internal void InjectCSharpSparkWorkerPath(string path)
+        public void InjectCSharpSparkWorkerPath(string path)
         {
             workerPath = path;
         }

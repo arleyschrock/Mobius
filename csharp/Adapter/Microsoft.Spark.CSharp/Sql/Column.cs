@@ -17,7 +17,7 @@ namespace Microsoft.Spark.CSharp.Sql
     {
         private readonly IColumnProxy columnProxy;
 
-        internal IColumnProxy ColumnProxy
+        public IColumnProxy ColumnProxy
         {
             get
             {
@@ -25,7 +25,7 @@ namespace Microsoft.Spark.CSharp.Sql
             }
         }
 
-        internal Column(IColumnProxy columnProxy)
+        public Column(IColumnProxy columnProxy)
         {
             this.columnProxy = columnProxy;
         }

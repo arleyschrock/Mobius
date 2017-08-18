@@ -185,13 +185,13 @@ namespace AdapterTest
             }
         }
 
-        internal static bool ReadBoolean(Stream s)
+        public static bool ReadBoolean(Stream s)
         {
             byte[] buffer = SerDe.ReadBytes(s, 1);
             return BitConverter.ToBoolean(buffer, 0);
         }
 
-        internal static Dictionary<object, object> ReadDictionary(Stream s)
+        public static Dictionary<object, object> ReadDictionary(Stream s)
         {
             Dictionary<object, object> dict = new Dictionary<object, object>();
             var len = SerDe.ReadInt(s);
@@ -223,12 +223,12 @@ namespace AdapterTest
             return dict;
         }
 
-        internal static char ReadObjectType(Stream s)
+        public static char ReadObjectType(Stream s)
         {
             return SerDe.ToChar(SerDe.ReadBytes(s, 1)[0]);
         }
 
-        internal static object ReadArray(Stream s)
+        public static object ReadArray(Stream s)
         {
             var type = ReadObjectType(s);
             switch (type)
@@ -259,7 +259,7 @@ namespace AdapterTest
             }
         }
 
-        internal static List<byte[]> ReadByteList(Stream s)
+        public static List<byte[]> ReadByteList(Stream s)
         {
             var count = SerDe.ReadInt(s);
             var a = new List<byte[]>(count);
@@ -272,7 +272,7 @@ namespace AdapterTest
             return a;
         }
 
-        internal static int[] ReadIntArray(Stream s)
+        public static int[] ReadIntArray(Stream s)
         {
             var a = new int[SerDe.ReadInt(s)];
             for (var i = 0; i < a.Length; i++)
@@ -283,7 +283,7 @@ namespace AdapterTest
             return a;
         }
 
-        internal static long[] ReadLongArray(Stream s)
+        public static long[] ReadLongArray(Stream s)
         {
             var a = new long[SerDe.ReadInt(s)];
             for (var i = 0; i < a.Length; i++)
@@ -294,7 +294,7 @@ namespace AdapterTest
             return a;
         }
 
-        internal static string[] ReadStringArray(Stream s)
+        public static string[] ReadStringArray(Stream s)
         {
             var a = new string[SerDe.ReadInt(s)];
             for (var i = 0; i < a.Length; i++)
@@ -305,7 +305,7 @@ namespace AdapterTest
             return a;
         }
 
-        internal static JvmObjectReference[] ReadJvmObjectReferenceArray(Stream s)
+        public static JvmObjectReference[] ReadJvmObjectReferenceArray(Stream s)
         {
             var a = new JvmObjectReference[SerDe.ReadInt(s)];
             for (var i = 0; i < a.Length; i++)
@@ -316,7 +316,7 @@ namespace AdapterTest
             return a;
         }
 
-        internal static double[] ReadDoubleArray(Stream s)
+        public static double[] ReadDoubleArray(Stream s)
         {
             var a = new double[SerDe.ReadInt(s)];
             for (var i = 0; i < a.Length; i++)
@@ -327,7 +327,7 @@ namespace AdapterTest
             return a;
         }
 
-        internal static bool[] ReadBooleanArray(Stream s)
+        public static bool[] ReadBooleanArray(Stream s)
         {
             var a = new bool[SerDe.ReadInt(s)];
             for (var i = 0; i < a.Length; i++)
@@ -338,25 +338,25 @@ namespace AdapterTest
             return a;
         }
 
-        internal static DateTime ReadDate(Stream s)
+        public static DateTime ReadDate(Stream s)
         {
             // TODO
             return default(DateTime);
         }
 
-        internal static DateTime ReadTime(Stream s)
+        public static DateTime ReadTime(Stream s)
         {
             // TODO
             return default(DateTime);
         }
 
-        internal static object ReadObject(Stream s)
+        public static object ReadObject(Stream s)
         {
             char type = ReadObjectType(s);
             return ReadTypedObject(s, type);
         }
 
-        internal static object ReadTypedObject(Stream s, char type)
+        public static object ReadTypedObject(Stream s, char type)
         {
             switch (type)
             {

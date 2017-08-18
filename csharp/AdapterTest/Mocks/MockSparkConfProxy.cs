@@ -10,24 +10,24 @@ using Microsoft.Spark.CSharp.Proxy;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockSparkConfProxy : ISparkConfProxy
+    public class MockSparkConfProxy : ISparkConfProxy
     {
-        internal Dictionary<string, string> stringConfDictionary = new Dictionary<string, string>();
+        public Dictionary<string, string> stringConfDictionary = new Dictionary<string, string>();
         private Dictionary<string, int> intConfDictionary = new Dictionary<string, int>();
 
-        internal const string MockMasterKey = "mockmaster";
+        public const string MockMasterKey = "mockmaster";
         public void SetMaster(string master)
         {
             stringConfDictionary["mockmaster"] = master;
         }
 
-        internal const string MockAppNameKey = "mockappName";
+        public const string MockAppNameKey = "mockappName";
         public void SetAppName(string appName)
         {
             stringConfDictionary["mockappName"] = appName;
         }
 
-        internal const string MockHomeKey = "mockhome";
+        public const string MockHomeKey = "mockhome";
         public void SetSparkHome(string sparkHome)
         {
             stringConfDictionary["mockhome"] = sparkHome;

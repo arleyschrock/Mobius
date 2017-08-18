@@ -14,11 +14,11 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class SparkConfIpcProxy : ISparkConfProxy
+    public class SparkConfIpcProxy : ISparkConfProxy
     {
         private JvmObjectReference jvmSparkConfReference;
 
-        internal JvmObjectReference JvmSparkConfReference
+        public JvmObjectReference JvmSparkConfReference
         {
             get { return jvmSparkConfReference; }
         }

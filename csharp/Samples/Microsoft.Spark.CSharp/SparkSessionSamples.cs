@@ -16,19 +16,19 @@ namespace Microsoft.Spark.CSharp.Samples
     {
         private static SparkSession sparkSession;
 
-        internal static SparkSession GetSparkSession()
+        public static SparkSession GetSparkSession()
         {
             return sparkSession ?? (sparkSession = SparkSession.Builder().EnableHiveSupport().GetOrCreate());
         }
 
         [Sample]
-        internal static void SSNewSessionSample()
+        public static void SSNewSessionSample()
         {
             RunDataFrameSample(true);
         }
 
         [Sample]
-        internal static void SSDataFrameSample()
+        public static void SSDataFrameSample()
         {
             RunDataFrameSample(false);
         }
@@ -61,7 +61,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SSShowSchemaSample()
+        public static void SSShowSchemaSample()
         {
             var peopleDataFrame = GetSparkSession().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(DataFrameSamples.PeopleJson));
             peopleDataFrame.Explain(true);
@@ -69,7 +69,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SSTableSample()
+        public static void SSTableSample()
         {
             var originalPeopleDataFrame = GetSparkSession().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(DataFrameSamples.PeopleJson));
             originalPeopleDataFrame.RegisterTempTable("people");
@@ -90,7 +90,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SSSqlSample()
+        public static void SSSqlSample()
         {
             var originalPeopleDataFrame = GetSparkSession().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(DataFrameSamples.PeopleJson));
             originalPeopleDataFrame.RegisterTempTable("people");
@@ -112,7 +112,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SSDropTableSample()
+        public static void SSDropTableSample()
         {
             var originalPeopleDataFrame = GetSparkSession().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(DataFrameSamples.PeopleJson));
             originalPeopleDataFrame.RegisterTempTable("people");
@@ -140,7 +140,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SSCreateDataFrameSample()
+        public static void SSCreateDataFrameSample()
         {
             var schemaPeople = new StructType(new List<StructField>
                                         {
@@ -187,7 +187,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SparkSessionUdfSample()
+        public static void SparkSessionUdfSample()
         {
             GetSparkSession().Udf.RegisterFunction<string, string, string>("FullAddress", (city, state) => city + " " + state);
             GetSparkSession().Udf.RegisterFunction<bool, string, int>("PeopleFilter", (name, age) => name == "Bill" && age > 80);

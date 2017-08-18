@@ -15,7 +15,7 @@ namespace AdapterTest.Mocks
     {
         private string mockJson;
 
-        internal MockStructTypeProxy(string json)
+        public MockStructTypeProxy(string json)
         {
             mockJson = json;
         }

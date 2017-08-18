@@ -11,13 +11,13 @@ namespace Microsoft.Spark.CSharp.Network
     /// ByteBufChunkList class represents a simple linked like list used to store ByteBufChunk objects
     /// based on its usage.
     /// </summary>
-    internal class ByteBufChunkList
+    public class ByteBufChunkList
     {
         private readonly int maxUsage;
         private readonly int minUsage;
 
-        internal readonly ByteBufChunkList NextList;
-        internal ByteBufChunk head;
+        public readonly ByteBufChunkList NextList;
+        public ByteBufChunk head;
 
         /// <summary>
         /// The previous ByteBufChunkList. This is only update once when create the linked like list
@@ -51,7 +51,7 @@ namespace Microsoft.Spark.CSharp.Network
                 return;
             }
 
-            AddInternal(chunk);
+            Addpublic(chunk);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Microsoft.Spark.CSharp.Network
 
             Remove(chunk);
             // Move the ByteBufChunk down the ByteBufChunkList linked-list.
-            return MoveInternal(chunk);
+            return Movepublic(chunk);
         }
 
         private bool Move(ByteBufChunk chunk)
@@ -113,18 +113,18 @@ namespace Microsoft.Spark.CSharp.Network
             if (chunk.Usage < minUsage)
             {
                 // Move the ByteBufChunk down the ByteBufChunkList linked-list
-                return MoveInternal(chunk);
+                return Movepublic(chunk);
             }
 
             // ByteBufChunk fits into this ByteBufChunkList, adding it here.
-            AddInternal(chunk);
+            Addpublic(chunk);
             return true;
         }
 
         /// <summary>
         /// Adds the ByteBufChunk to this ByteBufChunkList
         /// </summary>
-        private void AddInternal(ByteBufChunk chunk)
+        private void Addpublic(ByteBufChunk chunk)
         {
             chunk.Parent = this;
             if (head == null)
@@ -146,7 +146,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// Moves the ByteBufChunk down the ByteBufChunkList linked-list so it will end up in the right
         /// ByteBufChunkList that has the correct minUsage/maxUsage in respect to ByteBufChunk.Usage.
         /// </summary>
-        private bool MoveInternal(ByteBufChunk chunk)
+        private bool Movepublic(ByteBufChunk chunk)
         {
             if (PrevList == null)
             {

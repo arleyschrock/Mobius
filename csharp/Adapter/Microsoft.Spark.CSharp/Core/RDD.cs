@@ -22,14 +22,14 @@ namespace Microsoft.Spark.CSharp.Core
         [NonSerialized]
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(RDD<T>));
 
-        internal IRDDProxy rddProxy;
-        internal IRDDProxy previousRddProxy;
+        public IRDDProxy rddProxy;
+        public IRDDProxy previousRddProxy;
         // There should be only one SparkContext instance per application, mark it as NonSerialized to avoid more than one SparkContext instances created.
         // Need to set this field with a valid SparkContext instance after deserialization.
         [NonSerialized]
-        internal SparkContext sparkContext;
-        internal SerializedMode serializedMode; //used for deserializing data before processing in C# worker
-        internal SerializedMode prevSerializedMode;
+        public SparkContext sparkContext;
+        public SerializedMode serializedMode; //used for deserializing data before processing in C# worker
+        public SerializedMode prevSerializedMode;
 
         /// <summary>
         /// Indicates whether the RDD is cached.
@@ -40,10 +40,10 @@ namespace Microsoft.Spark.CSharp.Core
         /// Indicates whether the RDD is checkpointed.
         /// </summary>
         protected bool isCheckpointed;
-        internal bool bypassSerializer;
-        internal Partitioner partitioner;
+        public bool bypassSerializer;
+        public Partitioner partitioner;
 
-        internal virtual IRDDProxy RddProxy
+        public virtual IRDDProxy RddProxy
         {
             get
             {
@@ -95,16 +95,16 @@ namespace Microsoft.Spark.CSharp.Core
             }
         }
 
-        internal RDD() { }
+        public RDD() { }
 
-        internal RDD(IRDDProxy rddProxy, SparkContext sparkContext, SerializedMode serializedMode = SerializedMode.Byte)
+        public RDD(IRDDProxy rddProxy, SparkContext sparkContext, SerializedMode serializedMode = SerializedMode.Byte)
         {
             this.rddProxy = rddProxy;
             this.sparkContext = sparkContext;
             this.serializedMode = serializedMode;
         }
 
-        internal RDD<U> ConvertTo<U>()
+        public RDD<U> ConvertTo<U>()
         {
             RDD<U> r = (this is PipelinedRDD<T>) ? new PipelinedRDD<U>() : new RDD<U>();
 
@@ -596,7 +596,7 @@ namespace Microsoft.Spark.CSharp.Core
             return Collect(port).Cast<T>().ToArray();
         }
 
-        internal IEnumerable<dynamic> Collect(int port)
+        public IEnumerable<dynamic> Collect(int port)
         {
             return RddProxy.RDDCollector.Collect(port, serializedMode, typeof(T));
         }
@@ -1072,18 +1072,18 @@ namespace Microsoft.Spark.CSharp.Core
         }
 
         /// <summary>
-        /// Internal method exposed for Random Splits in DataFrames. Samples an RDD given a probability range.
+        /// public method exposed for Random Splits in DataFrames. Samples an RDD given a probability range.
         /// </summary>
         /// <param name="lb">lower bound to use for the Bernoulli sampler</param>
         /// <param name="ub">upper bound to use for the Bernoulli sampler</param>
         /// <param name="seed">the seed for the Random number generator</param>
         /// <returns>A random sub-sample of the RDD without replacement.</returns>
-        internal RDD<T> RandomSampleWithRange(double lb, double ub, long seed)
+        public RDD<T> RandomSampleWithRange(double lb, double ub, long seed)
         {
             return new RDD<T>(RddProxy.RandomSampleWithRange(lb, ub, seed), sparkContext);
         }
 
-        internal int GetDefaultPartitionNum()
+        public int GetDefaultPartitionNum()
         {
             var numPartitions = sparkContext.SparkConf.SparkConfProxy.GetInt("spark.default.parallelism", 0);
             if (numPartitions == 0 && previousRddProxy != null)
@@ -1165,7 +1165,7 @@ namespace Microsoft.Spark.CSharp.Core
             return self.TakeOrdered(num, true, keyFunc);
         }
 
-        internal static T[] TakeOrdered<T>(this RDD<T> self, int num, bool ascending, Func<T, dynamic> keyFunc = null) where T : IComparable<T>
+        public static T[] TakeOrdered<T>(this RDD<T> self, int num, bool ascending, Func<T, dynamic> keyFunc = null) where T : IComparable<T>
         {
             var helper = new TakeOrderedHelper<T>(num, keyFunc, ascending);
             return self.MapPartitionsWithIndex(helper.TakeOrderedInPartition)
@@ -1206,12 +1206,12 @@ namespace Microsoft.Spark.CSharp.Core
     public class DynamicTypingWrapper<I, O>
     {
         private readonly Func<int, IEnumerable<I>, IEnumerable<O>> func;
-        internal DynamicTypingWrapper(Func<int, IEnumerable<I>, IEnumerable<O>> f)
+        public DynamicTypingWrapper(Func<int, IEnumerable<I>, IEnumerable<O>> f)
         {
             func = f;
         }
 
-        internal IEnumerable<dynamic> Execute(int val, IEnumerable<dynamic> inputValues)
+        public IEnumerable<dynamic> Execute(int val, IEnumerable<dynamic> inputValues)
         {
             return func(val, inputValues.Cast<I>()).Cast<dynamic>();
         }
@@ -1229,7 +1229,7 @@ namespace Microsoft.Spark.CSharp.Core
     [Serializable]
     public class DynamicTypingWrapper<K, V, W1, W2, W3>
     {
-        internal IEnumerable<dynamic> Execute(int val, IEnumerable<dynamic> inputValues)
+        public IEnumerable<dynamic> Execute(int val, IEnumerable<dynamic> inputValues)
         {
             // constructor and property reflection is much slower than 'new' operator
             return inputValues.Select(x => 
@@ -1269,15 +1269,15 @@ namespace Microsoft.Spark.CSharp.Core
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class FilterHelper<I>
+    public class FilterHelper<I>
     {
         private readonly Func<I, bool> func;
-        internal FilterHelper(Func<I, bool> f)
+        public FilterHelper(Func<I, bool> f)
         {
             func = f;
         }
 
-        internal IEnumerable<I> Execute(int pid, IEnumerable<I> input)
+        public IEnumerable<I> Execute(int pid, IEnumerable<I> input)
         {
             return input.Where(func);
         }
@@ -1290,15 +1290,15 @@ namespace Microsoft.Spark.CSharp.Core
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class MapHelper<I, O>
+    public class MapHelper<I, O>
     {
         private readonly Func<I, O> func;
-        internal MapHelper(Func<I, O> f)
+        public MapHelper(Func<I, O> f)
         {
             func = f;
         }
 
-        internal IEnumerable<O> Execute(int pid, IEnumerable<I> input)
+        public IEnumerable<O> Execute(int pid, IEnumerable<I> input)
         {
             return input.Select(func);
         }
@@ -1311,15 +1311,15 @@ namespace Microsoft.Spark.CSharp.Core
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class FlatMapHelper<I, O>
+    public class FlatMapHelper<I, O>
     {
         private readonly Func<I, IEnumerable<O>> func;
-        internal FlatMapHelper(Func<I, IEnumerable<O>> f)
+        public FlatMapHelper(Func<I, IEnumerable<O>> f)
         {
             func = f;
         }
 
-        internal IEnumerable<O> Execute(int pid, IEnumerable<I> input)
+        public IEnumerable<O> Execute(int pid, IEnumerable<I> input)
         {
             return input.SelectMany(func);
         }
@@ -1332,15 +1332,15 @@ namespace Microsoft.Spark.CSharp.Core
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class MapPartitionsHelper<T, U>
+    public class MapPartitionsHelper<T, U>
     {
         private readonly Func<IEnumerable<T>, IEnumerable<U>> func;
-        internal MapPartitionsHelper(Func<IEnumerable<T>, IEnumerable<U>> f)
+        public MapPartitionsHelper(Func<IEnumerable<T>, IEnumerable<U>> f)
         {
             func = f;
         }
 
-        internal IEnumerable<U> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<U> Execute(int pid, IEnumerable<T> input)
         {
             return func(input);
         }
@@ -1353,37 +1353,37 @@ namespace Microsoft.Spark.CSharp.Core
     /// on the serializability of compiler generated types
     /// </summary>
     [Serializable]
-    internal class ReduceHelper<T1>
+    public class ReduceHelper<T1>
     {
         private readonly Func<T1, T1, T1> func;
-        internal ReduceHelper(Func<T1, T1, T1> f)
+        public ReduceHelper(Func<T1, T1, T1> f)
         {
             func = f;
         }
 
-        internal IEnumerable<T1> Execute(int pid, IEnumerable<T1> input)
+        public IEnumerable<T1> Execute(int pid, IEnumerable<T1> input)
         {
             yield return input.DefaultIfEmpty().Aggregate(func);
         }
     }
     [Serializable]
-    internal class GlomHelper<T>
+    public class GlomHelper<T>
     {
-        internal IEnumerable<T[]> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<T[]> Execute(int pid, IEnumerable<T> input)
         {
             yield return input.ToArray();
         }
     }
     [Serializable]
-    internal class ForeachHelper<T>
+    public class ForeachHelper<T>
     {
         private readonly Action<T> func;
-        internal ForeachHelper(Action<T> f)
+        public ForeachHelper(Action<T> f)
         {
             func = f;
         }
 
-        internal IEnumerable<T> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<T> Execute(int pid, IEnumerable<T> input)
         {
             foreach (var item in input)
             {
@@ -1393,72 +1393,72 @@ namespace Microsoft.Spark.CSharp.Core
         }
     }
     [Serializable]
-    internal class ForeachPartitionHelper<T>
+    public class ForeachPartitionHelper<T>
     {
         private readonly Action<IEnumerable<T>> func;
-        internal ForeachPartitionHelper(Action<IEnumerable<T>> f)
+        public ForeachPartitionHelper(Action<IEnumerable<T>> f)
         {
             func = f;
         }
 
-        internal IEnumerable<T> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<T> Execute(int pid, IEnumerable<T> input)
         {
             func(input);
             yield return default(T);
         }
     }
     [Serializable]
-    internal class KeyByHelper<K, T>
+    public class KeyByHelper<K, T>
     {
         private readonly Func<T, K> func;
-        internal KeyByHelper(Func<T, K> f)
+        public KeyByHelper(Func<T, K> f)
         {
             func = f;
         }
 
-        internal Tuple<K, T> Execute(T input)
+        public Tuple<K, T> Execute(T input)
         {
             return new Tuple<K, T>(func(input), input);
         }
     }
     [Serializable]
-    internal class AggregateHelper<U, T>
+    public class AggregateHelper<U, T>
     {
         private readonly U zeroValue;
         private readonly Func<U, T, U> op;
-        internal AggregateHelper(U zeroValue, Func<U, T, U> op)
+        public AggregateHelper(U zeroValue, Func<U, T, U> op)
         {
             this.zeroValue = zeroValue;
             this.op = op;
         }
 
-        internal IEnumerable<U> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<U> Execute(int pid, IEnumerable<T> input)
         {
             yield return input.Aggregate(zeroValue, op);
         }
     }
     [Serializable]
-    internal class TreeAggregateHelper<U>
+    public class TreeAggregateHelper<U>
     {
         private readonly int numPartitions;
-        internal TreeAggregateHelper(int numPartitions)
+        public TreeAggregateHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
-        internal IEnumerable<Tuple<int, U>> Execute(int pid, IEnumerable<U> input)
+        public IEnumerable<Tuple<int, U>> Execute(int pid, IEnumerable<U> input)
         {
             return input.Select(x => new Tuple<int, U>(pid % numPartitions, x));
         }
     }
     [Serializable]
-    internal class TreeReduceHelper<T>
+    public class TreeReduceHelper<T>
     {
         private readonly Func<T, T, T> func;
-        internal TreeReduceHelper(Func<T, T, T> func)
+        public TreeReduceHelper(Func<T, T, T> func)
         {
             this.func = func;
         }
-        internal Tuple<T, bool> Execute(Tuple<T, bool> x, Tuple<T, bool> y)
+        public Tuple<T, bool> Execute(Tuple<T, bool> x, Tuple<T, bool> y)
         {
             if (x.Item2)
                 return y;
@@ -1469,33 +1469,33 @@ namespace Microsoft.Spark.CSharp.Core
         }
     }
     [Serializable]
-    internal class TakeHelper<T>
+    public class TakeHelper<T>
     {
         private readonly int num;
-        internal TakeHelper(int num)
+        public TakeHelper(int num)
         {
             this.num = num;
         }
-        internal IEnumerable<T> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<T> Execute(int pid, IEnumerable<T> input)
         {
             return input.Take(num);
         }
     }
     [Serializable]
-    internal class TakeOrderedHelper<T> where T : IComparable<T>
+    public class TakeOrderedHelper<T> where T : IComparable<T>
     {
         private readonly int num;
         private readonly Func<T, dynamic> keyFunc;
         private readonly bool ascending;
 
-        internal TakeOrderedHelper(int num, Func<T, dynamic> keyFunc, bool ascending)
+        public TakeOrderedHelper(int num, Func<T, dynamic> keyFunc, bool ascending)
         {
             this.num = num;
             this.keyFunc = keyFunc;
             this.ascending = ascending;
         }
 
-        internal IEnumerable<PriorityQueue<T>> TakeOrderedInPartition(int pid, IEnumerable<T> input)
+        public IEnumerable<PriorityQueue<T>> TakeOrderedInPartition(int pid, IEnumerable<T> input)
         {
             Comparer<T> comparer;
 
@@ -1531,7 +1531,7 @@ namespace Microsoft.Spark.CSharp.Core
             return new[] { priorityQueue };
         }
 
-        internal PriorityQueue<T> MergeTwoPriorityQueues(PriorityQueue<T> queue1, PriorityQueue<T> queue2)
+        public PriorityQueue<T> MergeTwoPriorityQueues(PriorityQueue<T> queue1, PriorityQueue<T> queue2)
         {
             foreach (var e in queue1)
             {
@@ -1543,14 +1543,14 @@ namespace Microsoft.Spark.CSharp.Core
     }
 
     [Serializable]
-    internal class ZipWithUniqueIdHelper<T>
+    public class ZipWithUniqueIdHelper<T>
     {
         private readonly int num;
-        internal ZipWithUniqueIdHelper(int num)
+        public ZipWithUniqueIdHelper(int num)
         {
             this.num = num;
         }
-        internal IEnumerable<Tuple<T, long>> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<Tuple<T, long>> Execute(int pid, IEnumerable<T> input)
         {
             long l = 0;
             foreach (var item in input)
@@ -1560,14 +1560,14 @@ namespace Microsoft.Spark.CSharp.Core
         }
     }
     [Serializable]
-    internal class ZipWithIndexHelper<T>
+    public class ZipWithIndexHelper<T>
     {
         private readonly int[] starts;
-        internal ZipWithIndexHelper(int[] starts)
+        public ZipWithIndexHelper(int[] starts)
         {
             this.starts = starts;
         }
-        internal IEnumerable<Tuple<T, long>> Execute(int pid, IEnumerable<T> input)
+        public IEnumerable<Tuple<T, long>> Execute(int pid, IEnumerable<T> input)
         {
             long l = 0;
             foreach (var item in input)
@@ -1576,7 +1576,7 @@ namespace Microsoft.Spark.CSharp.Core
             }
         }
     }
-    internal enum SerializedMode
+    public enum SerializedMode
     {
         None,
         String,

@@ -22,7 +22,7 @@ namespace Microsoft.Spark.CSharp.Sql
             : base(sparkContext, sparkContext.SparkContextProxy.CreateHiveContext())
         { }
 
-        internal HiveContext(SparkContext sparkContext, ISqlContextProxy sqlContextProxy)
+        public HiveContext(SparkContext sparkContext, ISqlContextProxy sqlContextProxy)
             : base(sparkContext, sqlContextProxy)
         { }
 

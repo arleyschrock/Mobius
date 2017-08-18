@@ -29,9 +29,9 @@ namespace Microsoft.Spark.CSharp.Streaming
     [Serializable]
     public class MapWithStateDStream<K, V, S, M> : DStream<M>
     {
-        internal DStream<Tuple<K, S>> snapshotsDStream;
+        public DStream<Tuple<K, S>> snapshotsDStream;
 
-        internal MapWithStateDStream(DStream<M> mappedDataDStream, DStream<Tuple<K, S>> snapshotsDStream)
+        public MapWithStateDStream(DStream<M> mappedDataDStream, DStream<Tuple<K, S>> snapshotsDStream)
             : base(mappedDataDStream.DStreamProxy, mappedDataDStream.streamingContext)
         {
             this.snapshotsDStream = snapshotsDStream;
@@ -52,17 +52,17 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// </summary>
     /// <typeparam name="S">Type of the state data</typeparam>
     [Serializable]
-    internal class KeyedState<S>
+    public class KeyedState<S>
     {
-        internal S state;
-        internal long ticks;
+        public S state;
+        public long ticks;
 
-        internal KeyedState()
+        public KeyedState()
         {
             
         }
 
-        internal KeyedState(S state, long ticks)
+        public KeyedState(S state, long ticks)
         {
             this.state = state;
             this.ticks = ticks;
@@ -78,10 +78,10 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// <typeparam name="S">Type of the state data</typeparam>
     /// <typeparam name="M">Type of the mapped data</typeparam>
     [Serializable]
-    internal class MapWithStateRDDRecord<K, S, M>
+    public class MapWithStateRDDRecord<K, S, M>
     {
-        internal Dictionary<K, KeyedState<S>> stateMap = new Dictionary<K, KeyedState<S>>();
-        internal List<M> mappedData = new List<M>();
+        public Dictionary<K, KeyedState<S>> stateMap = new Dictionary<K, KeyedState<S>>();
+        public List<M> mappedData = new List<M>();
 
         public MapWithStateRDDRecord()
         {
@@ -105,7 +105,7 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// <typeparam name="S">Type of the state data</typeparam>
     /// <typeparam name="M">Type of the mapped data</typeparam>
     [Serializable]
-    internal class UpdateStateHelper<K, V, S, M>
+    public class UpdateStateHelper<K, V, S, M>
     {
         [NonSerialized]
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(UpdateStateHelper<K, V, S, M>));
@@ -115,7 +115,7 @@ namespace Microsoft.Spark.CSharp.Streaming
         private readonly bool removeTimedoutData;
         private readonly TimeSpan idleDuration;
 
-        internal UpdateStateHelper(Func<K, V, State<S>, M> f, long ticks, bool removeTimedoutData, TimeSpan idleDuration)
+        public UpdateStateHelper(Func<K, V, State<S>, M> f, long ticks, bool removeTimedoutData, TimeSpan idleDuration)
         {
             this.f = f;
             this.ticks = ticks;
@@ -123,7 +123,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             this.idleDuration = idleDuration;
         }
 
-        internal IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> iter)
+        public IEnumerable<dynamic> Execute(int pid, IEnumerable<dynamic> iter)
         {
             var enumerator = iter.GetEnumerator();
             var preStateRddRecord = GetStateRecord(enumerator);
@@ -190,7 +190,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             return new []{stateRddRecord};
         }
 
-        internal MapWithStateRDDRecord<K, S, M> GetStateRecord(IEnumerator<dynamic> enumerator)
+        public MapWithStateRDDRecord<K, S, M> GetStateRecord(IEnumerator<dynamic> enumerator)
         {
             if (enumerator.MoveNext())
             {
@@ -202,19 +202,19 @@ namespace Microsoft.Spark.CSharp.Streaming
     }
 
     [Serializable]
-    internal class MapWithStateHelper<K, V, S, M>
+    public class MapWithStateHelper<K, V, S, M>
     {
         private static readonly DateTime UnixTimeEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private readonly Func<double, RDD<dynamic>, RDD<dynamic>> prevFunc;
         private readonly StateSpec<K, V, S, M> stateSpec;
 
-        internal MapWithStateHelper(Func<double, RDD<dynamic>, RDD<dynamic>> prevF, StateSpec<K, V, S, M> stateSpec)
+        public MapWithStateHelper(Func<double, RDD<dynamic>, RDD<dynamic>> prevF, StateSpec<K, V, S, M> stateSpec)
         {
             prevFunc = prevF;
             this.stateSpec = stateSpec;
         }
 
-        internal RDD<dynamic> Execute(double t, RDD<dynamic> stateRDD, RDD<dynamic> valuesRDD)
+        public RDD<dynamic> Execute(double t, RDD<dynamic> stateRDD, RDD<dynamic> valuesRDD)
         {
             long ticks = UnixTimeEpoch.AddMilliseconds(t).Ticks;
 
@@ -251,20 +251,20 @@ namespace Microsoft.Spark.CSharp.Streaming
     }
 
     [Serializable]
-    internal class MapWithStateMapPartitionHelper<K, V, S, M>
+    public class MapWithStateMapPartitionHelper<K, V, S, M>
     {
-        internal long ticks;
-        internal MapWithStateMapPartitionHelper(long ticks)
+        public long ticks;
+        public MapWithStateMapPartitionHelper(long ticks)
         {
             this.ticks = ticks;
         }
 
-        internal IEnumerable<MapWithStateRDDRecord<K, S, M>> Execute(IEnumerable<Tuple<K, S>> iter)
+        public IEnumerable<MapWithStateRDDRecord<K, S, M>> Execute(IEnumerable<Tuple<K, S>> iter)
         {
             return new[] {new MapWithStateRDDRecord<K, S, M>(ticks, iter)};
         }
 
-        internal IEnumerable<MapWithStateRDDRecord<K, S, M>> ExecuteWithoutInitialState(IEnumerable<Tuple<K, V>> iter)
+        public IEnumerable<MapWithStateRDDRecord<K, S, M>> ExecuteWithoutInitialState(IEnumerable<Tuple<K, V>> iter)
         {
             return new[] { new MapWithStateRDDRecord<K, S, M>() };
         }
@@ -280,10 +280,10 @@ namespace Microsoft.Spark.CSharp.Streaming
     [Serializable]
     public class StateSpec<K, V, S, M>
     {
-        internal Func<K, V, State<S>, M> mappingFunction;
-        internal int numPartitions;
-        internal TimeSpan idleDuration = TimeSpan.FromTicks(0);
-        internal RDD<Tuple<K, S>> initialState = null;
+        public Func<K, V, State<S>, M> mappingFunction;
+        public int numPartitions;
+        public TimeSpan idleDuration = TimeSpan.FromTicks(0);
+        public RDD<Tuple<K, S>> initialState = null;
 
         /// <summary>
         /// Create a StateSpec for setting all the specifications of the `mapWithState` operation on a pair DStream.
@@ -339,18 +339,18 @@ namespace Microsoft.Spark.CSharp.Streaming
     [Serializable]
     public class State<S>
     {
-        internal S state = default(S);
+        public S state = default(S);
 
         [NonSerialized]
-        internal bool defined = false;
+        public bool defined = false;
         [NonSerialized]
-        internal bool timingOut = false; // FIXME: set timingOut to true for those timeouted keys
+        public bool timingOut = false; // FIXME: set timingOut to true for those timeouted keys
         [NonSerialized]
-        internal bool updated = false;
+        public bool updated = false;
         [NonSerialized]
-        internal bool removed = false;
+        public bool removed = false;
 
-        internal State(S state, bool timingOut = false)
+        public State(S state, bool timingOut = false)
         {
             this.state = state;
             this.timingOut = timingOut;

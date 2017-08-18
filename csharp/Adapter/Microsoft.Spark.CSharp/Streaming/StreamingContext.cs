@@ -29,9 +29,9 @@ namespace Microsoft.Spark.CSharp.Streaming
      */
     public class StreamingContext
     {
-        internal readonly IStreamingContextProxy streamingContextProxy;
+        public readonly IStreamingContextProxy streamingContextProxy;
         private SparkContext sparkContext;
-        internal SparkContext SparkContext
+        public SparkContext SparkContext
         {
             get
             {

@@ -30,12 +30,12 @@ namespace Microsoft.Spark.CSharp.Sql
         /// <summary>
         /// Arguments used to construct this typ
         /// </summary>
-        internal object[] Values;
+        public object[] Values;
 
         /// <summary>
         /// Schema of the values
         /// </summary>
-        internal string Schema;
+        public string Schema;
 
         /// <summary>
         /// Returns a string that represents the current object.

@@ -14,7 +14,7 @@ namespace Microsoft.Spark.CSharp.Samples
     class RDDSamples
     {
         [Sample]
-        internal static void RDDCheckpointSample()
+        public static void RDDCheckpointSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 100), 4);
             rdd.Cache();
@@ -29,7 +29,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDSampleSample()
+        public static void RDDSampleSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 100), 4);
             var sample = rdd.Sample(false, 0.1, 81);
@@ -45,7 +45,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDRandomSplitSample()
+        public static void RDDRandomSplitSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 500), 1);
             var splitted = rdd.RandomSplit(new double[] { 2, 3 }, 17);
@@ -62,7 +62,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTakeSampleSample()
+        public static void RDDTakeSampleSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 10), 2);
 
@@ -82,7 +82,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDUnionSample()
+        public static void RDDUnionSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 1, 2, 3 }, 1);
             var union = rdd.Union(rdd).Collect();
@@ -95,7 +95,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDIntersectionSample()
+        public static void RDDIntersectionSample()
         {
             var rdd1 = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 10, 2, 3, 4, 5 }, 1);
             var rdd2 = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 6, 2, 3, 7, 8 }, 1);
@@ -109,7 +109,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDGlomSample()
+        public static void RDDGlomSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4 }, 2);
             var glom = rdd.Glom().Collect();
@@ -125,7 +125,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDGroupBySample()
+        public static void RDDGroupBySample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 1, 2, 3, 5, 8 }, 1);
             var groups = rdd.GroupBy(x => x % 2).Collect();
@@ -146,21 +146,21 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDForeachSample()
+        public static void RDDForeachSample()
         {
             SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4, 5 }, 1).Foreach(x => Console.Write(x + " "));
             Console.WriteLine();
         }
 
         [Sample]
-        internal static void RDDForeachPartitionSample()
+        public static void RDDForeachPartitionSample()
         {
             SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4, 5 }, 1).ForeachPartition(iter => { foreach (var x in iter) Console.Write(x + " "); });
             Console.WriteLine();
         }
 
         [Sample]
-        internal static void RDDReduceSample()
+        public static void RDDReduceSample()
         {
             var reduced = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4, 5 }, 1).Reduce((x, y) => x + y);
             Console.WriteLine(reduced);
@@ -172,7 +172,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTreeReduceSample()
+        public static void RDDTreeReduceSample()
         {
             var treeReduce = SparkCLRSamples.SparkContext.Parallelize(new int[] { -5, -4, -3, -2, -1, 1, 2, 3, 4 }, 10).TreeReduce((x, y) => x + y);
             Console.WriteLine(treeReduce);
@@ -184,7 +184,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDFoldSample()
+        public static void RDDFoldSample()
         {
             var fold = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4, 5 }, 1).Fold(0, (x, y) => x + y);
             Console.WriteLine(fold);
@@ -196,7 +196,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDAggregateSample()
+        public static void RDDAggregateSample()
         {
             var aggregate = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4 }, 1).Aggregate(0, (x, y) => x + y, (x, y) => x + y);
             Console.WriteLine(aggregate);
@@ -208,7 +208,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTreeAggregateSample()
+        public static void RDDTreeAggregateSample()
         {
             var treeAggregate = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4 }, 1).Aggregate(0, (x, y) => x + y, (x, y) => x + y);
             Console.WriteLine(treeAggregate);
@@ -220,7 +220,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDCountByValueSample()
+        public static void RDDCountByValueSample()
         {
             var countByValue = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 1, 2, 2 }, 2)
                 .CountByValue()
@@ -237,7 +237,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTakeSample()
+        public static void RDDTakeSample()
         {
             var taked = SparkCLRSamples.SparkContext.Parallelize(new int[] { 2, 3, 4, 5, 6 }, 2).Cache().Take(2);
             Console.WriteLine(string.Join(",", taked));
@@ -249,7 +249,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDFirstSample()
+        public static void RDDFirstSample()
         {
             var first = SparkCLRSamples.SparkContext.Parallelize(new int[] { 2, 3, 4 }, 2).First();
             Console.WriteLine(first);
@@ -261,7 +261,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDIsEmptySample()
+        public static void RDDIsEmptySample()
         {
             var isEmpty = SparkCLRSamples.SparkContext.Parallelize(new int[0], 1).IsEmpty();
             Console.WriteLine(isEmpty);
@@ -273,7 +273,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDSubtractSample()
+        public static void RDDSubtractSample()
         {
             var x = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4 }, 1);
             var y = SparkCLRSamples.SparkContext.Parallelize(new int[] { 3 }, 1);
@@ -287,7 +287,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDKeyBySample()
+        public static void RDDKeyBySample()
         {
             var keyBy = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4 }, 1).KeyBy(x => x * x).Collect();
             foreach (var kv in keyBy)
@@ -304,7 +304,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDRepartitionSample()
+        public static void RDDRepartitionSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4, 5, 6, 7 }, 4);
             var countBeforeRepartition = rdd.Glom().Collect().Length;
@@ -320,7 +320,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDCoalesceSample()
+        public static void RDDCoalesceSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2, 3, 4, 5 }, 3);
             var countBeforeCoalesce = rdd.Glom().Collect().Length;
@@ -336,7 +336,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDZipSample()
+        public static void RDDZipSample()
         {
             var x = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 5), 1);
             var y = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(1000, 5), 1);
@@ -354,7 +354,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDZipWithIndexSample()
+        public static void RDDZipWithIndexSample()
         {
             var zipWithIndex = SparkCLRSamples.SparkContext.Parallelize(new string[] { "a", "b", "c", "d" }, 3).ZipWithIndex().Collect();
             foreach (var t in zipWithIndex)
@@ -370,7 +370,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDZipWithUniqueIdSample()
+        public static void RDDZipWithUniqueIdSample()
         {
             var zipWithUniqueId = SparkCLRSamples.SparkContext.Parallelize(new string[] { "a", "b", "c", "d", "e" }, 3).ZipWithUniqueId().Collect();
             foreach (var t in zipWithUniqueId)
@@ -387,7 +387,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDSetNameSample()
+        public static void RDDSetNameSample()
         {
             const string name = "SampleRDD";
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new string[] { "a", "b", "c", "d", "e" }, 3).SetName(name);
@@ -400,14 +400,14 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDToDebugStringSample()
+        public static void RDDToDebugStringSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new string[] { "a", "b", "c", "d", "e" }, 3);
             Console.WriteLine(rdd.ToDebugString());
         }
 
         [Sample]
-        internal static void RDDToLocalIteratorSample()
+        public static void RDDToLocalIteratorSample()
         {
             var localIteratorResult = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 10), 1).ToLocalIterator().ToArray();
             Console.WriteLine(string.Join(",", localIteratorResult));
@@ -419,7 +419,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDSaveAsTextFileSample()
+        public static void RDDSaveAsTextFileSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new string[] { "a", "b", "c", "d", "e" }, 2);
             var path = SparkCLRSamples.FileSystemHelper.GetTempFileName();
@@ -433,7 +433,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDCartesianSample()
+        public static void RDDCartesianSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 2 }, 1);
             var cartesian = rdd.Cartesian(rdd).Collect();
@@ -450,7 +450,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDDistinctSample()
+        public static void RDDDistinctSample()
         {
             var distinct = SparkCLRSamples.SparkContext.Parallelize(new int[] { 1, 1, 2, 3 }, 1).Distinct(1).Collect();
 
@@ -465,7 +465,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDMaxSample()
+        public static void RDDMaxSample()
         {
             var max = SparkCLRSamples.SparkContext.Parallelize(new double[] { 1.0, 5.0, 43.0, 10.0 }, 2).Max();
             Console.WriteLine(max);
@@ -477,7 +477,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDMinSample()
+        public static void RDDMinSample()
         {
             var min = SparkCLRSamples.SparkContext.Parallelize(new double[] { 2.0, 5.0, 43.0, 10.0 }, 2).Min();
             Console.WriteLine(min);
@@ -489,7 +489,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTakeOrderedSample()
+        public static void RDDTakeOrderedSample()
         {
             var takeOrderd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 10, 1, 2, 9, 3, 4, 5, 6, 7 }, 2).TakeOrdered(6);
             Console.WriteLine(string.Join(",", takeOrderd));
@@ -501,7 +501,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTakeOrderedSample2()
+        public static void RDDTakeOrderedSample2()
         {
             var takeOrderd = SparkCLRSamples.SparkContext.Parallelize(new int[] { 10, 1, 2, 9, 3, 4, 5, 6, 7 }, 2).TakeOrdered(6, x => -x);
             Console.WriteLine(string.Join(",", takeOrderd));
@@ -513,7 +513,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void RDDTopSample()
+        public static void RDDTopSample()
         {
             var top = SparkCLRSamples.SparkContext.Parallelize(new int[] { 2, 3, 4, 5, 6 }, 2).Top(3);
             Console.WriteLine(string.Join(",", top));
@@ -528,7 +528,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Counts words in a file
         /// </summary>
         [Sample]
-        internal static void RDDWordCountSample()
+        public static void RDDWordCountSample()
         {
             var lines = SparkCLRSamples.SparkContext.TextFile(SparkCLRSamples.Configuration.GetInputDataPath("words.txt"), 1);
             
@@ -580,7 +580,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Performs a join of 2 RDDs and run reduction
         /// </summary>
         [Sample]
-        internal static void RDDJoinSample()
+        public static void RDDJoinSample()
         {
             var requests = SparkCLRSamples.SparkContext.TextFile(SparkCLRSamples.Configuration.GetInputDataPath("requestslog.txt"), 1);
             var metrics = SparkCLRSamples.SparkContext.TextFile(SparkCLRSamples.Configuration.GetInputDataPath("metricslog.txt"), 1);
@@ -654,7 +654,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample for map and filter in RDD
         /// </summary>
         [Sample]
-        internal static void RDDMapFilterSample()
+        public static void RDDMapFilterSample()
         {
 
             var mulogs = SparkCLRSamples.SparkContext.TextFile(SparkCLRSamples.Configuration.GetInputDataPath("csvtestlog.txt"), 2);
@@ -685,7 +685,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample for distributing objects as RDD
         /// </summary>
         [Sample]
-        internal static void RDDSerializableObjectCollectionSample()
+        public static void RDDSerializableObjectCollectionSample()
         {
             var personsRdd = SparkCLRSamples.SparkContext.Parallelize(new[] { new Person { Age = 3 }, new Person { Age = 10 }, new Person { Age = 15 } }, 3);
             var derivedPersonsRdd = personsRdd.Map(x => new Person { Age = x.Age + 1 });
@@ -702,7 +702,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample for distributing strings as RDD
         /// </summary>
         [Sample]
-        internal static void RDDStringCollectionSample()
+        public static void RDDStringCollectionSample()
         {
             var logEntriesRdd = SparkCLRSamples.SparkContext.Parallelize(new[] { "row1col1,row1col2", "row2col1,row2col2", "row3col3" }, 2);
             var logEntriesColumnRdd = logEntriesRdd.Map(x => x.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries));
@@ -719,7 +719,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample for distributing int as RDD
         /// </summary>
         [Sample]
-        internal static void RDDIntCollectionSample()
+        public static void RDDIntCollectionSample()
         {
             var numbersRdd = SparkCLRSamples.SparkContext.Parallelize(new[] { 1, 100, 5, 55, 65 }, 3);
             var oddNumbersRdd = numbersRdd.Filter(x => x % 2 != 0);
@@ -736,7 +736,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample for CombineByKey method
         /// </summary>
         [Sample]
-        internal static void RDDCombineBySample()
+        public static void RDDCombineBySample()
         {
             var markets = SparkCLRSamples.SparkContext.TextFile(SparkCLRSamples.Configuration.GetInputDataPath("market.tab"), 1);
             long totalMarketsCount = markets.Count();

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface ISparkConfProxy
+    public interface ISparkConfProxy
     {
         void SetMaster(string master);
         void SetAppName(string appName);

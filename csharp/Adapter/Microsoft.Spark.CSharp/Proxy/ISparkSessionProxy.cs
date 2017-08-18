@@ -10,12 +10,12 @@ using Microsoft.Spark.CSharp.Sql;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    internal interface IUdfRegistrationProxy
+    public interface IUdfRegistrationProxy
     {
         void RegisterFunction(string name, byte[] command, string returnType);
     }
 
-    interface ISparkSessionProxy
+    public interface  ISparkSessionProxy
     {
         ISqlContextProxy SqlContextProxy { get; }
         IUdfRegistrationProxy Udf { get; }

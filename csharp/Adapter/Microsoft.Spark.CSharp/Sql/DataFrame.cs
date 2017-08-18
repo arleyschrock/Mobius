@@ -81,7 +81,7 @@ namespace Microsoft.Spark.CSharp.Sql
             }
         }
 
-        internal SparkContext SparkContext
+        public SparkContext SparkContext
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Spark.CSharp.Sql
             }
         }
 
-        internal IDataFrameProxy DataFrameProxy
+        public IDataFrameProxy DataFrameProxy
         {
             get { return dataFrameProxy;  }
         }
@@ -114,7 +114,7 @@ namespace Microsoft.Spark.CSharp.Sql
             }
         }
 
-        internal DataFrame(IDataFrameProxy dataFrameProxy, SparkContext sparkContext)
+        public DataFrame(IDataFrameProxy dataFrameProxy, SparkContext sparkContext)
         {
             this.dataFrameProxy = dataFrameProxy;
             this.sparkContext = sparkContext;
@@ -1243,7 +1243,7 @@ namespace Microsoft.Spark.CSharp.Sql
     /// </summary>
     public class GroupedData
     {
-        internal IGroupedDataProxy GroupedDataProxy
+        public IGroupedDataProxy GroupedDataProxy
         {
             get { return groupedDataProxy; }
         }
@@ -1251,7 +1251,7 @@ namespace Microsoft.Spark.CSharp.Sql
         private readonly IGroupedDataProxy groupedDataProxy;
         private readonly DataFrame dataFrame;
 
-        internal GroupedData(IGroupedDataProxy groupedDataProxy, DataFrame dataFrame)
+        public GroupedData(IGroupedDataProxy groupedDataProxy, DataFrame dataFrame)
         {
             this.groupedDataProxy = groupedDataProxy;
             this.dataFrame = dataFrame;

@@ -11,7 +11,7 @@ namespace Microsoft.Spark.CSharp.Core
     public class HadoopConfiguration
     {
         private readonly IHadoopConfigurationProxy hadoopConfigurationProxy;
-        internal HadoopConfiguration(IHadoopConfigurationProxy hadoopConfProxy)
+        public HadoopConfiguration(IHadoopConfigurationProxy hadoopConfProxy)
         {
             hadoopConfigurationProxy = hadoopConfProxy;
         }

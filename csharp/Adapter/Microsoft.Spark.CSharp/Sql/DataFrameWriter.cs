@@ -16,14 +16,14 @@ namespace Microsoft.Spark.CSharp.Sql
     public class DataFrameWriter
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(DataFrameWriter));
-        internal IDataFrameWriterProxy DataFrameWriterProxy
+        public IDataFrameWriterProxy DataFrameWriterProxy
         {
             get { return dataFrameWriterProxy; }
         }
 
         private readonly IDataFrameWriterProxy dataFrameWriterProxy;
 
-        internal DataFrameWriter(IDataFrameWriterProxy dataFrameWriterProxy)
+        public DataFrameWriter(IDataFrameWriterProxy dataFrameWriterProxy)
         {
             this.dataFrameWriterProxy = dataFrameWriterProxy;
         }

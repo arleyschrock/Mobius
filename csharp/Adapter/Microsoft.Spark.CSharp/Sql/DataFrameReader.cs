@@ -20,7 +20,7 @@ namespace Microsoft.Spark.CSharp.Sql
         private readonly IDataFrameReaderProxy dataFrameReaderProxy;
         private readonly SparkContext sparkContext;
 
-        internal DataFrameReader(IDataFrameReaderProxy dataFrameReaderProxy, SparkContext sparkContext)
+        public DataFrameReader(IDataFrameReaderProxy dataFrameReaderProxy, SparkContext sparkContext)
         {
             this.dataFrameReaderProxy = dataFrameReaderProxy;
             this.sparkContext = sparkContext;

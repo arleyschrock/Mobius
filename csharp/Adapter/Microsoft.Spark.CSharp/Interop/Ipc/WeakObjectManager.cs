@@ -24,7 +24,7 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
     /// So potential memory leak can happen in JVMObjectTracker.
     /// To solve this, track the garbage collection in CSharp side, get the id, release JVMObjectTracker's HashMap. 
     /// </summary>
-    internal interface IWeakObjectManager : IDisposable
+    public interface IWeakObjectManager : IDisposable
     {
         TimeSpan CheckInterval { get; set; }
 
@@ -45,7 +45,7 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
     /// <summary>
     /// adaptively control the number of weak objects that should be checked for each interval
     /// </summary>
-    internal class WeakReferenceCheckCountController
+    public class WeakReferenceCheckCountController
     {
         private static readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(WeakReferenceCheckCountController));
 
@@ -76,11 +76,11 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
         }
     }
 
-    internal class WeakObjectManagerImpl : IWeakObjectManager
+    public class WeakObjectManagerImpl : IWeakObjectManager
     {
         private static readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(WeakObjectManagerImpl));
 
-        internal static TimeSpan DefaultCheckInterval = TimeSpan.FromSeconds(3);
+        public static TimeSpan DefaultCheckInterval = TimeSpan.FromSeconds(3);
         private TimeSpan checkInterval;
 
         private WeakReferenceCheckCountController checkCountController = new WeakReferenceCheckCountController(10, 1000);
@@ -111,21 +111,21 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
 
         private IObjectReleaser objectReleaser = new JvmObjectReleaser();
 
-        internal IObjectReleaser ObjectReleaser
+        public IObjectReleaser ObjectReleaser
         {
             set { objectReleaser = value; }
         }
 
         private Thread releaserThread;
 
-        internal WeakObjectManagerImpl(TimeSpan checkIntervalTimeSpan)
+        public WeakObjectManagerImpl(TimeSpan checkIntervalTimeSpan)
         {
             checkInterval = checkIntervalTimeSpan;
             releaserThread = new Thread(RunReleaseObjectLoop) { IsBackground = true };
             releaserThread.Start();
         }
 
-        internal WeakObjectManagerImpl() : this(DefaultCheckInterval) { }
+        public WeakObjectManagerImpl() : this(DefaultCheckInterval) { }
 
         public int GetReferencesCount()
         {
@@ -243,12 +243,12 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
         }
     }
 
-    internal interface IObjectReleaser
+    public interface IObjectReleaser
     {
         void ReleaseObject(string objId);
     }
 
-    internal class JvmObjectReleaser : IObjectReleaser
+    public class JvmObjectReleaser : IObjectReleaser
     {
         private const string ReleaseHandler = "SparkCLRHandler";
         private const string ReleaseMethod = "rm";

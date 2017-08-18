@@ -12,7 +12,7 @@ using Column = Microsoft.Spark.CSharp.Sql.Catalog.Column;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    interface ICatalogProxy
+    public interface  ICatalogProxy
     {
         string CurrentDatabase { get; }
 

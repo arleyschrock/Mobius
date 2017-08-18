@@ -17,7 +17,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// RioNative class imports and initializes RIOSock.dll for use with RIO socket APIs.
     /// It also provided a simple thread pool that retrieves the results from IO completion port.
     /// </summary>
-    internal class RioNative : IDisposable
+    public class RioNative : IDisposable
     {
         private const int DefaultResultSize = 32; // Default RIO result size that be used to dequeue RIO results from IOCP
         private static readonly Lazy<RioNative> Default = new Lazy<RioNative>(() => new RioNative());
@@ -52,7 +52,7 @@ namespace Microsoft.Spark.CSharp.Network
             Dispose(true);
         }
 
-        internal static int GetWorkThreadNumber()
+        public static int GetWorkThreadNumber()
         {
             return Default.Value.workThreadPoolOfRecv.Length;
         }
@@ -61,7 +61,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// Sets whether use thread pool to query RIO socket results, 
         /// it must be called before calling EnsureRioLoaded()
         /// </summary>
-        internal static void SetUseThreadPool(bool toUseThreadPool)
+        public static void SetUseThreadPool(bool toUseThreadPool)
         {
             useThreadPool = toUseThreadPool;
         }
@@ -69,7 +69,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// Gets the connection table that contains all connections.
         /// </summary>
-        internal static ConcurrentDictionary<long, RioSocketWrapper> ConnectionTable
+        public static ConcurrentDictionary<long, RioSocketWrapper> ConnectionTable
         {
             get { return Default.Value.connectedSocks; }
         }
@@ -77,7 +77,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// Ensures that the native dll of RIO socket is loaded and initialized.
         /// </summary>
-        internal static void EnsureRioLoaded()
+        public static void EnsureRioLoaded()
         {
             if (Default.Value == null)
             {
@@ -93,7 +93,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// Explicitly unload the native dll of RIO socket, and release resources.
         /// </summary>
-        internal static void UnloadRio()
+        public static void UnloadRio()
         {
             if (!Default.IsValueCreated) return;
             Default.Value.Dispose(false);
@@ -266,16 +266,16 @@ namespace Microsoft.Spark.CSharp.Network
         private static extern uint DequeueRIOResults([In] bool isRecvCq, [Out] IntPtr rioResults, [In] uint rioResultSize);
 
         //
-        // Internal functions
+        // public functions
         //
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr CreateRIOSocket([In, Out] IntPtr localAddr, [In, Out] ref int addrLen);
+        public static extern IntPtr CreateRIOSocket([In, Out] IntPtr localAddr, [In, Out] ref int addrLen);
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr CreateRIORequestQueue(
+        public static extern IntPtr CreateRIORequestQueue(
             [In] IntPtr socket,
             [In] uint maxOutstandingReceive,
             [In] uint maxOutstandingSend,
@@ -283,7 +283,7 @@ namespace Microsoft.Spark.CSharp.Network
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern unsafe bool PostRIOReceive(
+        public static extern unsafe bool PostRIOReceive(
             [In] IntPtr socketQueue,
             [In] RioBuf* pData,
             [In] uint dataBufferCount,
@@ -292,7 +292,7 @@ namespace Microsoft.Spark.CSharp.Network
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern unsafe bool PostRIOSend(
+        public static extern unsafe bool PostRIOSend(
             [In] IntPtr socketQueue,
             [In] RioBuf* pData,
             [In] uint dataBufferCount,
@@ -301,15 +301,15 @@ namespace Microsoft.Spark.CSharp.Network
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern bool AllocateRIOCompletion([In] uint numCompletions);
+        public static extern bool AllocateRIOCompletion([In] uint numCompletions);
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern bool ReleaseRIOCompletion([In] uint numCompletion);
+        public static extern bool ReleaseRIOCompletion([In] uint numCompletion);
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern bool ResizeRIORequestQueue(
+        public static extern bool ResizeRIORequestQueue(
             [In] IntPtr rq,
             [In] uint maxOutstandingReceive,
             [In] uint maxOutstandingSend);
@@ -317,27 +317,27 @@ namespace Microsoft.Spark.CSharp.Network
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr RegisterRIOBuffer([In] IntPtr dataBuffer, [In] uint dataLength);
+        public static extern IntPtr RegisterRIOBuffer([In] IntPtr dataBuffer, [In] uint dataLength);
 
         [DllImport(RioSockDll, CharSet = CharSet.Unicode, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void DeregisterRIOBuffer([In] IntPtr bufferId);
+        public static extern void DeregisterRIOBuffer([In] IntPtr bufferId);
 
         [DllImport(Ws2Dll, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr accept([In] IntPtr s, [In, Out] IntPtr addr, [In, Out] ref int addrlen);
+        public static extern IntPtr accept([In] IntPtr s, [In, Out] IntPtr addr, [In, Out] ref int addrlen);
 
         [DllImport(Ws2Dll, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int connect([In] IntPtr s, [In] byte[] addr, [In] int addrlen);
+        public static extern int connect([In] IntPtr s, [In] byte[] addr, [In] int addrlen);
 
         [DllImport(Ws2Dll, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int closesocket([In] IntPtr s);
+        public static extern int closesocket([In] IntPtr s);
 
         [DllImport(Ws2Dll, SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int listen([In] IntPtr s, [In] int backlog);
+        public static extern int listen([In] IntPtr s, [In] int backlog);
 
         #endregion
     }
@@ -346,7 +346,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// The RioResult structure contains data used to indicate request completion results used with RIO socket
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct RioResult
+    public struct RioResult
     {
         public int Status;
         public uint BytesTransferred;

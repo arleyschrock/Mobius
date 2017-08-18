@@ -55,7 +55,7 @@ namespace Microsoft.Spark.CSharp
         }
 
         [Sample("experimental")]
-        internal static void DStreamTextFileSample()
+        public static void DStreamTextFileSample()
         {
             count = 0;
 
@@ -130,7 +130,7 @@ namespace Microsoft.Spark.CSharp
         /// TODO: automate kafka service
         /// </summary>
         [Sample("experimental")]
-        internal static void DStreamDirectKafkaWithRepartitionSample()
+        public static void DStreamDirectKafkaWithRepartitionSample()
         {
             count = 0;
 
@@ -188,7 +188,7 @@ namespace Microsoft.Spark.CSharp
         /// A sample shows that ConstantInputDStream is an input stream that always returns the same mandatory input RDD at every batch time.
         /// </summary>
         [Sample("experimental")]
-        internal static void DStreamConstantDStreamSample()
+        public static void DStreamConstantDStreamSample()
         {
             var sc = SparkCLRSamples.SparkContext;
             var ssc = new StreamingContext(sc, 2000L);
@@ -223,7 +223,7 @@ namespace Microsoft.Spark.CSharp
         /// DStreamReduceByKeyAndWindow does winodwed reduce once
         /// </summary>
         [Sample("experimental")]
-        internal static void DStreamReduceByKeyAndSmallWindowSample()
+        public static void DStreamReduceByKeyAndSmallWindowSample()
         {
             slideDuration = 6;
             DStreamReduceByKeyAndWindowSample();
@@ -235,7 +235,7 @@ namespace Microsoft.Spark.CSharp
         /// by first invReduce on old RDDs and then reduce on new RDDs
         /// </summary>
         [Sample("experimental")]
-        internal static void DStreamReduceByKeyAndLargeWindowSample()
+        public static void DStreamReduceByKeyAndLargeWindowSample()
         {
             slideDuration = 4;
             DStreamReduceByKeyAndWindowSample();
@@ -295,7 +295,7 @@ namespace Microsoft.Spark.CSharp
         }
 
         [Sample("experimental")]
-        internal static void DStreamCSharpInputSample()
+        public static void DStreamCSharpInputSample()
         {
             const int numPartitions = 5;
 
@@ -336,16 +336,16 @@ namespace Microsoft.Spark.CSharp
 
     // Use this helper class to test broacast variable in streaming application
     [Serializable]
-    internal class UpdateStateHelper
+    public class UpdateStateHelper
     {
         private Broadcast<int> b;
 
-        internal UpdateStateHelper(Broadcast<int> b)
+        public UpdateStateHelper(Broadcast<int> b)
         {
             this.b = b;
         }
 
-        internal int Execute(IEnumerable<Tuple<int, int>> vs, int s)
+        public int Execute(IEnumerable<Tuple<int, int>> vs, int s)
         {
             int result = vs.Sum(x => x.Item1 + x.Item2) + s + b.Value;
             return result;

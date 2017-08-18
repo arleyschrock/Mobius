@@ -7,7 +7,7 @@ using Microsoft.Spark.CSharp.Interop.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class HadoopConfigurationIpcProxy : IHadoopConfigurationProxy
+    public class HadoopConfigurationIpcProxy : IHadoopConfigurationProxy
     {
         private readonly JvmObjectReference jvmHadoopConfigurationReference;
         public HadoopConfigurationIpcProxy(JvmObjectReference jHadoopConf)

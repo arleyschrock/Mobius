@@ -25,7 +25,7 @@ namespace AdapterTest
     class ConfigurationServiceTest
     {
         // Set environment variable with new value, and return old value for enviroment reset after each test finishes
-        internal string SetEnviromentVariable(string name, string value)
+        public string SetEnviromentVariable(string name, string value)
         {
             string oldValue = Environment.GetEnvironmentVariable(name);
             Environment.SetEnvironmentVariable(name, value);
@@ -84,7 +84,7 @@ namespace AdapterTest
             Assert.Throws<NotSupportedException>(() => TestConfiguration("invalid-master"));
         }
 
-        internal void TestConfiguration(string sparkMaster)
+        public void TestConfiguration(string sparkMaster)
         {
             string oldSparkClrHome = SetEnviromentVariable(ConfigurationService.SPARKCLR_HOME, Path.GetTempPath());
             string oldSparkMaster = SetEnviromentVariable(ConfigurationService.SPARK_MASTER, sparkMaster);

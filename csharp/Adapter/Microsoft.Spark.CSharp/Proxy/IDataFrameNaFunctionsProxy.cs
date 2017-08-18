@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    interface IDataFrameNaFunctionsProxy
+    public interface  IDataFrameNaFunctionsProxy
     {
         IDataFrameProxy Drop(int minNonNulls, string[] cols);
         IDataFrameProxy Fill(double value, string[] cols);

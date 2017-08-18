@@ -22,10 +22,10 @@ namespace ReplTest
     [TestFixture]
     public class ReplTest
     {
-        internal class TestIoHandler : IoHandler
+        public class TestIoHandler : IoHandler
         {
-            internal BlockingCollection<string> input = new BlockingCollection<string>();
-            internal List<string> output = new List<string>();
+            public BlockingCollection<string> input = new BlockingCollection<string>();
+            public List<string> output = new List<string>();
 
             public void Write(object obj)
             {

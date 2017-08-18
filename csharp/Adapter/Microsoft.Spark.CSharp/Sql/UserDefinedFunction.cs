@@ -10,11 +10,11 @@ using Microsoft.Spark.CSharp.Interop;
 
 namespace Microsoft.Spark.CSharp.Sql
 {
-    internal class UserDefinedFunction<RT>
+    public class UserDefinedFunction<RT>
     {
         private readonly IUDFProxy udfProxy;
 
-        internal UserDefinedFunction(Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> func)
+        public UserDefinedFunction(Func<int, IEnumerable<dynamic>, IEnumerable<dynamic>> func)
         {
             udfProxy = SparkCLREnvironment.SparkCLRProxy.SparkContextProxy.CreateUserDefinedCSharpFunction(
                 func.GetType().Name,
@@ -22,7 +22,7 @@ namespace Microsoft.Spark.CSharp.Sql
                 Functions.GetReturnType(typeof(RT)));
         }
 
-        internal UserDefinedFunction(IUDFProxy udfProxy)
+        public UserDefinedFunction(IUDFProxy udfProxy)
         {
             this.udfProxy = udfProxy;
         }
@@ -33,57 +33,57 @@ namespace Microsoft.Spark.CSharp.Sql
         }
 
         #region udf Execute() overloads to support up to 0 - 10 input Column argument(s)
-        internal Column Execute0()
+        public Column Execute0()
         {
             return Execute();
         }
 
-        internal Column Execute1(Column c1)
+        public Column Execute1(Column c1)
         {
             return Execute(c1);
         }
 
-        internal Column Execute2(Column c1, Column c2)
+        public Column Execute2(Column c1, Column c2)
         {
             return Execute(c1, c2);
         }
 
-        internal Column Execute3(Column c1, Column c2, Column c3)
+        public Column Execute3(Column c1, Column c2, Column c3)
         {
             return Execute(c1, c2, c3);
         }
 
-        internal Column Execute4(Column c1, Column c2, Column c3, Column c4)
+        public Column Execute4(Column c1, Column c2, Column c3, Column c4)
         {
             return Execute(c1, c2, c3, c4);
         }
 
-        internal Column Execute5(Column c1, Column c2, Column c3, Column c4, Column c5)
+        public Column Execute5(Column c1, Column c2, Column c3, Column c4, Column c5)
         {
             return Execute(c1, c2, c3, c4, c5);
         }
 
-        internal Column Execute6(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6)
+        public Column Execute6(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6)
         {
             return Execute(c1, c2, c3, c4, c5, c6);
         }
 
-        internal Column Execute7(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7)
+        public Column Execute7(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7)
         {
             return Execute(c1, c2, c3, c4, c5, c6, c7);
         }
 
-        internal Column Execute8(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7, Column c8)
+        public Column Execute8(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7, Column c8)
         {
             return Execute(c1, c2, c3, c4, c5, c6, c7, c8);
         }
 
-        internal Column Execute9(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7, Column c8, Column c9)
+        public Column Execute9(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7, Column c8, Column c9)
         {
             return Execute(c1, c2, c3, c4, c5, c6, c7, c8, c9);
         }
 
-        internal Column Execute10(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7, Column c8, Column c9, Column c10)
+        public Column Execute10(Column c1, Column c2, Column c3, Column c4, Column c5, Column c6, Column c7, Column c8, Column c9, Column c10)
         {
             return Execute(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10);
         }

@@ -197,6 +197,8 @@ object SQLUtils {
 
     val rowRdd = stringRdd.map{s =>
       val columns = s.split(delimiter)
+      
+      /// wtf
       columns.length match {
         case 1 => RowFactory.create(columns(0))
         case 2 => RowFactory.create(columns(0), columns(1))

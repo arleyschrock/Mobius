@@ -17,7 +17,7 @@ using Microsoft.Spark.CSharp.Sql;
 [assembly: InternalsVisibleTo("ReplTest")] 
 namespace AdapterTest.Mocks
 {
-    internal class MockSparkCLRProxy : ISparkCLRProxy
+    public class MockSparkCLRProxy : ISparkCLRProxy
     {
         public ISparkConfProxy CreateSparkConf(bool loadDefaults = true)
         {

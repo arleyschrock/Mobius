@@ -42,7 +42,8 @@ export CONFIGURATION=$STEP
 
 export STEP=$CONFIGURATION
 
-msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
+dotnet build -c Debug
+# msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
 export RC=$? && [ $RC -ne 0 ] && error_exit
 echo "BUILD ok for $CONFIGURATION $PROJ"
 
@@ -51,7 +52,8 @@ export STEP=Release
 
 export CONFIGURATION=$STEP
 
-msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
+dotnet build -c Release
+# msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
 export RC=$? && [ $RC -ne 0 ] && error_exit
 echo "BUILD ok for $CONFIGURATION $PROJ"
 

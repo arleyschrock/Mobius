@@ -43,7 +43,7 @@ namespace Microsoft.Spark.CSharp
         private readonly SparkCLRHost host;
         private readonly ParseOptions options;
 
-        internal readonly string compilationDumpDirectory;
+        public readonly string compilationDumpDirectory;
 
         public RoslynScriptEngine(SparkContext sc, SqlContext sqlContext)
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Spark.CSharp
             options = new CSharpParseOptions(LanguageVersion.CSharp6, DocumentationMode.Parse, SourceCodeKind.Script);   
         }
 
-        internal Script<object> CreateScript(string code)
+        public Script<object> CreateScript(string code)
         {
             var scriptOptions = ScriptOptions.Default
                                 .AddReferences("System")
@@ -139,7 +139,7 @@ namespace Microsoft.Spark.CSharp
                 }
                 else
                 {
-                    // Currently "ContinueAsync" is a internal methold, might go public in 1.2.0(https://github.com/dotnet/roslyn/issues/6612)
+                    // Currently "ContinueAsync" is a public methold, might go public in 1.2.0(https://github.com/dotnet/roslyn/issues/6612)
                     const string methodName = "ContinueAsync";
                     var m = script.GetType().GetMethod(methodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                     if (m != null)
@@ -163,13 +163,13 @@ namespace Microsoft.Spark.CSharp
         /// <summary>
         /// Check whether the given code is a complete submission
         /// </summary>
-        internal bool IsCompleteSubmission(string code)
+        public bool IsCompleteSubmission(string code)
         {
             SyntaxTree syntaxTree = SyntaxFactory.ParseSyntaxTree(code, options);
             return SyntaxFactory.IsCompleteSubmission(syntaxTree);
         }
 
-        internal string CompilationDumpPath(int seqId)
+        public string CompilationDumpPath(int seqId)
         {
             return Path.Combine(compilationDumpDirectory, "ReplCompilation." + seqId);
         }

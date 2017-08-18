@@ -22,7 +22,7 @@ namespace Microsoft.Spark.CSharp.Sql
 
         private IUdfRegistrationProxy udfRegistrationProxy;
 
-        internal UdfRegistration(IUdfRegistrationProxy udfRegistrationProxy)
+        public UdfRegistration(IUdfRegistrationProxy udfRegistrationProxy)
         {
             this.udfRegistrationProxy = udfRegistrationProxy;
         }

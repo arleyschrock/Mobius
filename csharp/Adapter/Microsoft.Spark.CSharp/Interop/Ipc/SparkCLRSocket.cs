@@ -114,12 +114,12 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
         }
         private class SparkCLRSocketStream : IDisposable
         {
-            internal readonly BinaryReader Reader;
-            internal readonly BinaryWriter Writer;
-            internal readonly NetworkStream Stream;
+            public readonly BinaryReader Reader;
+            public readonly BinaryWriter Writer;
+            public readonly NetworkStream Stream;
             private ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(SparkCLRSocketStream));
 
-            internal SparkCLRSocketStream(Socket socket)
+            public SparkCLRSocketStream(Socket socket)
             {
                 Stream = new NetworkStream(socket);
                 Reader = new BinaryReader(Stream);

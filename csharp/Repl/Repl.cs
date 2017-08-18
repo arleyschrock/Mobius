@@ -10,7 +10,7 @@ using Microsoft.Spark.CSharp.Sql;
 
 namespace Microsoft.Spark.CSharp
 {
-    internal interface IoHandler
+    public interface IoHandler
     {
         void Write(Object obj);
 
@@ -31,7 +31,7 @@ namespace Microsoft.Spark.CSharp
         string ReadLine();
     }
 
-    internal class ConsoleIoHandler : IoHandler
+    public class ConsoleIoHandler : IoHandler
     {
         public void Write(object obj)
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Spark.CSharp
         }
     }
 
-    internal class Repl
+    public class Repl
     {
         private readonly IScriptEngine scriptEngine;
         private readonly IoHandler ioHandler;
@@ -137,12 +137,12 @@ namespace Microsoft.Spark.CSharp
             }
         }
 
-        internal bool IsDirective(string line)
+        public bool IsDirective(string line)
         {
             return Regex.Match(line.Trim(), "^:\\S+").Success;
         }
 
-        internal void ProcessDirective(string directive, ref bool terminated)
+        public void ProcessDirective(string directive, ref bool terminated)
         {
             var verb = directive.Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries)[0];
             switch (verb)
@@ -165,7 +165,7 @@ namespace Microsoft.Spark.CSharp
             }
         }
 
-        internal void ProcessExecutionResult(ScriptResult scriptResult)
+        public void ProcessExecutionResult(ScriptResult scriptResult)
         {
             if (scriptResult.CompileExceptionInfo != null)
             {
@@ -181,7 +181,7 @@ namespace Microsoft.Spark.CSharp
             }
         }
 
-        internal void LoadAssebmly(string directive)
+        public void LoadAssebmly(string directive)
         {
             var match = Regex.Match(directive.Trim(), ":load\\s+\"(.*?)\"");
             if (match.Success)
@@ -203,7 +203,7 @@ namespace Microsoft.Spark.CSharp
             }
         }
 
-        internal void Help()
+        public void Help()
         {
             const string helps = "Commands:\r\n  :help\t\tDisplay help on available commands.\r\n  :load\t\tLoad extra library to current execution context, e.g. :load \"myLib.dll\".\r\n  :quit\t\tExit REPL.";
             ioHandler.WriteLine(helps);

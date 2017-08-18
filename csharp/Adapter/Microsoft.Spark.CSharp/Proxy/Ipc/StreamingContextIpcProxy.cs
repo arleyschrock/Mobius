@@ -23,10 +23,10 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
     /// calling Spark jvm side API in JavaStreamingContext.scala, StreamingContext.scala or external KafkaUtils.scala
     /// </summary>
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class StreamingContextIpcProxy : IStreamingContextProxy
+    public class StreamingContextIpcProxy : IStreamingContextProxy
     {
         private readonly ILoggerService logger = LoggerServiceFactory.GetLogger(typeof(StreamingContextIpcProxy));
-        internal readonly JvmObjectReference jvmStreamingContextReference;
+        public readonly JvmObjectReference jvmStreamingContextReference;
         private readonly JvmObjectReference jvmJavaStreamingReference;
         private readonly ISparkContextProxy sparkContextProxy;
         private readonly SparkContext sparkContext;

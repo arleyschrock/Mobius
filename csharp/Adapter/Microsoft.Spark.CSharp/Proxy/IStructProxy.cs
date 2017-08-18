@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    interface IStructTypeProxy
+    public interface  IStructTypeProxy
     {
         List<IStructFieldProxy> GetStructTypeFields();
         string ToJson();
     }
 
-    interface IStructDataTypeProxy
+    public interface  IStructDataTypeProxy
     {
         string GetDataTypeString();
         string GetDataTypeSimpleString();
     }
 
-    interface IStructFieldProxy
+    public interface  IStructFieldProxy
     {
         string GetStructFieldName();
         IStructDataTypeProxy GetStructFieldDataType();

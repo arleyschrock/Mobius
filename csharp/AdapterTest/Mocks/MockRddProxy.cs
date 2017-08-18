@@ -19,12 +19,12 @@ using NUnit.Framework;
 namespace AdapterTest.Mocks
 {
     [Serializable]
-    internal class MockRddProxy : IRDDProxy
+    public class MockRddProxy : IRDDProxy
     {
-        internal IEnumerable<dynamic> result;
-        internal bool pickle;
-        internal string name;
-        internal object[] mockRddReference;
+        public IEnumerable<dynamic> result;
+        public bool pickle;
+        public string name;
+        public object[] mockRddReference;
 
         public IRDDCollector RDDCollector
         {

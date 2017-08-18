@@ -13,7 +13,7 @@ namespace Microsoft.Spark.CSharp.Samples
     class PairRDDSamples
     {
         [Sample]
-        internal static void PairRDDCollectAsMapSample()
+        public static void PairRDDCollectAsMapSample()
         {
             var map = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<int, int>(1, 2), new Tuple<int, int>(3, 4) }, 1).CollectAsMap();
 
@@ -28,7 +28,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDKeysSample()
+        public static void PairRDDKeysSample()
         {
             var keys = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<int, int>(1, 2), new Tuple<int, int>(3, 4) }, 1).Keys().Collect();
 
@@ -43,7 +43,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDValuesSample()
+        public static void PairRDDValuesSample()
         {
             var values = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<int, int>(1, 2), new Tuple<int, int>(3, 4) }, 1).Values().Collect();
 
@@ -58,7 +58,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDReduceByKeySample()
+        public static void PairRDDReduceByKeySample()
         {
             var reduced = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -80,7 +80,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDReduceByKeyLocallySample()
+        public static void PairRDDReduceByKeyLocallySample()
         {
             var reduced = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -102,7 +102,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDCountByKeySample()
+        public static void PairRDDCountByKeySample()
         {
             var countByKey = SparkCLRSamples.SparkContext.Parallelize(
                 new[]
@@ -125,7 +125,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDJoinSample()
+        public static void PairRDDJoinSample()
         {
             var l = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -154,7 +154,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDLeftOuterJoinSample()
+        public static void PairRDDLeftOuterJoinSample()
         {
             var l = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -182,7 +182,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDRightOuterJoinSample()
+        public static void PairRDDRightOuterJoinSample()
         {
             var l = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -210,7 +210,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDFullOuterJoinSample()
+        public static void PairRDDFullOuterJoinSample()
         {
             var l = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -243,7 +243,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDPartitionBySample()
+        public static void PairRDDPartitionBySample()
         {
             Func<dynamic, int> partitionFunc = key =>
             {
@@ -278,7 +278,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDCombineByKeySample()
+        public static void PairRDDCombineByKeySample()
         {
             var combineByKey = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -300,7 +300,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDAggregateByKeySample()
+        public static void PairRDDAggregateByKeySample()
         {
             var aggregateByKey = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -322,7 +322,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDFoldByKeySample()
+        public static void PairRDDFoldByKeySample()
         {
             var FoldByKey = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -344,7 +344,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDGroupByKeySample()
+        public static void PairRDDGroupByKeySample()
         {
             var groupByKey = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -366,7 +366,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDMapValuesSample()
+        public static void PairRDDMapValuesSample()
         {
             var mapValues = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -387,7 +387,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDFlatMapValuesSample()
+        public static void PairRDDFlatMapValuesSample()
         {
             var flatMapValues = SparkCLRSamples.SparkContext.Parallelize(
                 new[] 
@@ -411,7 +411,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDGroupWithSample()
+        public static void PairRDDGroupWithSample()
         {
             var x = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int>("a", 1), new Tuple<string, int>("b", 4)}, 2);
             var y = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int>("a", 2)}, 1);
@@ -429,7 +429,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDGroupWithSample2()
+        public static void PairRDDGroupWithSample2()
         {
             var x = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int>("a", 5), new Tuple<string, int>("b", 6) }, 2);
             var y = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int>("a", 1), new Tuple<string, int>("b", 4) }, 2);
@@ -449,7 +449,7 @@ namespace Microsoft.Spark.CSharp.Samples
 
         //TO DO: implement PairRDDFunctions.SampleByKey
         //[Sample]
-        //internal static void PairRDDSampleByKeySample()
+        //public static void PairRDDSampleByKeySample()
         //{
         //    var fractions = new Dictionary<string, double> { { "a", 0.2 }, { "b", 0.1 } };
         //    var rdd = SparkCLRSamples.SparkContext.Parallelize(fractions.Keys.ToArray(), 2).Cartesian(SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 1000), 2));
@@ -459,7 +459,7 @@ namespace Microsoft.Spark.CSharp.Samples
         //}
 
         [Sample]
-        internal static void PairRDDSubtractByKeySample()
+        public static void PairRDDSubtractByKeySample()
         {
             var x = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int?>("a", 1), new Tuple<string, int?>("b", 4), new Tuple<string, int?>("b", 5), new Tuple<string, int?>("a", 2) }, 2);
             var y = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int?>("a", 3), new Tuple<string, int?>("c", null) }, 2);
@@ -478,7 +478,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDLookupSample()
+        public static void PairRDDLookupSample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(Enumerable.Range(0, 1000).Zip(Enumerable.Range(0, 1000), (x, y) => new Tuple<int, int>(x, y)), 10);
             var lookup42 = rdd.Lookup(42);
@@ -494,7 +494,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void PairRDDSortByKeySample()
+        public static void PairRDDSortByKeySample()
         {
             var rdd = SparkCLRSamples.SparkContext.Parallelize(new[] { new Tuple<string, int>("B", 2),
                 new Tuple<string, int>("a", 1), new Tuple<string, int>("c", 3),

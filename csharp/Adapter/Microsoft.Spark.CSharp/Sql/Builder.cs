@@ -15,9 +15,9 @@ namespace Microsoft.Spark.CSharp.Sql
     /// </summary>
     public class Builder
     {
-        internal Dictionary<string, string> options = new Dictionary<string, string>();
+        public Dictionary<string, string> options = new Dictionary<string, string>();
 
-        internal Builder() { }
+        public Builder() { }
 
         /// <summary>
         /// Sets the Spark master URL to connect to, such as "local" to run locally, "local[4]" to

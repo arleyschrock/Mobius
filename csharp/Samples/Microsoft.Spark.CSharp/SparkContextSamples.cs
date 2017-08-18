@@ -16,23 +16,23 @@ namespace Microsoft.Spark.CSharp.Samples
     class SparkContextSamples
     {
         [Serializable]
-        internal class BroadcastHelper<T>
+        public class BroadcastHelper<T>
         {
             private readonly Broadcast<T[]> broadcastVar;
 
-            internal BroadcastHelper(Broadcast<T[]> broadcastVar)
+            public BroadcastHelper(Broadcast<T[]> broadcastVar)
             {
                 this.broadcastVar = broadcastVar;
             }
 
-            internal IEnumerable<T> Execute(int i)
+            public IEnumerable<T> Execute(int i)
             {
                 return broadcastVar.Value;
             }
         }
 
         [Sample]
-        internal static void SparkContextBroadcastSample()
+        public static void SparkContextBroadcastSample()
         {
             var b = SparkCLRSamples.SparkContext.Broadcast<int[]>(Enumerable.Range(1, 5).ToArray());
             foreach (var value in b.Value)
@@ -62,18 +62,18 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Serializable]
-        internal class AccumulatorHelper
+        public class AccumulatorHelper
         {
             private Accumulator<int> accumulator;
             private bool async;
 
-            internal AccumulatorHelper(Accumulator<int> accumulator, bool async = false)
+            public AccumulatorHelper(Accumulator<int> accumulator, bool async = false)
             {
                 this.accumulator = accumulator;
                 this.async = async;
             }
 
-            internal void Execute(int input)
+            public void Execute(int input)
             {
                 if (async)
                 {
@@ -94,7 +94,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SparkContextAccumulatorSample()
+        public static void SparkContextAccumulatorSample()
         {
             var a = SparkCLRSamples.SparkContext.Accumulator<int>(100);
             var b = SparkCLRSamples.SparkContext.Accumulator<int>(100);
@@ -113,7 +113,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SparkContextSample()
+        public static void SparkContextSample()
         {
             Console.WriteLine(SparkCLRSamples.SparkContext.Version);
             Console.WriteLine(SparkCLRSamples.SparkContext.SparkUser);
@@ -140,7 +140,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SparkContextUnionSample()
+        public static void SparkContextUnionSample()
         {
             var rdd1 = SparkCLRSamples.SparkContext.Parallelize(new int[] {1, 1, 2, 3}, 1);
             var rdd2 = SparkCLRSamples.SparkContext.Parallelize(new int[] {1, 1, 2, 3}, 1);
@@ -155,7 +155,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void SparkContextHadoopConfigurationSample()
+        public static void SparkContextHadoopConfigurationSample()
         {
             var hadoopConf = SparkCLRSamples.SparkContext.HadoopConfiguration;
             var initialValue = hadoopConf.Get("testproperty", "defaultvalue");

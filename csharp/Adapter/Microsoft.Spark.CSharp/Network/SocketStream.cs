@@ -11,7 +11,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// Provides the underlying stream of data for network access.
     /// Just like a NetworkStream.
     /// </summary>
-    internal class SocketStream: Stream
+    public class SocketStream: Stream
     {
         private readonly ByteBufPool bufPool;
         private readonly ISocketWrapper streamSocket;

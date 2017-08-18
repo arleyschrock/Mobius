@@ -14,7 +14,7 @@ namespace Microsoft.Spark.CSharp.Samples
     /// <summary>
     /// Runs samples
     /// </summary>
-    internal class SamplesRunner
+    public class SamplesRunner
     {
         private static Regex samplesToRunRegex;
         private static Regex samplesCategoryRegex;
@@ -22,7 +22,7 @@ namespace Microsoft.Spark.CSharp.Samples
         // track <SampleName, Category, SampleSucceeded, Duration> for reporting
         private static readonly List<Tuple<string, string, bool, TimeSpan>> samplesRunInfoList = new List<Tuple<string, string, bool, TimeSpan>>();
 
-        internal static bool RunSamples()
+        public static bool RunSamples()
         {
             var samples = Assembly.GetEntryAssembly().GetTypes()
                       .SelectMany(type => type.GetMethods(BindingFlags.NonPublic | BindingFlags.Static))

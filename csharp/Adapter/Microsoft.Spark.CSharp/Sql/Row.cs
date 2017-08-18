@@ -77,7 +77,7 @@ namespace Microsoft.Spark.CSharp.Sql
     }
 
     [Serializable]
-    internal class RowImpl : Row
+    public class RowImpl : Row
     {
         private readonly StructType schema;
         public dynamic[] Values { get { return values; } }
@@ -92,7 +92,7 @@ namespace Microsoft.Spark.CSharp.Sql
                 return Get(index);
             }
         }
-        internal RowImpl(dynamic data, StructType schema)
+        public RowImpl(dynamic data, StructType schema)
         {
             if (data is dynamic[])
             {

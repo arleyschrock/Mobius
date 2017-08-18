@@ -13,7 +13,7 @@ namespace Microsoft.Spark.CSharp.Samples
     class CatalogSamples
     {
         [Sample]
-        internal static void CatalogSample()
+        public static void CatalogSample()
         {
             var catalog = SparkSessionSamples.GetSparkSession().Catalog;
             var currentDatabase = catalog.CurrentDatabase;

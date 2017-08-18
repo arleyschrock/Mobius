@@ -17,7 +17,7 @@ namespace Microsoft.Spark.CSharp.Sql.Catalog
     {
         ICatalogProxy catalogProxy;
 
-        internal Catalog(ICatalogProxy catalogProxy)
+        public Catalog(ICatalogProxy catalogProxy)
         {
             this.catalogProxy = catalogProxy;
         }
@@ -237,17 +237,17 @@ namespace Microsoft.Spark.CSharp.Sql.Catalog
         /// <summary>
         /// Name of the database
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get;  set; }
 
         /// <summary>
         /// Desciption for the database
         /// </summary>
-        public string Description { get; internal set; }
+        public string Description { get;  set; }
 
         /// <summary>
         /// Location of the database
         /// </summary>
-        public string LocationUri { get; internal set; }
+        public string LocationUri { get;  set; }
     }
 
     /// <summary>
@@ -258,27 +258,27 @@ namespace Microsoft.Spark.CSharp.Sql.Catalog
         /// <summary>
         /// Name of the table
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get;  set; }
 
         /// <summary>
         /// Name of the database Table belongs to
         /// </summary>
-        public string Database { get; internal set; }
+        public string Database { get;  set; }
 
         /// <summary>
         /// Description of the table
         /// </summary>
-        public string Description { get; internal set; }
+        public string Description { get;  set; }
 
         /// <summary>
         /// Type of the table (table, view)
         /// </summary>
-        public string TableType { get; internal set; }
+        public string TableType { get;  set; }
 
         /// <summary>
         /// Whether the table is a temporary table
         /// </summary>
-        public bool IsTemporary { get; internal set; }
+        public bool IsTemporary { get;  set; }
     }
 
     /// <summary>
@@ -289,32 +289,32 @@ namespace Microsoft.Spark.CSharp.Sql.Catalog
         /// <summary>
         /// Name of the column
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get;  set; }
 
         /// <summary>
         /// Datatype of the column
         /// </summary>
-        public string DataType { get; internal set; }
+        public string DataType { get;  set; }
 
         /// <summary>
         /// Description of the column
         /// </summary>
-        public string Description { get; internal set; }
+        public string Description { get;  set; }
 
         /// <summary>
         /// Whether the column value can be null
         /// </summary>
-        public bool IsNullable { get; internal set; }
+        public bool IsNullable { get;  set; }
 
         /// <summary>
         /// Whether the column is a partition column.
         /// </summary>
-        public bool IsPartition { get; internal set; }
+        public bool IsPartition { get;  set; }
 
         /// <summary>
         /// Whether the column is a bucket column.
         /// </summary>
-        public bool IsBucket { get; internal set; }
+        public bool IsBucket { get;  set; }
     }
 
     /// <summary>
@@ -325,26 +325,26 @@ namespace Microsoft.Spark.CSharp.Sql.Catalog
         /// <summary>
         /// Name of the column
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get;  set; }
 
         /// <summary>
         /// Name of the database
         /// </summary>
-        public string Database { get; internal set; }
+        public string Database { get;  set; }
 
         /// <summary>
         /// Description of the function
         /// </summary>
-        public string Description { get; internal set; }
+        public string Description { get;  set; }
 
         /// <summary>
         /// Fully qualified class name of the function
         /// </summary>
-        public string ClassName { get; internal set; }
+        public string ClassName { get;  set; }
 
         /// <summary>
         /// Whether the function is a temporary function or not.
         /// </summary>
-        public bool IsTemporary { get; internal set; }
+        public bool IsTemporary { get;  set; }
     }
 }

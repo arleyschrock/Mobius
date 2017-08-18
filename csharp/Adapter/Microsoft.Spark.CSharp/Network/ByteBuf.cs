@@ -11,7 +11,7 @@ namespace Microsoft.Spark.CSharp.Network
     /// ByteBuf delimits a section of a ByteBufChunk.
     /// It is the smallest unit to be allocated.
     /// </summary>
-    internal class ByteBuf
+    public class ByteBuf
     {
         private int readerIndex;
         private int writerIndex;
@@ -35,7 +35,7 @@ namespace Microsoft.Spark.CSharp.Network
         ///      |                   |                  |                  |
         ///      0       ==     readerIndex   ==   writerIndex    ==    capacity
         /// </summary>
-        internal ByteBuf(ByteBufChunk chunk, int offset, int capacity)
+        public ByteBuf(ByteBufChunk chunk, int offset, int capacity)
         {
             if (offset < 0)
                 throw new ArgumentOutOfRangeException("offset", "Offset is less than zero.");
@@ -82,7 +82,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// Returns the ByteBuf chunk that contains this ByteBuf.
         /// </summary>
-        internal ByteBufChunk ByteBufChunk { get; private set; }
+        public ByteBufChunk ByteBufChunk { get; private set; }
 
         /// <summary>
         /// Returns the number of readable bytes which is equal to (writerIndex - readerIndex).
@@ -307,7 +307,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// Returns a RioBuf object for input (receive)
         /// </summary>
         /// <returns>A RioBuf object</returns>
-        internal RioBuf GetInputRioBuf()
+        public RioBuf GetInputRioBuf()
         {
             EnsureAccessible();
             if (!ByteBufChunk.IsUnsafe)
@@ -322,7 +322,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// Returns a RioBuf object for output (send).
         /// </summary>
         /// <returns>A RioBuf object</returns>
-        internal RioBuf GetOutputRioBuf()
+        public RioBuf GetOutputRioBuf()
         {
             EnsureAccessible();
             if (!ByteBufChunk.IsUnsafe)
@@ -336,7 +336,7 @@ namespace Microsoft.Spark.CSharp.Network
         /// <summary>
         /// Creates an empty ByteBuf with error status.
         /// </summary>
-        internal static ByteBuf NewErrorStatusByteBuf(int errorCode)
+        public static ByteBuf NewErrorStatusByteBuf(int errorCode)
         {
             return new ByteBuf(errorCode);
         }
@@ -385,7 +385,7 @@ namespace Microsoft.Spark.CSharp.Network
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct RioBuf
+    public struct RioBuf
     {
         public RioBuf(IntPtr bufferId, uint offset, uint length)
         {

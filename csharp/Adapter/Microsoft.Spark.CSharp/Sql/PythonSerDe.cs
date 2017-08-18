@@ -10,7 +10,7 @@ namespace Microsoft.Spark.CSharp.Sql
     /// <summary>
     /// Used for SerDe of Python objects
     /// </summary>
-    class PythonSerDe
+    public class PythonSerDe
     {
         static PythonSerDe()
         {
@@ -24,7 +24,7 @@ namespace Microsoft.Spark.CSharp.Sql
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>
-        internal static object[] GetUnpickledObjects(byte[] buffer)
+        public static object[] GetUnpickledObjects(byte[] buffer)
         {
             var unpickler = new Unpickler(); //not making any assumptions about the implementation and hence not a class member
             var unpickledItems = unpickler.loads(buffer);

@@ -15,12 +15,12 @@ using Microsoft.Spark.CSharp.Sql.Catalog;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class CatalogIpcProxy : ICatalogProxy
+    public class CatalogIpcProxy : ICatalogProxy
     {
         private readonly JvmObjectReference jvmCatalogReference;
         private readonly ISqlContextProxy sqlContextProxy;
 
-        internal CatalogIpcProxy(JvmObjectReference jvmCatalogReference, ISqlContextProxy sqlContextProxy)
+        public CatalogIpcProxy(JvmObjectReference jvmCatalogReference, ISqlContextProxy sqlContextProxy)
         {
             this.jvmCatalogReference = jvmCatalogReference;
             this.sqlContextProxy = sqlContextProxy;

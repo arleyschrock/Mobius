@@ -16,11 +16,11 @@ namespace Microsoft.Spark.CSharp.Samples
 {
     class DataFrameSamples
     {
-        internal const string PeopleJson = @"people.json";
-        internal const string OrderJson = @"order.json";
-        internal const string RequestsLog = @"requestslog.txt";
-        internal const string MetricsLog = @"metricslog.txt";
-        internal const string CSVTestLog = @"csvtestlog.txt";
+        public const string PeopleJson = @"people.json";
+        public const string OrderJson = @"order.json";
+        public const string RequestsLog = @"requestslog.txt";
+        public const string MetricsLog = @"metricslog.txt";
+        public const string CSVTestLog = @"csvtestlog.txt";
 
         private static SqlContext sqlContext;
 
@@ -33,7 +33,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to show schema of DataFrame
         /// </summary>
         [Sample]
-        internal static void DFShowSchemaSample()
+        public static void DFShowSchemaSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             peopleDataFrame.Explain(true);
@@ -44,7 +44,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to get schema of DataFrame in json format
         /// </summary>
         [Sample]
-        internal static void DFGetSchemaJsonSample()
+        public static void DFGetSchemaJsonSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             string json = peopleDataFrame.Schema.Json;
@@ -55,7 +55,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to run collect for DataFrame
         /// </summary>
         [Sample]
-        internal static void DFCollectSample()
+        public static void DFCollectSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var rows = peopleDataFrame.Collect().ToArray();
@@ -103,7 +103,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to register a DataFrame as temptable and run queries
         /// </summary>
         [Sample]
-        internal static void DFRegisterTableSample()
+        public static void DFRegisterTableSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             peopleDataFrame.RegisterTempTable("people");
@@ -127,7 +127,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to load a text file as dataframe
         /// </summary>
         [Sample]
-        internal static void DFTextFileLoadDataFrameSample()
+        public static void DFTextFileLoadDataFrameSample()
         {
             var requestsSchema = new StructType(new List<StructField>
                                                 {
@@ -161,7 +161,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to load two text files and join them using temptable constructs
         /// </summary>
         [Sample]
-        internal static void DFTextFileJoinTempTableSample()
+        public static void DFTextFileJoinTempTableSample()
         {
             var requestsDataFrame = GetSqlContext().TextFile(SparkCLRSamples.Configuration.GetInputDataPath(RequestsLog));
             requestsDataFrame.ShowSchema();
@@ -191,7 +191,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to load two text files and join them using DataFrame DSL
         /// </summary>
         [Sample]
-        internal static void DFTextFileJoinTableDSLSample()
+        public static void DFTextFileJoinTableDSLSample()
         {
             //C0 - guid, C1 - datacenter
             var requestsDataFrame = GetSqlContext().TextFile(SparkCLRSamples.Configuration.GetInputDataPath(RequestsLog)).Select("_c0", "_c1");
@@ -222,7 +222,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to iterate on the schema of DataFrame
         /// </summary>
         [Sample]
-        internal static void DFSchemaSample()
+        public static void DFSchemaSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var peopleDataFrameSchema = peopleDataFrame.Schema;
@@ -250,7 +250,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to convert DataFrames to RDD
         /// </summary>
         [Sample]
-        internal static void DFConversionSample()
+        public static void DFConversionSample()
         {
             // repartitioning below so that batching in pickling does not impact count on Rdd created from the dataframe
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson)).Repartition(4);
@@ -273,7 +273,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform simple select and filter on DataFrame using DSL
         /// </summary>
         [Sample]
-        internal static void DFProjectionFilterDSLSample()
+        public static void DFProjectionFilterDSLSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson)); 
             var projectedFilteredDataFrame = peopleDataFrame.Select("name", "address.state")
@@ -298,7 +298,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to join DataFrames using DSL
         /// </summary>
         [Sample]
-        internal static void DFJoinSample()
+        public static void DFJoinSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var orderDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(OrderJson));
@@ -320,7 +320,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to join DataFrames using DSL
         /// </summary>
         [Sample]
-        internal static void DFJoinMultiColSample()
+        public static void DFJoinMultiColSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var multiColumnJoin = peopleDataFrame.Join(peopleDataFrame, new string[] { "name", "id" });
@@ -338,7 +338,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to intersect DataFrames using DSL.
         /// </summary>
         [Sample]
-        internal static void DFIntersectSample()
+        public static void DFIntersectSample()
         {
             var peopleDataFrame1 = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var peopleDataFrame2 = peopleDataFrame1.Filter("name = 'Bill'");
@@ -357,7 +357,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to unionAll DataFrames using DSL.
         /// </summary>
         [Sample]
-        internal static void DFUnionAllSample()
+        public static void DFUnionAllSample()
         {
             var peopleDataFrame1 = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var peopleDataFrame2 = peopleDataFrame1.Filter("name = 'Bill'");
@@ -376,7 +376,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to subtract a DataFrame from another DataFrame using DSL.
         /// </summary>
         [Sample]
-        internal static void DFSubtractSample()
+        public static void DFSubtractSample()
         {
             var peopleDataFrame1 = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var peopleDataFrame2 = peopleDataFrame1.Filter("name = 'Bill'");
@@ -395,7 +395,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to drop a column from DataFrame using DSL.
         /// </summary>
         [Sample]
-        internal static void DFDropSample()
+        public static void DFDropSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -412,7 +412,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to drop a DataFrame with omitting rows with null values using DSL.
         /// </summary>
         [Sample]
-        internal static void DFDropNaSample()
+        public static void DFDropNaSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -430,7 +430,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to fill value to Na fields of a dataframe.
         /// </summary>
         [Sample]
-        internal static void DFFillNaSample()
+        public static void DFFillNaSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var count = peopleDataFrame.Count();
@@ -468,7 +468,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to fill value to Na fields of a dataframe using dict
         /// </summary>
         [Sample]
-        internal static void DFFillNaSampleWithDict()
+        public static void DFFillNaSampleWithDict()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var count = peopleDataFrame.Count();
@@ -495,7 +495,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to drop rows containing any null values.
         /// </summary>
         [Sample]
-        internal static void DFNaDropSample()
+        public static void DFNaDropSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfCount = peopleDataFrame.Count();
@@ -517,7 +517,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to fill rows containing null values.
         /// </summary>
         [Sample]
-        internal static void DFNaFillSample()
+        public static void DFNaFillSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson))
                 .WithColumn("mail", Functions.Lit(null).Cast("string"));
@@ -533,7 +533,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to replace rows containing null values.
         /// </summary>
         [Sample]
-        internal static void DFNaReplaceSample()
+        public static void DFNaReplaceSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             Console.WriteLine("Before replace operation:");
@@ -553,7 +553,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to drop a duplicated rows in a DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFDropDuplicatesSample()
+        public static void DFDropDuplicatesSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -570,7 +570,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to replace a value in a DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFReplaceSample()
+        public static void DFReplaceSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -618,7 +618,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform randomSplit on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFRandomSplitSample()
+        public static void DFRandomSplitSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var randomSplitted = peopleDataFrame.RandomSplit(new[] { 1.0, 2.0 }).ToArray();
@@ -636,7 +636,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Columns on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFColumnsSample()
+        public static void DFColumnsSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var columnNames = peopleDataFrame.Columns().ToArray();
@@ -658,7 +658,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform DTypes on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFDTypesSample()
+        public static void DFDTypesSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var columnsNameAndType = peopleDataFrame.DTypes().ToArray();
@@ -681,7 +681,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Sort on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFSortSample()
+        public static void DFSortSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var sorted = peopleDataFrame.Sort(new string[] { "name", "age" }, new bool[] { true, false });
@@ -715,7 +715,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform SortWithinPartitions on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFSortWithinPartitionsSample()
+        public static void DFSortWithinPartitionsSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             peopleDataFrame = peopleDataFrame.Repartition(2);
@@ -742,7 +742,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Alias on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFAliasSample()
+        public static void DFAliasSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfAs1 = peopleDataFrame.Alias("df_as1");
@@ -767,7 +767,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Select on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFSelectSample()
+        public static void DFSelectSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var projected = peopleDataFrame.Select(peopleDataFrame["name"], "age");
@@ -786,7 +786,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform WithColumn on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFWithColumnSample()
+        public static void DFWithColumnSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfWithNewColumn = peopleDataFrame.WithColumn("age2", peopleDataFrame["age"] + 10);
@@ -806,7 +806,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform WithColumnRenamed on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFWithColumnRenamedSample()
+        public static void DFWithColumnRenamedSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfWithNewColumnName = peopleDataFrame.WithColumnRenamed("age", "age2");
@@ -824,7 +824,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Corr on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFCorrSample()
+        public static void DFCorrSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -841,7 +841,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Cov on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFCovSample()
+        public static void DFCovSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -858,7 +858,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform FreqItems on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFFreqItemsSample()
+        public static void DFFreqItemsSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -877,7 +877,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Describe on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFDescribeSample()
+        public static void DFDescribeSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -903,7 +903,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Rollup on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFRollupSample()
+        public static void DFRollupSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -921,7 +921,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Cube on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFCubeSample()
+        public static void DFCubeSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -939,7 +939,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Cube on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFGroupDataOperationSample()
+        public static void DFGroupDataOperationSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -970,7 +970,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform Crosstab on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFCrosstabSample()
+        public static void DFCrosstabSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -989,7 +989,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform aggregation on DataFrame using DSL
         /// </summary>
         [Sample]
-        internal static void DFAggregateDSLSample()
+        public static void DFAggregateDSLSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var countAggDataFrame = peopleDataFrame.Where("name = 'Bill'").Agg(new Dictionary<string, string> {{"name", "count"}});
@@ -1011,7 +1011,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform simple select and filter on DataFrame using UDF
         /// </summary>
         [Sample]
-        internal static void DFProjectionFilterUDFSample()
+        public static void DFProjectionFilterUDFSample()
         {
             GetSqlContext().RegisterFunction<string, string, string>("FullAddress", (city, state) => city + " " + state);
             GetSqlContext().RegisterFunction<bool, string, int>("PeopleFilter", (name, age) => name == "Bill" && age > 80);
@@ -1040,7 +1040,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to perform limit on DataFrame using DSL.
         /// </summary>
         [Sample]
-        internal static void DFLimitSample()
+        public static void DFLimitSample()
         {
             const int num = 2;
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -1053,7 +1053,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to run head for DataFrame
         /// </summary>
         [Sample]
-        internal static void DFHeadSample()
+        public static void DFHeadSample()
         {
             const int num = 3;
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -1063,7 +1063,7 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Sample]
-        internal static void DFTakeSample()
+        public static void DFTakeSample()
         {
             const int num = 2;
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
@@ -1077,7 +1077,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// </summary>
         /// <param name="rows"> Rows from people DataFrame </param>
         /// <param name="num"> Expected number of rows from people DataFrame </param>
-        internal static void PrintAndVerifyPeopleDataFrameRows(IEnumerable<Row> rows, int num)
+        public static void PrintAndVerifyPeopleDataFrameRows(IEnumerable<Row> rows, int num)
         {
             Console.WriteLine("peopleDataFrame:");
 
@@ -1123,7 +1123,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to run first() method on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFFirstSample()
+        public static void DFFirstSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var row = peopleDataFrame.Sort(new string[] { "id" }, new bool[] { true }).First();
@@ -1168,7 +1168,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Verify the schema of people dataframe.
         /// </summary>
         /// <param name="schema"> RowSchema of people DataFrame </param>
-        internal static void VerifySchemaOfPeopleDataFrame(StructType schema)
+        public static void VerifySchemaOfPeopleDataFrame(StructType schema)
         {
             Assert.IsNotNull(schema);
             Assert.AreEqual("struct", schema.TypeName);
@@ -1211,7 +1211,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Verify the contents of 1st row of people dataframe.
         /// </summary>
         /// <param name="firstRow"> First row of people DataFrame </param>
-        internal static void VerifyFirstRowOfPeopleDataFrame(Row firstRow)
+        public static void VerifyFirstRowOfPeopleDataFrame(Row firstRow)
         {
             Assert.IsNotNull(firstRow);
             Assert.AreEqual(4, firstRow.Size());
@@ -1229,7 +1229,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to run distinct() operation on DataFrame
         /// </summary>
         [Sample]
-        internal static void DFDistinctSample()
+        public static void DFDistinctSample()
         {
             var csvTestLogDataFrame = GetSqlContext().TextFile(SparkCLRSamples.Configuration.GetInputDataPath(CSVTestLog));
 
@@ -1259,7 +1259,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to get Rdd from DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFRddSample()
+        public static void DFRddSample()
         {
             // repartitioning below so that batching in pickling does not impact count on Rdd created from the dataframe
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson)).Repartition(4);
@@ -1386,7 +1386,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to check IsLocal from DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFIsLocalSample()
+        public static void DFIsLocalSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -1404,7 +1404,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample for Coalesce on DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFCoalesceSample()
+        public static void DFCoalesceSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson)).Repartition(4);
 
@@ -1429,7 +1429,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to persist DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFPersistSample()
+        public static void DFPersistSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             peopleDataFrame.Persist().Show();
@@ -1439,7 +1439,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to unpersist DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFUnpersistSample()
+        public static void DFUnpersistSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             peopleDataFrame.Persist().Unpersist().Show();
@@ -1449,7 +1449,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to cache DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFCacheSample()
+        public static void DFCacheSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             peopleDataFrame.Cache().Show();
@@ -1459,7 +1459,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to repartition DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFRepartitionSample()
+        public static void DFRepartitionSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var numPartitions = peopleDataFrame.MapPartitions(iters => new int[] { iters.Count() }).Count();
@@ -1482,7 +1482,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to repartition DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFRepartitionSample2()
+        public static void DFRepartitionSample2()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -1512,7 +1512,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to sample a DataFrame.
         /// </summary>
         [Sample]
-        internal static void DFSampleSample()
+        public static void DFSampleSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
 
@@ -1546,7 +1546,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// FlatMap sample
         /// </summary>
         [Sample]
-        internal static void DFFlatMapSample()
+        public static void DFFlatMapSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfCount = peopleDataFrame.Count();
@@ -1573,7 +1573,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Map sample
         /// </summary>
         [Sample]
-        internal static void DFMapSample()
+        public static void DFMapSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfCount = peopleDataFrame.Count();
@@ -1599,7 +1599,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// MapPartitions sample
         /// </summary>
         [Sample]
-        internal static void DFMapPartitionsSample()
+        public static void DFMapPartitionsSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var dfCount = peopleDataFrame.Count();
@@ -1619,7 +1619,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// ForeachPartition sample
         /// </summary>
         [Sample]
-        internal static void DFForeachPartitionSample()
+        public static void DFForeachPartitionSample()
         {
             const int partitionNumber = 3;
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson)).Repartition(partitionNumber);
@@ -1635,15 +1635,15 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Serializable]
-        internal class PartitionCountHelper
+        public class PartitionCountHelper
         {
             private Accumulator<int> accumulator;
-            internal PartitionCountHelper(Accumulator<int> accumulator)
+            public PartitionCountHelper(Accumulator<int> accumulator)
             {
                 this.accumulator = accumulator;
             }
 
-            internal void Execute(IEnumerable<Row> iter)
+            public void Execute(IEnumerable<Row> iter)
             {
                 // Count only once for a partition iter
                 accumulator = accumulator + 1;
@@ -1656,15 +1656,15 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Serializable]
-        internal class ForeachRowHelper
+        public class ForeachRowHelper
         {
             private Accumulator<int> accumulator;
-            internal ForeachRowHelper(Accumulator<int> accumulator)
+            public ForeachRowHelper(Accumulator<int> accumulator)
             {
                 this.accumulator = accumulator;
             }
 
-            internal void Execute(Row row)
+            public void Execute(Row row)
             {
                 accumulator = accumulator + 1;
             }
@@ -1674,7 +1674,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Foreach sample
         /// </summary>
         [Sample]
-        internal static void DFForeachSample()
+        public static void DFForeachSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var accumulator = SparkCLRSamples.SparkContext.Accumulator(0);
@@ -1688,15 +1688,15 @@ namespace Microsoft.Spark.CSharp.Samples
         }
 
         [Serializable]
-        internal class ActionHelper
+        public class ActionHelper
         {
             private Accumulator<int> accumulator;
-            internal ActionHelper(Accumulator<int> accumulator)
+            public ActionHelper(Accumulator<int> accumulator)
             {
                 this.accumulator = accumulator;
             }
 
-            internal void Execute(IEnumerable<Row> iter)
+            public void Execute(IEnumerable<Row> iter)
             {
                 foreach (var row in iter)
                 {
@@ -1709,7 +1709,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// ForeachPartition sample with accumulator
         /// </summary>
         [Sample]
-        internal static void DFForeachnSampleWithAccumulator()
+        public static void DFForeachnSampleWithAccumulator()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var accumulator = SparkCLRSamples.SparkContext.Accumulator(0);
@@ -1722,7 +1722,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Write to parquet sample using DataFrameWriter
         /// </summary>
         [Sample]
-        internal static void DFWriteToParquetSample()
+        public static void DFWriteToParquetSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var parquetPath = SparkCLRSamples.FileSystemHelper.GetTempPath() + "DF_Parquet_Samples_" + (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
@@ -1749,7 +1749,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Write to parquet sample with 'append' mode
         /// </summary>
         [Sample]
-        internal static void DFWriteToParquetSampleWithAppendMode()
+        public static void DFWriteToParquetSampleWithAppendMode()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var parquetPath = SparkCLRSamples.FileSystemHelper.GetTempPath() + "DF_Parquet_Samples_" + (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
@@ -1791,7 +1791,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Write to json sample
         /// </summary>
         [Sample]
-        internal static void DFWriteToJsonSample()
+        public static void DFWriteToJsonSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var jsonPath = SparkCLRSamples.FileSystemHelper.GetTempPath() + "DF_Json_Samples_" + (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
@@ -1818,7 +1818,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Write to parquet sample
         /// </summary>
         [Sample]
-        internal static void DFSaveAsParquetFileSample()
+        public static void DFSaveAsParquetFileSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var parquetPath = SparkCLRSamples.FileSystemHelper.GetTempPath() + "DF_Parquet_Samples_" + (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
@@ -1845,7 +1845,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// DataFrame `Save` sample
         /// </summary>
         [Sample]
-        internal static void DFSaveSample()
+        public static void DFSaveSample()
         {
             var peopleDataFrame = GetSqlContext().Read().Json(SparkCLRSamples.Configuration.GetInputDataPath(PeopleJson));
             var path = SparkCLRSamples.FileSystemHelper.GetTempPath() + "DF_Samples_" + (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;

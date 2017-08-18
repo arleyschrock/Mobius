@@ -17,7 +17,7 @@ namespace Microsoft.Spark.CSharp.Core
     ///    b. Else ignore it.
     /// </summary>
     [Serializable]
-    internal class PriorityQueue<T> : IEnumerable<T> where T : IComparable<T>
+    public class PriorityQueue<T> : IEnumerable<T> where T : IComparable<T>
     {
         // The number of elements in the priority queue.
         private int elementCount;
@@ -27,7 +27,7 @@ namespace Microsoft.Spark.CSharp.Core
         /// <summary>
         /// Constructor of PriorityQueue type.
         /// </summary>
-        internal PriorityQueue(int queueSize, Comparer<T> comparer)
+        public PriorityQueue(int queueSize, Comparer<T> comparer)
         {
             this.comparer = comparer;
             queue = new T[queueSize];
@@ -36,7 +36,7 @@ namespace Microsoft.Spark.CSharp.Core
         /// <summary>
         /// Inserts the specified element into this priority queue.
         /// </summary>
-        internal void Offer(T e)
+        public void Offer(T e)
         {
             if (ReferenceEquals(null, e))
             {

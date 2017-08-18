@@ -16,10 +16,10 @@ namespace Microsoft.Spark.CSharp.Samples
     /// </summary>
     public class SparkCLRSamples
     {
-        internal static Configuration Configuration;
-        internal static SparkContext SparkContext;
-        internal static ILoggerService Logger;
-        internal static IFileSystemHelper FileSystemHelper;
+        public static Configuration Configuration;
+        public static SparkContext SparkContext;
+        public static ILoggerService Logger;
+        public static IFileSystemHelper FileSystemHelper;
 
         static void Main(string[] args)
         {
@@ -98,7 +98,7 @@ namespace Microsoft.Spark.CSharp.Samples
 
         //the benefits of color coding can be seen only in debug mode because in other modes
         //the console output is redirected to another process and color coding will be lost
-        internal static void WriteColorCodedConsoleMessage(ConsoleColor colorCoding, string message)
+        public static void WriteColorCodedConsoleMessage(ConsoleColor colorCoding, string message)
         {
             ConsoleColor currentForegroundColor = Console.ForegroundColor;
             Console.ForegroundColor = colorCoding;

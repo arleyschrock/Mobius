@@ -22,7 +22,7 @@ namespace Microsoft.Spark.CSharp.Interop
     public class SparkCLREnvironment
     {
         private static ISparkCLRProxy sparkCLRProxy;
-        internal static ISparkCLRProxy SparkCLRProxy
+        public static ISparkCLRProxy SparkCLRProxy
         {
             get { return sparkCLRProxy ?? (sparkCLRProxy = new SparkCLRIpcProxy()); }
             set
@@ -31,9 +31,9 @@ namespace Microsoft.Spark.CSharp.Interop
             }
         }
 
-        internal static IConfigurationService configurationService;
+        public static IConfigurationService configurationService;
 
-        internal static IConfigurationService ConfigurationService
+        public static IConfigurationService ConfigurationService
         {
             get { return configurationService ?? (configurationService = new ConfigurationService()); }
             set
@@ -43,7 +43,7 @@ namespace Microsoft.Spark.CSharp.Interop
         }
 
         private static IWeakObjectManager weakObjectManager;
-        internal static IWeakObjectManager WeakObjectManager
+        public static IWeakObjectManager WeakObjectManager
         {
             get { return weakObjectManager ?? (weakObjectManager = new WeakObjectManagerImpl()); }
             set { weakObjectManager = value; }

@@ -37,18 +37,18 @@ namespace Microsoft.Spark.CSharp.Streaming
     {
         private static DateTime startUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        internal StreamingContext streamingContext;
-        internal IDStreamProxy prevDStreamProxy;
-        internal IDStreamProxy dstreamProxy;
-        internal SerializedMode prevSerializedMode;
-        internal SerializedMode serializedMode;
+        public StreamingContext streamingContext;
+        public IDStreamProxy prevDStreamProxy;
+        public IDStreamProxy dstreamProxy;
+        public SerializedMode prevSerializedMode;
+        public SerializedMode serializedMode;
         
-        internal bool isCached;
-        internal bool isCheckpointed;
+        public bool isCached;
+        public bool isCheckpointed;
 
-        internal virtual IDStreamProxy DStreamProxy { get { return dstreamProxy; } }
+        public virtual IDStreamProxy DStreamProxy { get { return dstreamProxy; } }
         
-        internal bool Piplinable
+        public bool Piplinable
         {
             get
             {
@@ -67,9 +67,9 @@ namespace Microsoft.Spark.CSharp.Streaming
             }
         }
 
-        internal DStream() { }
+        public DStream() { }
 
-        internal DStream(IDStreamProxy dstreamProxy, StreamingContext streamingContext, SerializedMode serializedMode = SerializedMode.Byte)
+        public DStream(IDStreamProxy dstreamProxy, StreamingContext streamingContext, SerializedMode serializedMode = SerializedMode.Byte)
         {
             this.streamingContext = streamingContext;
             this.dstreamProxy = dstreamProxy;
@@ -373,7 +373,7 @@ namespace Microsoft.Spark.CSharp.Streaming
             return DStreamProxy.Slice(fromUnixTime, toUnixTime).Select(r => new RDD<T>(r, streamingContext.SparkContext, serializedMode)).ToArray();
         }
 
-        internal void ValidateWindowParam(int windowSeconds, int slideSeconds)
+        public void ValidateWindowParam(int windowSeconds, int slideSeconds)
         {
             int duration = SlideDuration;
 
@@ -476,82 +476,82 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// </summary>
 
     [Serializable]
-    internal class MapPartitionsWithIndexHelper<I, O>
+    public class MapPartitionsWithIndexHelper<I, O>
     {
         private readonly Func<int, IEnumerable<I>, IEnumerable<O>> func;
         private readonly bool preservesPartitioningParam = false;
-        internal MapPartitionsWithIndexHelper(Func<int, IEnumerable<I>, IEnumerable<O>> f, bool preservesPartitioningParam = false)
+        public MapPartitionsWithIndexHelper(Func<int, IEnumerable<I>, IEnumerable<O>> f, bool preservesPartitioningParam = false)
         {
             func = f;
             this.preservesPartitioningParam = preservesPartitioningParam;
         }
 
-        internal RDD<O> Execute(RDD<I> rdd)
+        public RDD<O> Execute(RDD<I> rdd)
         {
             return rdd.MapPartitionsWithIndex(func, preservesPartitioningParam);
         }
     }
 
     [Serializable]
-    internal class TransformHelper<I, O>
+    public class TransformHelper<I, O>
     {
         private readonly Func<RDD<I>, RDD<O>> func;
-        internal TransformHelper(Func<RDD<I>, RDD<O>> f)
+        public TransformHelper(Func<RDD<I>, RDD<O>> f)
         {
             func = f;
         }
 
-        internal RDD<O> Execute(double t, RDD<I> rdd)
+        public RDD<O> Execute(double t, RDD<I> rdd)
         {
             return func(rdd);
         }
     }
 
     [Serializable]
-    internal class TransformDynamicHelper<I, O>
+    public class TransformDynamicHelper<I, O>
     {
         private readonly Func<double, RDD<I>, RDD<O>> func;
-        internal TransformDynamicHelper(Func<double, RDD<I>, RDD<O>> f)
+        public TransformDynamicHelper(Func<double, RDD<I>, RDD<O>> f)
         {
             func = f;
         }
 
-        internal RDD<dynamic> Execute(double t, RDD<dynamic> rdd)
+        public RDD<dynamic> Execute(double t, RDD<dynamic> rdd)
         {
             return func(t, rdd.ConvertTo<I>()).ConvertTo<dynamic>();
         }
     }
 
     [Serializable]
-    internal class TransformWithHelper<T, U, V>
+    public class TransformWithHelper<T, U, V>
     {
         private readonly Func<RDD<T>, RDD<U>, RDD<V>> func;
-        internal TransformWithHelper(Func<RDD<T>, RDD<U>, RDD<V>> f)
+        public TransformWithHelper(Func<RDD<T>, RDD<U>, RDD<V>> f)
         {
             func = f;
         }
 
-        internal RDD<V> Execute(double t, RDD<T> rdd1, RDD<U> rdd2)
+        public RDD<V> Execute(double t, RDD<T> rdd1, RDD<U> rdd2)
         {
             return func(rdd1, rdd2);
         }
     }
 
     [Serializable]
-    internal class TransformWithDynamicHelper<T, U, V>
+    public class TransformWithDynamicHelper<T, U, V>
     {
         private readonly Func<double, RDD<T>, RDD<U>, RDD<V>> func;
         private readonly Func<double, RDD<dynamic>, RDD<dynamic>> prevFunc;
         private readonly Func<double, RDD<dynamic>, RDD<dynamic>> otherFunc;
 
-        internal TransformWithDynamicHelper(Func<double, RDD<T>, RDD<U>, RDD<V>> f, Func<double, RDD<dynamic>, RDD<dynamic>> prevF, Func<double, RDD<dynamic>, RDD<dynamic>> otherF)
+        public TransformWithDynamicHelper(Func<double, RDD<T>, RDD<U>, RDD<V>> f, Func<double, RDD<dynamic>, RDD<dynamic>> prevF, Func<double, RDD<dynamic>, RDD<dynamic>> otherF)
         {
             func = f;
             prevFunc = prevF;
             otherFunc = otherF;
         }
 
-        internal RDD<dynamic> Execute(double t, RDD<dynamic> rdd1, RDD<dynamic> rdd2)
+        public RDD<dynamic> Execute(double t, RDD<dynamic> rdd1, RDD<dynamic> rdd2)
         {
             if (prevFunc != null)
                 rdd1 = prevFunc(t, rdd1);
@@ -564,48 +564,48 @@ namespace Microsoft.Spark.CSharp.Streaming
     }
 
     [Serializable]
-    internal class RepartitionHelper<T>
+    public class RepartitionHelper<T>
     {
         private readonly int numPartitions;
-        internal RepartitionHelper(int numPartitions)
+        public RepartitionHelper(int numPartitions)
         {
             this.numPartitions = numPartitions;
         }
 
-        internal RDD<T> Execute(RDD<T> rdd)
+        public RDD<T> Execute(RDD<T> rdd)
         {
             return rdd.Repartition(numPartitions);
         }
     }
 
     [Serializable]
-    internal class ForeachRDDHelper<I>
+    public class ForeachRDDHelper<I>
     {
         private readonly Action<RDD<I>> func;
-        internal ForeachRDDHelper(Action<RDD<I>> f)
+        public ForeachRDDHelper(Action<RDD<I>> f)
         {
             func = f;
         }
 
-        internal void Execute(double t, RDD<dynamic> rdd)
+        public void Execute(double t, RDD<dynamic> rdd)
         {
             func(rdd.ConvertTo<I>());
         }
     }
 
     [Serializable]
-    internal class SaveAsTextFileHelper
+    public class SaveAsTextFileHelper
     {
         private readonly string prefix; 
         private readonly string suffix;
         
-        internal SaveAsTextFileHelper(string prefix, string suffix)
+        public SaveAsTextFileHelper(string prefix, string suffix)
         {
             this.prefix = prefix;
             this.suffix = suffix;
         }
 
-        internal void Execute(double t, RDD<dynamic> rdd)
+        public void Execute(double t, RDD<dynamic> rdd)
         {
             rdd.ConvertTo<string>().SaveAsTextFile(prefix + (long)t + suffix);
         }

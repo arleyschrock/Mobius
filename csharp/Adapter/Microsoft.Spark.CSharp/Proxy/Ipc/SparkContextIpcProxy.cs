@@ -16,19 +16,19 @@ using Microsoft.Spark.CSharp.Proxy.Ipc;
 namespace Microsoft.Spark.CSharp.Proxy.Ipc
 {
     [ExcludeFromCodeCoverage] //IPC calls to JVM validated using validation-enabled samples - unit test coverage not reqiured
-    internal class SparkContextIpcProxy : ISparkContextProxy
+    public class SparkContextIpcProxy : ISparkContextProxy
     {
         private JvmObjectReference jvmSparkContextReference;
         private JvmObjectReference jvmJavaContextReference;
         private JvmObjectReference jvmAccumulatorReference;
-        internal List<JvmObjectReference> jvmBroadcastReferences = new List<JvmObjectReference>();
+        public List<JvmObjectReference> jvmBroadcastReferences = new List<JvmObjectReference>();
 
         public ISparkConfProxy GetConf()
         {
             return new SparkConfIpcProxy(new JvmObjectReference((string)SparkCLRIpcProxy.JvmBridge.CallNonStaticJavaMethod(jvmJavaContextReference, "getConf")));
         }  
 
-        internal JvmObjectReference JvmSparkContextReference
+        public JvmObjectReference JvmSparkContextReference
         {
             get { return jvmSparkContextReference; }
         }
@@ -405,7 +405,7 @@ namespace Microsoft.Spark.CSharp.Proxy.Ipc
         }
     }
     
-    internal class BroadcastIpcProxy : IBroadcastProxy
+    public class BroadcastIpcProxy : IBroadcastProxy
     {
         private readonly JvmObjectReference jvmBroadcastReference;
         private readonly SparkContextIpcProxy sparkContextIpcProxy;

@@ -50,7 +50,7 @@ namespace AdapterTest
         }
 
         // create bytes for deserialization
-        internal Broadcast<T> CreateBroadcastVarInWorker<T>(T expectedValue, out long bid, out string path)
+        public Broadcast<T> CreateBroadcastVarInWorker<T>(T expectedValue, out long bid, out string path)
         {
             // create broadcast variable for serialization
 

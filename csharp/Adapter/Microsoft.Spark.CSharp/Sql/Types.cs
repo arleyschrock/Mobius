@@ -39,7 +39,7 @@ namespace Microsoft.Spark.CSharp.Sql
         /// <summary>
         /// return only type: TypeName by default, subclass can override it
         /// </summary>
-        internal virtual object JsonValue { get { return TypeName; } }
+        public virtual object JsonValue { get { return TypeName; } }
 
         /// <summary>
         /// The compact JSON representation of this data type.
@@ -131,7 +131,7 @@ namespace Microsoft.Spark.CSharp.Sql
     }
 
     /// <summary>
-    /// An internal type used to represent a simple type. 
+    /// An public type used to represent a simple type. 
     /// </summary>
     [Serializable]
     public class AtomicType : DataType
@@ -139,7 +139,7 @@ namespace Microsoft.Spark.CSharp.Sql
     }
 
     /// <summary>
-    /// An internal type used to represent a complex type (such as arrays, structs, and maps).
+    /// An public type used to represent a complex type (such as arrays, structs, and maps).
     /// </summary>
     [Serializable]
     public abstract class ComplexType : DataType
@@ -255,7 +255,7 @@ namespace Microsoft.Spark.CSharp.Sql
             this.scale = scale;
         }
 
-        internal override object JsonValue
+        public override object JsonValue
         {
             get { throw new NotImplementedException(); }
         }
@@ -298,7 +298,7 @@ namespace Microsoft.Spark.CSharp.Sql
             this.containsNull = containsNull;
         }
 
-        internal ArrayType(JObject json)
+        public ArrayType(JObject json)
         {
             FromJson(json);
         }
@@ -311,7 +311,7 @@ namespace Microsoft.Spark.CSharp.Sql
             get { return string.Format("array<{0}>", elementType.SimpleString); }
         }
 
-        internal override object JsonValue
+        public override object JsonValue
         {
             get
             {
@@ -344,7 +344,7 @@ namespace Microsoft.Spark.CSharp.Sql
     [Serializable]
     public class MapType : ComplexType
     {
-        internal override object JsonValue
+        public override object JsonValue
         {
             get { throw new NotImplementedException(); }
         }
@@ -399,7 +399,7 @@ namespace Microsoft.Spark.CSharp.Sql
             this.metadata = metadata ?? new JObject();
         }
 
-        internal StructField(JObject json)
+        public StructField(JObject json)
         {
             FromJson(json);
         }
@@ -409,7 +409,7 @@ namespace Microsoft.Spark.CSharp.Sql
         /// </summary>
         public override string SimpleString { get { return string.Format(@"{0}:{1}", name, dataType.SimpleString); } }
 
-        internal override object JsonValue
+        public override object JsonValue
         {
             get
             {
@@ -454,7 +454,7 @@ namespace Microsoft.Spark.CSharp.Sql
         /// </summary>
         public List<StructField> Fields { get { return fields; } }
 
-        internal IStructTypeProxy StructTypeProxy
+        public IStructTypeProxy StructTypeProxy
         {
             get
             {
@@ -474,12 +474,12 @@ namespace Microsoft.Spark.CSharp.Sql
             this.fields = fields.ToList();
         }
 
-        internal StructType(JObject json)
+        public StructType(JObject json)
         {
             FromJson(json);
         }
 
-        internal StructType(IStructTypeProxy structTypeProxy)
+        public StructType(IStructTypeProxy structTypeProxy)
         {
             this.structTypeProxy = structTypeProxy;
             var jsonSchema = structTypeProxy.ToJson();
@@ -494,7 +494,7 @@ namespace Microsoft.Spark.CSharp.Sql
             get { return string.Format(@"struct<{0}>", string.Join(",", fields.Select(f => f.SimpleString))); }
         }
 
-        internal override object JsonValue
+        public override object JsonValue
         {
             get
             {

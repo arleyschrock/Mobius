@@ -24,12 +24,12 @@ namespace Microsoft.Spark.CSharp.Streaming
     /// </summary>
     /// <typeparam name="U"></typeparam>
     [Serializable]
-    internal class TransformedDStream<U> : DStream<U>
+    public class TransformedDStream<U> : DStream<U>
     {
-        internal Func<double, RDD<dynamic>, RDD<dynamic>> func;
+        public Func<double, RDD<dynamic>, RDD<dynamic>> func;
         private Func<double, RDD<dynamic>, RDD<dynamic>> prevFunc;
 
-        internal void Init<T>(DStream<T> prev, Func<double, RDD<dynamic>, RDD<dynamic>> f)
+        public void Init<T>(DStream<T> prev, Func<double, RDD<dynamic>, RDD<dynamic>> f)
         {
             streamingContext = prev.streamingContext;
             serializedMode = SerializedMode.Byte;
@@ -57,19 +57,19 @@ namespace Microsoft.Spark.CSharp.Streaming
         {
             private readonly Func<double, RDD<dynamic>, RDD<dynamic>> func;
             private readonly Func<double, RDD<dynamic>, RDD<dynamic>> prevFunc;
-            internal NewFuncWrapper(Func<double, RDD<dynamic>, RDD<dynamic>> func, Func<double, RDD<dynamic>, RDD<dynamic>> prevFunc)
+            public NewFuncWrapper(Func<double, RDD<dynamic>, RDD<dynamic>> func, Func<double, RDD<dynamic>, RDD<dynamic>> prevFunc)
             {
                 this.func = func;
                 this.prevFunc = prevFunc;
             }
 
-            internal RDD<dynamic> Execute(double t, RDD<dynamic> rdd)
+            public RDD<dynamic> Execute(double t, RDD<dynamic> rdd)
             {
                 return func(t, prevFunc(t, rdd));
             }
         }
 
-        internal override IDStreamProxy DStreamProxy
+        public override IDStreamProxy DStreamProxy
         {
             get
             {

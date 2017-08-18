@@ -37,10 +37,10 @@ namespace Microsoft.Spark.CSharp.Core
         [NonSerialized]
         public static ConcurrentDictionary<long, Broadcast> broadcastRegistry = new ConcurrentDictionary<long, Broadcast>();
         [NonSerialized]
-        internal string path;
+        public string path;
 
-        internal long broadcastId;
-        internal Broadcast() { }
+        public long broadcastId;
+        public Broadcast() { }
 
         /// <summary>
         /// Initializes a new instance of Broadcast class with a specified path.
@@ -51,7 +51,7 @@ namespace Microsoft.Spark.CSharp.Core
             this.path = path;
         }
 
-        internal static void DumpBroadcast<T>(T value, string path)
+        public static void DumpBroadcast<T>(T value, string path)
         {
             var formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Write))
@@ -59,7 +59,7 @@ namespace Microsoft.Spark.CSharp.Core
                 formatter.Serialize(fs, value);
             }
         }
-        internal static T LoadBroadcast<T>(string path)
+        public static T LoadBroadcast<T>(string path)
         {
             var formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -83,7 +83,7 @@ namespace Microsoft.Spark.CSharp.Core
         [NonSerialized]
         private bool valueLoaded = false;
 
-        internal Broadcast(SparkContext sparkContext, T value)
+        public Broadcast(SparkContext sparkContext, T value)
         {
             this.value = value;
             this.valueLoaded = true;

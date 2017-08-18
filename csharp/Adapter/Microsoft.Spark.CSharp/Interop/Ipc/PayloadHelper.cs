@@ -11,9 +11,9 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
     /// <summary>
     /// Help build the IPC payload for JVM calls from CLR
     /// </summary>
-    internal class PayloadHelper
+    public class PayloadHelper
     {
-        internal static byte[] BuildPayload(bool isStaticMethod, object classNameOrJvmObjectReference, string methodName, object[] parameters)
+        public static byte[] BuildPayload(bool isStaticMethod, object classNameOrJvmObjectReference, string methodName, object[] parameters)
         {
             var isStaticMethodAsBytes = SerDe.ToBytes(isStaticMethod);
             var objectOrClassIdBytes = ToPayloadBytes(classNameOrJvmObjectReference.ToString()); //class name or objectId sent as string
@@ -42,7 +42,7 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
             return headerAndPayloadBytes;
         }
 
-        internal static byte[] ToPayloadBytes(string value)
+        public static byte[] ToPayloadBytes(string value)
         {
             var inputAsBytes = SerDe.ToBytes(value);
             var byteRepresentationofInputLength = SerDe.ToBytes(inputAsBytes.Length);
@@ -54,17 +54,17 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
             return sendPayloadBytes;
         }
 
-        internal static int GetPayloadLength(List<byte[]> payloadBytesList)
+        public static int GetPayloadLength(List<byte[]> payloadBytesList)
         {
             return payloadBytesList.Sum(payloadBytes => payloadBytes.Length);
         }
 
-        internal static byte[] GetPayload(List<byte[]> payloadBytesList)
+        public static byte[] GetPayload(List<byte[]> payloadBytesList)
         {
             return payloadBytesList.SelectMany(byteArray => byteArray).ToArray();
         }
 
-        internal static byte[] ConvertParametersToBytes(object[] parameters, bool addTypeIdPrefix = true)
+        public static byte[] ConvertParametersToBytes(object[] parameters, bool addTypeIdPrefix = true)
         {
             var paramtersBytes = new List<byte[]>();
             foreach (var parameter in parameters)
@@ -179,7 +179,7 @@ namespace Microsoft.Spark.CSharp.Interop.Ipc
             return paramtersBytes.SelectMany(byteArray => byteArray).ToArray();
         }
 
-        internal static byte[] GetTypeId(Type type) //TODO - support other types
+        public static byte[] GetTypeId(Type type) //TODO - support other types
         {
             if (type == typeof(int))
             {

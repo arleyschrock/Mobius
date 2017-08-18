@@ -13,7 +13,7 @@ namespace Microsoft.Spark.CSharp.Samples
         /// Sample to compute th evalue of Pi
         /// </summary>
         [Sample]
-        internal static void PiSample()
+        public static void PiSample()
         {
             const int slices = 3;
             var n = (int) Math.Min(100000L*slices, int.MaxValue);

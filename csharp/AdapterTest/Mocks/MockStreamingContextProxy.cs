@@ -11,7 +11,7 @@ using Microsoft.Spark.CSharp.Proxy;
 
 namespace AdapterTest.Mocks
 {
-    internal class MockStreamingContextProxy : IStreamingContextProxy
+    public class MockStreamingContextProxy : IStreamingContextProxy
     {
         private IFormatter formatter = new BinaryFormatter();
         public void Start()

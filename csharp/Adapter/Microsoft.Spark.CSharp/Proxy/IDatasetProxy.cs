@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Spark.CSharp.Proxy
 {
-    interface IDatasetProxy
+    public interface IDatasetProxy
     {
         IDataFrameProxy ToDF();
     }
