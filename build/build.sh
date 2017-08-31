@@ -30,81 +30,88 @@ download_dependency() {
   fi
 }
 
-SPARK_CSV_LINK="http://search.maven.org/remotecontent?filepath=com/databricks/spark-csv_2.10/1.4.0/spark-csv_2.10-1.4.0.jar"
-SPARK_CSV_JAR="spark-csv_2.10-1.4.0.jar"
-download_dependency $SPARK_CSV_LINK $SPARK_CSV_JAR
-
-COMMONS_CSV_LINK="http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-csv/1.4/commons-csv-1.4.jar"
-COMMONS_CSV_JAR="commons-csv-1.4.jar"
-download_dependency $COMMONS_CSV_LINK $COMMONS_CSV_JAR
-
-SPARK_STREAMING_KAFKA_LINK="http://search.maven.org/remotecontent?filepath=org/apache/spark/spark-streaming-kafka-0-8-assembly_2.11/2.0.0/spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar"
-SPARK_STREAMING_KAFKA_JAR="spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar"
-download_dependency $SPARK_STREAMING_KAFKA_LINK $SPARK_STREAMING_KAFKA_JAR
-
-popd
-
-export SPARKCLR_HOME="$FWDIR/runtime"
-echo "SPARKCLR_HOME=$SPARKCLR_HOME"
-
-if [ -d "$SPARKCLR_HOME" ];
+if [ ! -z SUPPRESS_JVM_BUILD ]; 
 then
-  echo "Delete existing $SPARKCLR_HOME ..."
-  rm -r -f "$SPARKCLR_HOME"
+  SPARK_CSV_LINK="http://search.maven.org/remotecontent?filepath=com/databricks/spark-csv_2.10/1.4.0/spark-csv_2.10-1.4.0.jar"
+  SPARK_CSV_JAR="spark-csv_2.10-1.4.0.jar"
+  download_dependency $SPARK_CSV_LINK $SPARK_CSV_JAR
+
+  COMMONS_CSV_LINK="http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-csv/1.4/commons-csv-1.4.jar"
+  COMMONS_CSV_JAR="commons-csv-1.4.jar"
+  download_dependency $COMMONS_CSV_LINK $COMMONS_CSV_JAR
+
+  SPARK_STREAMING_KAFKA_LINK="http://search.maven.org/remotecontent?filepath=org/apache/spark/spark-streaming-kafka-0-8-assembly_2.11/2.0.0/spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar"
+  SPARK_STREAMING_KAFKA_JAR="spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar"
+  download_dependency $SPARK_STREAMING_KAFKA_LINK $SPARK_STREAMING_KAFKA_JAR
+
+  popd
+
+  export SPARKCLR_HOME="$FWDIR/runtime"
+  echo "SPARKCLR_HOME=$SPARKCLR_HOME"
+
+  if [ -d "$SPARKCLR_HOME" ];
+  then
+    echo "Delete existing $SPARKCLR_HOME ..."
+    rm -r -f "$SPARKCLR_HOME"
+  fi
+
+  [ ! -d "$SPARKCLR_HOME" ] && mkdir "$SPARKCLR_HOME"
+  [ ! -d "$SPARKCLR_HOME/bin" ] && mkdir "$SPARKCLR_HOME/bin"
+  [ ! -d "$SPARKCLR_HOME/data" ] && mkdir "$SPARKCLR_HOME/data"
+  [ ! -d "$SPARKCLR_HOME/lib" ] && mkdir "$SPARKCLR_HOME/lib"
+  [ ! -d "$SPARKCLR_HOME/samples" ] && mkdir "$SPARKCLR_HOME/samples"
+  [ ! -d "$SPARKCLR_HOME/scripts" ] && mkdir "$SPARKCLR_HOME/scripts"
+  [ ! -d "$SPARKCLR_HOME/dependencies" ] && mkdir "$SPARKCLR_HOME/dependencies"
+
+  echo "Assemble Mobius external dependencies"
+  cp $FWDIR/dependencies/* "$SPARKCLR_HOME/dependencies/"
+  [ $? -ne 0 ] && exit 1
+
+  echo "Assemble Mobius Scala components"
+  pushd "$FWDIR/../scala"
+
+  # clean the target directory first
+  # mvn clean -q
+  # [ $? -ne 0 ] && exit 1
+
+  # Note: Shade-plugin helps creates an uber-package to simplify running samples during CI;
+  # however, it breaks debug mode in IntellJ. So enable shade-plugin
+  # only in build.cmd to create the uber-package.
+  # build the package
+  mvn package -Puber-jar -q
+
+  if [ $? -ne 0 ];
+  then
+    echo "Build Mobius Scala components failed, stop building."
+    popd
+    exit 1
+  fi
+  echo "Mobius Scala binaries"
+  cp target/spark*.jar "$SPARKCLR_HOME/lib/"
+  popd
+
+  # Any .jar files under the lib directory will be copied to the staged runtime lib tree.
+  if [ -d "$FWDIR/lib" ];
+  then
+    echo "Copy extra jar library binaries"
+    for g in `ls $FWDIR/lib/*.jar`
+    do
+      echo "$g"
+      cp "$g" "$SPARKCLR_HOME/lib/"
+    done
+  fi
 fi
-
-[ ! -d "$SPARKCLR_HOME" ] && mkdir "$SPARKCLR_HOME"
-[ ! -d "$SPARKCLR_HOME/bin" ] && mkdir "$SPARKCLR_HOME/bin"
-[ ! -d "$SPARKCLR_HOME/data" ] && mkdir "$SPARKCLR_HOME/data"
-[ ! -d "$SPARKCLR_HOME/lib" ] && mkdir "$SPARKCLR_HOME/lib"
-[ ! -d "$SPARKCLR_HOME/samples" ] && mkdir "$SPARKCLR_HOME/samples"
-[ ! -d "$SPARKCLR_HOME/scripts" ] && mkdir "$SPARKCLR_HOME/scripts"
-[ ! -d "$SPARKCLR_HOME/dependencies" ] && mkdir "$SPARKCLR_HOME/dependencies"
-
-echo "Assemble Mobius external dependencies"
-cp $FWDIR/dependencies/* "$SPARKCLR_HOME/dependencies/"
-[ $? -ne 0 ] && exit 1
-
-echo "Assemble Mobius Scala components"
-pushd "$FWDIR/../scala"
-
-# clean the target directory first
-# mvn clean -q
-# [ $? -ne 0 ] && exit 1
-
-# Note: Shade-plugin helps creates an uber-package to simplify running samples during CI;
-# however, it breaks debug mode in IntellJ. So enable shade-plugin
-# only in build.cmd to create the uber-package.
-# build the package
-mvn package -Puber-jar -q
-
-if [ $? -ne 0 ];
-then
-	echo "Build Mobius Scala components failed, stop building."
-	popd
-	exit 1
-fi
-echo "Mobius Scala binaries"
-cp target/spark*.jar "$SPARKCLR_HOME/lib/"
-popd
-
-# Any .jar files under the lib directory will be copied to the staged runtime lib tree.
-if [ -d "$FWDIR/lib" ];
-then
-  echo "Copy extra jar library binaries"
-  for g in `ls $FWDIR/lib/*.jar`
-  do
-    echo "$g"
-    cp "$g" "$SPARKCLR_HOME/lib/"
-  done
-fi
-
 echo "Assemble Mobius C# components"
 
 cd $FWDIR
 echo $PWD - C#
-# clean any possible previous build first
-$FWDIR/dotnet-clean.sh ../csharp
+
+if [ ! -z SUPPRESS_CLEAN ];
+then
+  # clean any possible previous build first
+  $FWDIR/dotnet-clean.sh ../csharp
+fi
+
 $FWDIR/dotnet-build.sh ../csharp
 
 if [ $? -ne 0 ];
@@ -126,7 +133,11 @@ cp $FWDIR/../csharp/Samples/Microsoft.Spark.CSharp/data/* "$SPARKCLR_HOME/data/"
 
 echo "Assemble Mobius examples"
 
-$FWDIR/dotnet-clean.sh ../examples
+if [ ! -z SUPPRESS_CLEAN ]; 
+then  
+  $FWDIR/dotnet-clean.sh ../examples
+fi
+
 $FWDIR/dotnet-build.sh ../examples
 
 if [ $? -ne 0 ];
