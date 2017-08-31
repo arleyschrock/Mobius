@@ -101,9 +101,8 @@ Refer to the [docs folder](docs) for design overview and other info on Mobius
 
 ## Build Status
 
-|Ubuntu 17.04 LTS |Windows |Unit test coverage |
-|-------------------|:------:|:-----------------:|
-|[![Build status](https://travis-ci.org/arleyschrock/Mobius.svg?branch=master)](https://travis-ci.org/Microsoft/Mobius) |[!branch=master)
+[![Build status](https://travis-ci.org/arleyschrock/Mobius.svg?branch=master)](https://travis-ci.org/arleyschrock/Mobius) 
+
 
 ## Getting Started
 
