@@ -103,8 +103,8 @@ echo "Assemble Mobius C# components"
 pushd "$FWDIR/../csharp"
 
 # clean any possible previous build first
-sh - < $FWDIR/dotnet-clean.sh
-sh - < $FWDIR/dotnet-build.sh
+bash - <  $FWDIR/dotnet-clean.sh
+bash - <  $FWDIR/dotnet-build.sh
 
 if [ $? -ne 0 ];
 then
@@ -114,12 +114,12 @@ then
 fi
 
 echo "Copying Mobius C# binaries"
-cp Worker/Microsoft.Spark.CSharp/bin/Release/* "$SPARKCLR_HOME/bin/"
+cp Worker/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0/* "$SPARKCLR_HOME/bin/"
 
 echo "Mobius C# Samples binaries"
 # need to include CSharpWorker.exe.config in samples folder
-cp Worker/Microsoft.Spark.CSharp/bin/Release/* "$SPARKCLR_HOME/samples/"
-cp Samples/Microsoft.Spark.CSharp/bin/Release/* "$SPARKCLR_HOME/samples/"
+cp Worker/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0* "$SPARKCLR_HOME/samples/"
+cp Samples/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0* "$SPARKCLR_HOME/samples/"
 
 echo "Mobius Samples data"
 cp Samples/Microsoft.Spark.CSharp/data/* "$SPARKCLR_HOME/data/"
@@ -128,8 +128,8 @@ popd
 echo "Assemble Mobius examples"
 pushd "$FWDIR/../examples"
 
-sh - < $FWDIR/dotnet-clean.sh
-sh - < $FWDIR/dotnet-compile.sh
+bash - <  $FWDIR/dotnet-clean.sh
+bash - <  $FWDIR/dotnet-compile.sh
 
 if [ $? -ne 0 ];
 then
