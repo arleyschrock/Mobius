@@ -4,18 +4,11 @@
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 #
-
-for g in `find . -type d -name bin`
+for name in obj bin
 do
-  rm -r -f "$g"
+  for d in $(find . -type d -name $name)
+  do
+    echo "rm -rf '$d'"
+    rm -rf $d
+  done
 done
-
-for g in `find . -type d -name obj`
-do
-  rm -r -f "$g"
-done
-
-# for g in `find . -type d -name TestResults`
-# do
-#   rm -r -f "$g"
-# done

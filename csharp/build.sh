@@ -28,19 +28,9 @@ function error_exit() {
   exit 1
 }
 
-echo "Restore NuGet packages ==================="
-export STEP=NuGet-Restore
 
-nuget restore
-
-export RC=$? && [ $RC -ne 0 ] && error_exit
-
-echo "Build Debug =============================="
 export STEP=Debug
-
 export CONFIGURATION=$STEP
-
-export STEP=$CONFIGURATION
 
 dotnet build -c Debug
 # msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
@@ -49,24 +39,18 @@ echo "BUILD ok for $CONFIGURATION $PROJ"
 
 echo "Build Release ============================"
 export STEP=Release
-
 export CONFIGURATION=$STEP
 
 dotnet build -c Release
-# msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
 export RC=$? && [ $RC -ne 0 ] && error_exit
 echo "BUILD ok for $CONFIGURATION $PROJ"
 
-#
-# The plan is to build SparkCLR nuget package in AppVeyor (Windows). 
-# Comment out this step for TravisCI (Linux) for now.
-#
 if [ -f "$PROJ_NAME.nuspec" ];
 then
   echo "===== Build NuGet package for $PROJ ====="
   export STEP=NuGet-Pack
 
-  nuget pack "$PROJ_NAME.nuspec"
+  dotnet pack "$PROJ_NAME
   export RC=$? && [ $RC -ne 0 ] && error_exit
   echo "NuGet package ok for $PROJ"
 fi
