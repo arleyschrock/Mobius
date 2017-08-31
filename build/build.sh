@@ -103,9 +103,8 @@ echo "Assemble Mobius C# components"
 pushd "$FWDIR/../csharp"
 
 # clean any possible previous build first
-./clean.sh
-
-./build.sh
+sh - < $FWDIR/dotnet-clean.sh
+sh - < $FWDIR/dotnet-build.sh
 
 if [ $? -ne 0 ];
 then
@@ -113,7 +112,8 @@ then
 	popd
 	exit 1
 fi
-echo "Mobius C# binaries"
+
+echo "Copying Mobius C# binaries"
 cp Worker/Microsoft.Spark.CSharp/bin/Release/* "$SPARKCLR_HOME/bin/"
 
 echo "Mobius C# Samples binaries"
@@ -127,9 +127,9 @@ popd
 
 echo "Assemble Mobius examples"
 pushd "$FWDIR/../examples"
-# clean any possible previous build first
-./clean.sh
-./build.sh
+
+sh - < $FWDIR/dotnet-clean.sh
+sh - < $FWDIR/dotnet-compile.sh
 
 if [ $? -ne 0 ];
 then
