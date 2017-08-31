@@ -26,7 +26,9 @@ function dotnet_build() {
   do
     if [ "$arg" == "Release" ];
     then 
-      eval $DOTNET publish -c Release
+        eval $DOTNET restore -r linux-x64
+        eval $DOTNET build -c Release -r linux-x64
+      eval $DOTNET publish -c Release -r linux-x64
     fi
   done
   
@@ -51,6 +53,10 @@ function show_usage(){
   echo "Usage: dotnet-build.sh <project directory>"
   exit 1
 }
+
+cd $(dirname $0)
+export FWDIR=$PWD
+
 if [ "$1" != "" ]; 
 then
   if [ -d $1 ]; 
