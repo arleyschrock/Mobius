@@ -22,6 +22,3 @@ script:
   - export NUNITCONSOLE="`pwd`/testrunner/NUnit.Console.3.0.0/tools/nunit3-console.exe"
   - cd ./build
   - ./build.sh
-  - ../csharp/test.sh
-  - cd ./localmode
-  - ./run-samples.sh --validate

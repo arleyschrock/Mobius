@@ -1,58 +1,29 @@
 #!/bin/bash
 
-#
-# Copyright (c) Microsoft. All rights reserved.
-# Licensed under the MIT license. See LICENSE file in the project root for full license information.
-#
-
-export FWDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export CppDll=NoCpp
-export XBUILDOPT=/verbosity:minimal
-
-if [ -z $builduri ];
-then
-  export builduri=build.sh
-fi
-
-export PROJ_NAME=SparkCLR
-export PROJ="$FWDIR/$PROJ_NAME.sln"
-
-echo "===== Building $PROJ ====="
-
-function error_exit() {
-  if [ -z $STEP ]; 
-  then
-    export STEP=$CONFIGURATION 
+function install_build_deps(){
+  if [ ! -d $HOME/dotnet/2.0 ]; then
+    ss apt update && ss apt install libunwind8 libunwind8-dev gettext libicu-dev liblttng-ust-dev libcurl4-openssl-dev libssl-dev uuid-dev unzip -y
+    mkdir -p $HOME/dotnet/2.0
+    curl -o $HOME/dotnet/2.0/dotnet.tar.gz 'https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz'
+    tar -xvf $HOME/dotnet/2.0/dotnet.tar.gz -C $HOME/dotnet/2.0
   fi
-  echo "===== Build FAILED for $PROJ -- $STEP with error $RC - CANNOT CONTINUE ====="
-  exit 1
+  export DOTNET=$HOME/dotnet/2.0/dotnet
 }
 
+function ss(){
+  if [ ! -f /usr/bin/sudo ]; then
+    echo $(exec $@)
+  else
+    echo $(exec sudo $@)
+  fi
+}
 
-export STEP=Debug
-export CONFIGURATION=$STEP
+function build() {
+  install_build_deps
+  $DOTNET build $@
+}
 
-dotnet build -c Debug
-# msbuild "/p:Configuration=$CONFIGURATION;AllowUnsafeBlocks=true" $XBUILDOPT $PROJ
-export RC=$? && [ $RC -ne 0 ] && error_exit
-echo "BUILD ok for $CONFIGURATION $PROJ"
+cd $(dirname $0)
 
-echo "Build Release ============================"
-export STEP=Release
-export CONFIGURATION=$STEP
-
-dotnet build -c Release
-export RC=$? && [ $RC -ne 0 ] && error_exit
-echo "BUILD ok for $CONFIGURATION $PROJ"
-
-if [ -f "$PROJ_NAME.nuspec" ];
-then
-  echo "===== Build NuGet package for $PROJ ====="
-  export STEP=NuGet-Pack
-
-  dotnet pack "$PROJ_NAME
-  export RC=$? && [ $RC -ne 0 ] && error_exit
-  echo "NuGet package ok for $PROJ"
-fi
-
-echo "===== Build succeeded for $PROJ ====="
+build -c Debug
+build -c Release
