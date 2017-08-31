@@ -69,8 +69,8 @@ echo "Assemble Mobius Scala components"
 pushd "$FWDIR/../scala"
 
 # clean the target directory first
-mvn clean -q
-[ $? -ne 0 ] && exit 1
+# mvn clean -q
+# [ $? -ne 0 ] && exit 1
 
 # Note: Shade-plugin helps creates an uber-package to simplify running samples during CI;
 # however, it breaks debug mode in IntellJ. So enable shade-plugin
@@ -134,15 +134,17 @@ then
 	echo "Build Mobius .NET Examples failed, stop building."
 	exit 1
 else
-  for i in $(find ../examples -type d -name Release); 
+  for i in $(find $FWDIR/../examples -type d -name publish); 
   do
-    project=$(dirname $i | rev | cut -d'/' -f1 | rev)
-    dest=$FWDIR/examples/$project
-    mkdir -p $dest
-    echo "Copying to $dest"
-    cp $i/Release/netcoreapp2.0/* $dest -rf
+    echo $i
+    PROJ1=$(echo $i | rev | cut -d'/' -f6 | rev)
+    PROJ2=$(echo $i | rev | cut -d'/' -f5 | rev)
+    
+    mkdir -p $FWDIR/examples/$PROJ1/$PROJ2
+    cp $i/* $FWDIR/examples/$PROJ1/$PROJ2 -rf
   done
 fi
+
 
 echo "Assemble Mobius script components"
 cd "$FWDIR/../scripts"
