@@ -18,13 +18,50 @@ function install_build_deps (){
   export DOTNET=$HOME/dotnet/2.0/dotnet
 }
 
-function build() {
+function dotnet_build() {
   install_build_deps
-  $DOTNET build $@
-  $DOTNET publish $
+  eval $DOTNET build $@
+  PUBLISH=
+  for arg in $@
+  do
+    if [ "$arg" == "Release" ];
+    then 
+      eval $DOTNET publish -c Release
+    fi
+  done
+  
 }
 
-cd $(dirname $0)
+function project_build(){
+  DEPLOY=$(dirname $0)
+  if [ "$DEPLOY" == "." ];
+  then
+    export DEPLOY=$PWD
+  fi
 
-build -c Debug
-build -c Release
+  echo $DEPLOY
+  ls $DEPLOY
+  
+  export DEPLOY=$DEPLOY/$(echo )
+  dotnet_build -c Debug 
+  dotnet_build -c Release 
+}
+
+function show_usage(){
+  echo "Usage: dotnet-build.sh <project directory>"
+  exit 1
+}
+if [ "$1" != "" ]; 
+then
+  if [ -d $1 ]; 
+  then  
+    cd $1
+    export PROJECT=$PWD | rev | cut -d'/' -f1 | rev
+    echo PROJECT: $PROJECT
+    project_build
+  else 
+    show_usage
+  fi
+else 
+  show_usage
+fi

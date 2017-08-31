@@ -100,52 +100,55 @@ then
 fi
 
 echo "Assemble Mobius C# components"
-pushd "$FWDIR/../csharp"
 
+cd $FWDIR
+echo $PWD - C#
 # clean any possible previous build first
-bash - <  $FWDIR/dotnet-clean.sh
-bash - <  $FWDIR/dotnet-build.sh
+$FWDIR/dotnet-clean.sh ../csharp
+$FWDIR/dotnet-build.sh ../csharp
 
 if [ $? -ne 0 ];
 then
 	echo "Build Mobius C# components failed, stop building."
-	popd
 	exit 1
 fi
 
 echo "Copying Mobius C# binaries"
-cp Worker/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0/* "$SPARKCLR_HOME/bin/"
+cp $FWDIR/../csharp/Worker/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0/* "$SPARKCLR_HOME/bin/" -rf
 
 echo "Mobius C# Samples binaries"
 # need to include CSharpWorker.exe.config in samples folder
-cp Worker/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0* "$SPARKCLR_HOME/samples/"
-cp Samples/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0* "$SPARKCLR_HOME/samples/"
+cp $FWDIR/../csharp/Worker/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0* "$SPARKCLR_HOME/samples/" -rf
+cp $FWDIR/../csharp/Samples/Microsoft.Spark.CSharp/bin/Release/netcoreapp2.0* "$SPARKCLR_HOME/samples/" -rf
 
 echo "Mobius Samples data"
-cp Samples/Microsoft.Spark.CSharp/data/* "$SPARKCLR_HOME/data/"
-popd
+cp $FWDIR/../csharp/Samples/Microsoft.Spark.CSharp/data/* "$SPARKCLR_HOME/data/"
 
 echo "Assemble Mobius examples"
-pushd "$FWDIR/../examples"
 
-bash - <  $FWDIR/dotnet-clean.sh
-bash - <  $FWDIR/dotnet-compile.sh
+$FWDIR/dotnet-clean.sh ../examples
+$FWDIR/dotnet-build.sh ../examples
 
 if [ $? -ne 0 ];
 then
 	echo "Build Mobius .NET Examples failed, stop building."
-	popd
 	exit 1
+else
+  for i in $(find ../examples -type d -name Release); 
+  do
+    project=$(dirname $i | rev | cut -d'/' -f1 | rev)
+    dest=$FWDIR/examples/$project
+    mkdir -p $dest
+    echo "Copying to $dest"
+    cp $i/Release/netcoreapp2.0/* $dest -rf
+  done
 fi
-popd
 
 echo "Assemble Mobius script components"
-pushd "$FWDIR/../scripts"
+cd "$FWDIR/../scripts"
 cp *.sh  "$SPARKCLR_HOME/scripts/"
-popd
 
 echo "zip run directory"
 [ ! -d "$FWDIR/target" ] && mkdir "$FWDIR/target"
-pushd "$SPARKCLR_HOME"
+cd "$SPARKCLR_HOME"
 zip -r "$FWDIR/target/run.zip" ./*
-popd
