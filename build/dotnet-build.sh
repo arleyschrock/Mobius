@@ -26,9 +26,10 @@ function dotnet_build() {
   do
     if [ "$arg" == "Release" ];
     then 
-        eval $DOTNET restore -r linux-x64
-        eval $DOTNET build -c Release -r linux-x64
-      eval $DOTNET publish -c Release -r linux-x64
+      eval $DOTNET restore -r $CSFLAGS
+      eval $DOTNET build -c Release $CSFLAGS
+      eval $DOTNET publish -c Release $CSFLAGS
+      break
     fi
   done
   

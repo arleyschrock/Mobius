@@ -5,12 +5,10 @@
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 #
 
-export FWDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $(dirname $0)
+export FWDIR=$PWD
 
 [ ! -d "$FWDIR/dependencies" ] && mkdir "$FWDIR/dependencies"
-
-echo "Download Mobius external dependencies"
-pushd "$FWDIR/dependencies"
 
 download_dependency() {
   LINK=$1
@@ -32,6 +30,10 @@ download_dependency() {
 
 if [ ! -z SUPPRESS_JVM_BUILD ]; 
 then
+
+  echo "Download Mobius external dependencies"
+  cd "$FWDIR/dependencies"
+
   SPARK_CSV_LINK="http://search.maven.org/remotecontent?filepath=com/databricks/spark-csv_2.10/1.4.0/spark-csv_2.10-1.4.0.jar"
   SPARK_CSV_JAR="spark-csv_2.10-1.4.0.jar"
   download_dependency $SPARK_CSV_LINK $SPARK_CSV_JAR
@@ -44,7 +46,7 @@ then
   SPARK_STREAMING_KAFKA_JAR="spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar"
   download_dependency $SPARK_STREAMING_KAFKA_LINK $SPARK_STREAMING_KAFKA_JAR
 
-  popd
+  cd $FWDIR
 
   export SPARKCLR_HOME="$FWDIR/runtime"
   echo "SPARKCLR_HOME=$SPARKCLR_HOME"
@@ -64,15 +66,15 @@ then
   [ ! -d "$SPARKCLR_HOME/dependencies" ] && mkdir "$SPARKCLR_HOME/dependencies"
 
   echo "Assemble Mobius external dependencies"
-  cp $FWDIR/dependencies/* "$SPARKCLR_HOME/dependencies/"
+  cp $FWDIR/dependencies/* "$SPARKCLR_HOME/dependencies/" -rf
   [ $? -ne 0 ] && exit 1
 
   echo "Assemble Mobius Scala components"
   pushd "$FWDIR/../scala"
 
   # clean the target directory first
-  # mvn clean -q
-  # [ $? -ne 0 ] && exit 1
+  mvn clean -q
+  [ $? -ne 0 ] && exit 1
 
   # Note: Shade-plugin helps creates an uber-package to simplify running samples during CI;
   # however, it breaks debug mode in IntellJ. So enable shade-plugin
@@ -101,6 +103,8 @@ then
     done
   fi
 fi
+
+
 echo "Assemble Mobius C# components"
 
 cd $FWDIR
